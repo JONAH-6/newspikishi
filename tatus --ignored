@@ -1,0 +1,11 @@
+ package.json                              |    2 [32m+[m[31m-[m
+ web/config/tailwind.config.js             |    1 [31m-[m
+ web/src/Routes.tsx                        |   56 [32m+[m[31m-[m
+ .../CartContext/CartContext.tsx           |  106 [32m+[m[31m-[m
+ web/src/contexts/AuthContexts.tsx         |   55 [32m+[m[31m-[m
+ web/src/layouts/MainLayout/MainLayout.tsx |  589 [32m+[m[31m-[m
+ web/src/pages/ContactPage/ContactPage.tsx |  151 [32m+[m[31m-[m
+ web/src/pages/HomePage/HomePage.tsx       |  936 [32m+[m[31m--[m
+ web/src/pages/LoginPage/LoginPage.tsx     |  174 [32m+[m[31m-[m
+ yarn.lock                                 | 4104 [32m+++++++[m[31m-------[m
+ 10 files changed, 3263 insertions(+), 2911 deletions(-)

@@ -29,7 +29,7 @@
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
     "firebase": "^12.8.0",
-    "lucide-react": "^0.563.0",
+    "lucide-react": "^1.33.0",
     "react-google-button": "^0.8.0",
     "typescript": "^5.9.3"
   }

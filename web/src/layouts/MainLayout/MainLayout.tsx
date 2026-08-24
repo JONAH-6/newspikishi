@@ -1,308 +1,401 @@
-// src/layouts/MainLayout/MainLayout.tsx
-import { useState, useRef, useEffect } from 'react'
-
-import { ShoppingCart, Home, Phone, LogIn, User, X, LogOut } from 'lucide-react'
-
-import { Link, routes, navigate } from '@redwoodjs/router'
-
+// web/src/layouts/MainLayout/MainLayout.tsx
+import React, { useState } from 'react'
+import { Link, navigate, routes, useLocation } from '@redwoodjs/router'
 import { useAuth } from 'src/contexts/AuthContexts'
+import { useCart } from 'src/components/CartContext/CartContext'
+import { RoleSwitcherBar } from 'src/components/RoleSwitcherBar/RoleSwitcherBar'
+import { JoinGroupModal } from 'src/components/JoinGroupModal/JoinGroupModal'
+import {
+  ShoppingCart,
+  User,
+  Heart,
+  Settings,
+  LogOut,
+  Menu as MenuIcon,
+  X,
+  Plus,
+  Minus,
+  Trash2,
+  Users,
+  ShoppingBag,
+  ChefHat,
+  Bike,
+  ShieldCheck,
+  MapPin,
+  Sparkles,
+  Phone,
+  Mail,
+  MessageCircle,
+  Home,
+  Grid,
+  ArrowRight,
+  TrendingDown,
+} from 'lucide-react'
 
-import { useCart } from '../../contexts/CartContext'
+interface MainLayoutProps {
+  children?: React.ReactNode
+}
 
-const MainLayout = ({ children }: { children?: React.ReactNode }) => {
-  const { itemCount, cart, removeFromCart, totalPrice } = useCart()
-  const { user, logOut } = useAuth()
-  const [showCartModal, setShowCartModal] = useState(false)
-  const [showUserDropdown, setShowUserDropdown] = useState(false)
-  const userDropdownRef = useRef<HTMLDivElement>(null)
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+  const { cart, removeFromCart, updateQuantity, totalPrice, itemCount, clearCart } = useCart()
+  const { user, logOut, isAuthenticated } = useAuth()
+  const location = useLocation()
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        userDropdownRef.current &&
-        !userDropdownRef.current.contains(event.target as Node)
-      ) {
-        setShowUserDropdown(false)
-      }
-    }
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false)
 
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
-
-  const handleLogout = async () => {
+  const handleSignOut = async () => {
     try {
       await logOut()
-      setShowUserDropdown(false)
       navigate(routes.home())
     } catch (error) {
-      console.error('Error logging out:', error)
+      console.error('Logout failed:', error)
     }
-  }
-
-  const getUserDisplayName = () => {
-    if (!user) return 'User'
-    if (user.displayName) return user.displayName
-    if (user.email) return user.email.split('@')[0]
-    return 'User'
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#8B0000] to-[#600000]">
-      <header className="sticky top-0 z-50 bg-[#8B0000]/90 text-white shadow-lg backdrop-blur-md">
-        <div className="container mx-auto px-4 py-3">
-          <nav className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to={routes.home()} className="h-16 w-16 rounded-full">
-              <img
-                src="/logo2.jpeg"
-                alt="Kilishi Delight Logo"
-                className="h-full w-full rounded-full object-cover"
-              />
+    <div className="flex min-h-screen flex-col bg-[#FAF8FD] font-sans antialiased text-[#211F26]">
+      {/* 1. Interactive Demo Bar for cross-persona testing */}
+      <RoleSwitcherBar />
+
+      <JoinGroupModal
+        isOpen={isJoinModalOpen}
+        onClose={() => setIsJoinModalOpen(false)}
+      />
+
+      {/* 2. Main Navigation Bar */}
+      <header className="sticky top-[37px] z-40 border-b border-[#E9E5EE] bg-white/95 backdrop-blur-md">
+        <div className="container mx-auto flex items-center justify-between px-4 py-3 sm:py-4">
+          {/* Logo */}
+          <div className="flex items-center gap-8">
+            <Link to={routes.home()} className="flex items-center gap-1.5 text-2xl sm:text-3xl font-black tracking-tight">
+              <span className="text-[#4B2E83]">YUM</span>
+              <span className="text-[#FFC928]">ZEE</span>
+              <span className="ml-1 rounded-full bg-[#FFC928]/30 px-2 py-0.5 text-[9px] font-black uppercase text-[#4B2E83] border border-[#FFC928]">
+                Campus
+              </span>
             </Link>
 
-            {/* 4 Icons Only */}
-            <div className="flex items-center space-x-6">
-              {/* Home Icon */}
+            {/* Desktop Navigation Links */}
+            <nav className="hidden lg:flex items-center gap-6 text-xs font-extrabold uppercase tracking-wider text-[#6F6B76]">
               <Link
                 to={routes.home()}
-                className="p-2 transition-colors hover:text-[#FFD700]"
-                title="Home"
+                className={`transition hover:text-[#4B2E83] ${
+                  location.pathname === '/' ? 'text-[#4B2E83] font-black border-b-2 border-[#4B2E83] pb-1' : ''
+                }`}
               >
-                <Home className="h-5 w-5" />
+                Food Menu
               </Link>
 
-              {/* Contact Icon */}
               <Link
-                to={routes.contact()}
-                className="p-2 transition-colors hover:text-[#FFD700]"
-                title="Contact"
+                to={routes.createGroupOrder()}
+                className={`flex items-center gap-1.5 rounded-full bg-[#FFC928]/20 px-3 py-1 text-[#4B2E83] border border-[#FFC928]/60 transition hover:bg-[#FFC928] hover:text-[#4B2E83] ${
+                  location.pathname.startsWith('/group') ? 'bg-[#FFC928] text-[#4B2E83]' : ''
+                }`}
               >
-                <Phone className="h-5 w-5" />
+                <Users className="h-3.5 w-3.5" />
+                <span>Group Order (Save ?600)</span>
               </Link>
 
-              {/* Cart Icon */}
-              <div className="relative p-2">
-                <button
-                  onClick={() => setShowCartModal(true)}
-                  className="transition-colors hover:text-[#FFD700]"
-                  title="Cart"
+              <button
+                onClick={() => setIsJoinModalOpen(true)}
+                className="transition hover:text-[#4B2E83]"
+              >
+                Join with Code
+              </button>
+
+              <Link
+                to={routes.orders()}
+                className={`transition hover:text-[#4B2E83] ${
+                  location.pathname === '/orders' ? 'text-[#4B2E83] font-black' : ''
+                }`}
+              >
+                My Orders
+              </Link>
+            </nav>
+          </div>
+
+          {/* Right Header Actions */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Join Group Modal Trigger */}
+            <button
+              onClick={() => setIsJoinModalOpen(true)}
+              className="hidden sm:flex items-center gap-1 rounded-xl border border-[#E9E5EE] bg-[#FAF8FD] px-3 py-2 text-xs font-bold text-[#4B2E83] hover:border-[#4B2E83] transition"
+            >
+              <Users className="h-3.5 w-3.5" />
+              <span>Join Group</span>
+            </button>
+
+            {/* Cart Button */}
+            <button
+              onClick={() => setIsCartOpen(true)}
+              className="relative flex items-center gap-2 rounded-2xl bg-[#FFC928] px-4 py-2.5 text-xs font-extrabold text-[#4B2E83] shadow-md hover:bg-[#E5B420] transition active:scale-95"
+              aria-label="Open food bag"
+            >
+              <ShoppingCart className="h-4 w-4" />
+              <span className="hidden sm:inline">Bag</span>
+              {itemCount > 0 && (
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#4B2E83] text-[11px] font-black text-white">
+                  {itemCount}
+                </span>
+              )}
+            </button>
+
+            {/* Auth Link / Avatar */}
+            {isAuthenticated ? (
+              <div className="flex items-center gap-2">
+                <Link
+                  to={routes.dashboard()}
+                  className="flex h-9 w-9 items-center justify-center rounded-2xl bg-[#F5F1FB] text-xs font-black text-[#4B2E83] border border-[#4B2E83]/20"
                 >
-                  <ShoppingCart className="h-5 w-5" />
+                  {user?.displayName ? user.displayName[0] : 'U'}
+                </Link>
+                <button
+                  onClick={handleSignOut}
+                  className="hidden sm:flex rounded-xl p-2 text-[#6F6B76] hover:bg-gray-100 transition"
+                  title="Sign Out"
+                >
+                  <LogOut className="h-4 w-4" />
                 </button>
-
-                {itemCount > 0 && (
-                  <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-[#FFD700] text-xs font-bold text-[#8B0000]">
-                    {itemCount}
-                  </span>
-                )}
               </div>
+            ) : (
+              <Link
+                to={routes.login()}
+                className="hidden sm:flex items-center gap-1.5 rounded-2xl border border-[#E9E5EE] px-4 py-2 text-xs font-bold text-[#211F26] hover:border-[#4B2E83] transition"
+              >
+                <User className="h-3.5 w-3.5" />
+                <span>Student Login</span>
+              </Link>
+            )}
 
-              {/* User/Login Icon with Dropdown */}
-              <div className="relative" ref={userDropdownRef}>
-                {user ? (
-                  <button
-                    onClick={() => setShowUserDropdown(!showUserDropdown)}
-                    className="p-2 transition-colors hover:text-[#FFD700]"
-                    title={`Logged in as ${getUserDisplayName()}`}
-                  >
-                    <div className="flex flex-col items-center">
-                      <User className="h-5 w-5" />
-                      <span className="mt-1 max-w-[60px] truncate text-xs">
-                        {getUserDisplayName().split(' ')[0]}
-                      </span>
-                    </div>
-                  </button>
-                ) : (
-                  <Link
-                    to={routes.login()}
-                    className="p-2 transition-colors hover:text-[#FFD700]"
-                    title="Login"
-                  >
-                    <LogIn className="h-5 w-5" />
-                  </Link>
-                )}
-
-                {/* User Dropdown Menu */}
-                {showUserDropdown && user && (
-                  <div className="absolute right-0 z-50 mt-2 w-48 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-xl">
-                    <div className="py-2">
-                      <div className="border-b px-4 py-2">
-                        <p className="truncate text-sm font-bold text-gray-900">
-                          {getUserDisplayName()}
-                        </p>
-                        <p className="truncate text-xs text-gray-600">
-                          {user.email}
-                        </p>
-                      </div>
-
-                      <button
-                        onClick={handleLogout}
-                        className="flex w-full items-center gap-3 px-4 py-3 text-sm text-red-600 transition-colors hover:bg-red-50"
-                      >
-                        <LogOut className="h-4 w-4" />
-                        <span>Logout</span>
-                      </button>
-                    </div>
-
-                    {/* Arrow pointing to user icon */}
-                    <div className="absolute -top-2 right-3 h-4 w-4 rotate-45 transform border-l border-t border-gray-200 bg-white"></div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </nav>
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="rounded-2xl p-2 text-[#211F26] hover:bg-gray-100 lg:hidden transition"
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <MenuIcon className="h-5 w-5" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {isMobileMenuOpen && (
+          <div className="border-t border-[#E9E5EE] bg-white p-4 lg:hidden space-y-3 animate-fadeIn">
+            <Link
+              to={routes.home()}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
+            >
+              ?? Food Menu
+            </Link>
+            <Link
+              to={routes.createGroupOrder()}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block rounded-xl bg-[#FFF9E8] p-2.5 text-xs font-black text-[#4B2E83]"
+            >
+              ?? Create Group Order (Free Delivery)
+            </Link>
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false)
+                setIsJoinModalOpen(true)
+              }}
+              className="w-full text-left rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
+            >
+              ?? Join Group with Code
+            </button>
+            <Link
+              to={routes.orders()}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
+            >
+              ?? My Orders
+            </Link>
+            <Link
+              to="/seller"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
+            >
+              ????? Kitchen Portal
+            </Link>
+            <Link
+              to="/rider"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
+            >
+              ?? Rider Portal
+            </Link>
+            <Link
+              to="/admin"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
+            >
+              ?? Admin Rules Engine
+            </Link>
+          </div>
+        )}
       </header>
 
-      <main className="min-h-screen">{children}</main>
-
-      {/* Cart Modal */}
-      {showCartModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-xl bg-white">
-            <div className="p-6">
-              <div className="mb-6 flex items-center justify-between">
-                <h3 className="text-2xl font-bold text-gray-900">
-                  Your Order ({itemCount} items)
+      {/* 3. Slide-over Cart Drawer */}
+      {isCartOpen && (
+        <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-fadeIn">
+          <div className="relative flex h-full w-full max-w-md flex-col justify-between bg-white shadow-2xl">
+            {/* Drawer Header */}
+            <div className="flex items-center justify-between border-b border-[#E9E5EE] bg-[#FAF8FD] p-5">
+              <div className="flex items-center gap-2">
+                <ShoppingCart className="h-5 w-5 text-[#4B2E83]" />
+                <h3 className="text-lg font-black text-[#211F26]">
+                  Your Snack Bag ({itemCount})
                 </h3>
-                <button
-                  onClick={() => setShowCartModal(false)}
-                  className="text-gray-500 hover:text-gray-700"
-                >
-                  <X className="h-6 w-6" />
-                </button>
               </div>
+              <button
+                onClick={() => setIsCartOpen(false)}
+                className="rounded-full p-1.5 text-[#6F6B76] hover:bg-gray-100 transition"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
 
+            {/* Drawer Body Items */}
+            <div className="flex-1 overflow-y-auto p-5 space-y-4">
               {cart.length === 0 ? (
-                <div className="py-8 text-center">
-                  <ShoppingCart className="mx-auto mb-4 h-16 w-16 text-gray-300" />
-                  <h4 className="mb-2 text-lg font-medium text-gray-900">
-                    Your cart is empty
-                  </h4>
-                  <p className="mb-4 text-gray-600">
-                    Add some delicious kilishi to get started!
-                  </p>
-                  <button
-                    onClick={() => setShowCartModal(false)}
-                    className="rounded-lg bg-[#8B0000] px-2 py-2 font-bold text-white transition hover:bg-[#600000]"
-                  >
-                    Continue Shopping
-                  </button>
+                <div className="py-16 text-center space-y-3">
+                  <ShoppingBag className="mx-auto h-16 w-16 text-[#6F6B76]/30" />
+                  <h4 className="font-extrabold text-base text-[#211F26]">Bag is empty</h4>
+                  <p className="text-xs text-[#6F6B76]">Add yummy snacks from the campus menu.</p>
                 </div>
               ) : (
-                <>
-                  <div className="mb-6 max-h-[300px] space-y-4 overflow-y-auto">
-                    {cart.map((item, index) => (
-                      <div
-                        key={`${item.id}-${index}`}
-                        className="flex items-center justify-between border-b pb-4"
-                      >
-                        <div className="flex-1">
-                          <h4 className="font-bold text-gray-900">
-                            {item.name}
-                          </h4>
-                          <p className="text-sm text-gray-600">
-                            ₦{item.price.toLocaleString()}
-                          </p>
-                        </div>
+                <div className="divide-y divide-[#E9E5EE]">
+                  {cart.map((item) => (
+                    <div key={item.id} className="flex items-center justify-between py-3.5 gap-3">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="h-12 w-12 rounded-xl border border-[#E9E5EE] object-cover"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <h5 className="text-xs font-bold text-[#211F26] truncate">{item.name}</h5>
+                        <p className="text-[11px] text-[#6F6B76]">?{item.price.toLocaleString()} each</p>
+                      </div>
+
+                      {/* Quantity Stepper */}
+                      <div className="flex items-center rounded-lg border border-[#E9E5EE] bg-[#FAF8FD] p-0.5">
                         <button
-                          onClick={() => removeFromCart(index)}
-                          className="ml-4 rounded px-3 py-1 text-red-600 transition hover:bg-red-50 hover:text-red-800"
+                          type="button"
+                          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                          className="h-6 w-6 flex items-center justify-center rounded bg-white text-xs font-bold shadow-sm"
                         >
-                          Remove
+                          <Minus className="h-3 w-3" />
+                        </button>
+                        <span className="w-6 text-center text-xs font-bold">{item.quantity}</span>
+                        <button
+                          type="button"
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          className="h-6 w-6 flex items-center justify-center rounded bg-white text-xs font-bold shadow-sm"
+                        >
+                          <Plus className="h-3 w-3" />
                         </button>
                       </div>
-                    ))}
-                  </div>
 
-                  <div className="border-t pt-4">
-                    <div className="mb-6 flex justify-between text-xl font-bold">
-                      <span>Total:</span>
-                      <span>₦{totalPrice.toLocaleString()}</span>
+                      <span className="text-xs font-extrabold text-[#4B2E83] min-w-[60px] text-right">
+                        ?{(item.price * item.quantity).toLocaleString()}
+                      </span>
                     </div>
-                    <div className="flex gap-3">
-                      <button
-                        onClick={() => setShowCartModal(false)}
-                        className="flex-1 rounded-lg border-2 border-[#8B0000] px-2 py-1 font-bold text-[#8B0000] transition hover:bg-[#8B0000] hover:text-white"
-                      >
-                        Continue Shopping
-                      </button>
-                      <button
-                        onClick={() => {
-                          alert('Proceeding to checkout!')
-                          setShowCartModal(false)
-                        }}
-                        className="flex-1 rounded-lg bg-[#FFD700] px-2 py-2 font-bold text-[#8B0000] transition hover:bg-[#FFC107]"
-                      >
-                        Checkout Now
-                      </button>
-                    </div>
-                  </div>
-                </>
+                  ))}
+                </div>
               )}
             </div>
+
+            {/* Drawer Footer Actions */}
+            {cart.length > 0 && (
+              <div className="border-t border-[#E9E5EE] bg-[#FAF8FD] p-5 space-y-4">
+                <div className="flex justify-between items-baseline">
+                  <span className="text-xs font-bold text-[#6F6B76] uppercase">Food Subtotal</span>
+                  <span className="text-xl font-black text-[#4B2E83]">?{totalPrice.toLocaleString()}</span>
+                </div>
+
+                {/* Dual Order Action Buttons */}
+                <div className="space-y-2">
+                  {/* Single Order Checkout */}
+                  <button
+                    onClick={() => {
+                      setIsCartOpen(false)
+                      navigate('/checkout')
+                    }}
+                    className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[#4B2E83] py-3.5 text-xs font-black text-white hover:bg-[#371F62] transition shadow"
+                  >
+                    <ShoppingBag className="h-4 w-4" />
+                    <span>Single Checkout (Order Alone)</span>
+                  </button>
+
+                  {/* Group Order Button */}
+                  <button
+                    onClick={() => {
+                      setIsCartOpen(false)
+                      navigate(routes.createGroupOrder())
+                    }}
+                    className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[#FFC928] py-3.5 text-xs font-black text-[#4B2E83] hover:bg-[#E5B420] transition shadow-md"
+                  >
+                    <Users className="h-4 w-4" />
+                    <span>Create Group Order (Save ?600)</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
 
-      <footer className="bg-[#600000] py-10 text-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <div>
-              <h3 className="mb-4 text-xl font-bold text-[#FFD700]">
-                Contact Us
-              </h3>
-              <p className="mb-2">Phone: +234 813 930 0740</p>
-              <p className="mb-2">Email: order@kilishidelight.com</p>
-              <p>Location: Jikwoyi Phase 2, Abuja</p>
-            </div>
+      {/* 4. Page Content */}
+      <main className="flex-1">{children}</main>
 
-            <div>
-              <h3 className="mb-4 text-xl font-bold text-[#FFD700]">
-                Quick Links
-              </h3>
-              <div className="space-y-3">
-                <Link
-                  to={routes.home()}
-                  className="flex items-center gap-2 transition hover:text-[#FFD700]"
-                >
-                  <Home className="h-4 w-4" />
-                  Home
-                </Link>
-                <Link
-                  to={routes.contact()}
-                  className="flex items-center gap-2 transition hover:text-[#FFD700]"
-                >
-                  <Phone className="h-4 w-4" />
-                  Contact
-                </Link>
+      {/* 5. Footer */}
+      <footer className="border-t border-[#E9E5EE] bg-[#211F26] py-12 text-white">
+        <div className="container mx-auto px-4 space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="space-y-3">
+              <div className="flex items-center gap-1.5 text-2xl font-black">
+                <span className="text-white">YUM</span>
+                <span className="text-[#FFC928]">ZEE</span>
               </div>
+              <p className="text-xs text-white/70 leading-relaxed">
+                Campus food & snack delivery tailored for university students. Order individually or combine with hostel friends for free delivery.
+              </p>
             </div>
 
-            <div>
-              <h3 className="mb-4 text-xl font-bold text-[#FFD700]">
-                Our Promise
-              </h3>
-              <p className="text-white/90">
-                Authentic, spicy, and delicious kilishi made with traditional
-                recipes and premium beef. 100% natural with no preservatives.
+            <div className="space-y-2 text-xs">
+              <h4 className="font-extrabold uppercase tracking-wider text-[#FFC928]">Quick Links</h4>
+              <ul className="space-y-1.5 text-white/70">
+                <li><Link to={routes.home()} className="hover:text-white">Food Menu</Link></li>
+                <li><Link to={routes.createGroupOrder()} className="hover:text-white">Create Group Order</Link></li>
+                <li><Link to={routes.orders()} className="hover:text-white">My Orders</Link></li>
+              </ul>
+            </div>
+
+            <div className="space-y-2 text-xs">
+              <h4 className="font-extrabold uppercase tracking-wider text-[#FFC928]">Operations Portals</h4>
+              <ul className="space-y-1.5 text-white/70">
+                <li><Link to="/seller" className="hover:text-white">????? Kitchen / Seller Portal</Link></li>
+                <li><Link to="/rider" className="hover:text-white">?? Campus Dispatch Rider</Link></li>
+                <li><Link to="/admin" className="hover:text-white">?? Admin Rules Engine</Link></li>
+              </ul>
+            </div>
+
+            <div className="space-y-2 text-xs text-white/70">
+              <h4 className="font-extrabold uppercase tracking-wider text-[#FFC928]">Campus Support</h4>
+              <p className="flex items-center gap-2">
+                <Phone className="h-3.5 w-3.5 text-[#FFC928]" /> 080-YUMZEE-CAMPUS
+              </p>
+              <p className="flex items-center gap-2">
+                <Mail className="h-3.5 w-3.5 text-[#FFC928]" /> support@yumzee.edu.ng
               </p>
             </div>
           </div>
 
-          <div className="mt-10 border-t border-white/20 pt-6 text-center">
-            <p className="mb-2 text-lg font-semibold text-[#FFD700]">
-              Kilishi Delight
-            </p>
-            <p>
-              © {new Date().getFullYear()} Kilishi Delight - Authentic Spiced
-              Dried Meat
-            </p>
-            <p className="mt-2 text-sm text-white/70">
-              Traditional Nigerian Kilishi, Modern Experience
-            </p>
+          <div className="border-t border-white/10 pt-6 text-center text-xs text-white/40">
+            ? {new Date().getFullYear()} YumZee Nigeria. Student-First Campus Food Ordering.
           </div>
         </div>
       </footer>
