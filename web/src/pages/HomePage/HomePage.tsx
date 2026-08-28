@@ -1,69 +1,42 @@
-// web/src/pages/HomePage/HomePage.tsx
-import React, { useState, useEffect } from 'react'
-import { Link, navigate, routes } from '@redwoodjs/router'
+// web/src/pages/HomePage/HomePage.tsx - CLEAN customer-only version
+// Removed: Start Group Order, Have a Code? Join, Group Order sections, Rider/Admin refs, Live ticker, Group comparison card, Group savings banner
+import React, { useState } from 'react'
+import { Link } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 import { useCart } from 'src/components/CartContext/CartContext'
 import {
   INITIAL_PRODUCTS,
-  OrderStore,
-  GroupOrder,
   Product,
 } from 'src/lib/orderStore'
-import { JoinGroupModal } from 'src/components/JoinGroupModal/JoinGroupModal'
 import {
   Utensils,
-  Users,
   ShoppingBag,
-  Sparkles,
-  ArrowRight,
   Plus,
   Minus,
   Check,
   Clock,
-  MapPin,
   Flame,
-  ShieldCheck,
   Search,
   Star,
   Zap,
   Award,
-  ChevronRight,
   TrendingDown,
-  Info,
 } from 'lucide-react'
 
 const categories = [
   'All Items',
-  'Savory Snacks',
-  'Pastries',
-  'Fast Food',
-  'Cakes & Treats',
-  'Beverages',
+  'Meals',
+  'Snacks',
+  'Sides',
+  'Drinks',
 ]
 
 const HomePage = () => {
-  const { addToCart, cart, itemCount } = useCart()
+  const { addToCart } = useCart()
   const [selectedCategory, setSelectedCategory] = useState('All Items')
   const [searchQuery, setSearchQuery] = useState('')
   const [quantities, setQuantities] = useState<Record<number, number>>({})
   const [addedIds, setAddedIds] = useState<number[]>([])
-  const [activeGroups, setActiveGroups] = useState<GroupOrder[]>([])
-  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false)
-  const [selectedProductModal, setSelectedProductModal] = useState<Product | null>(null)
-
-  const reloadGroups = () => {
-    const groups = OrderStore.getGroupOrders().filter(
-      (g) => !g.isLocked && new Date(g.deadline).getTime() > Date.now()
-    )
-    setActiveGroups(groups)
-  }
-
-  useEffect(() => {
-    reloadGroups()
-    const handleUpdate = () => reloadGroups()
-    window.addEventListener('yumzee_store_update', handleUpdate)
-    return () => window.removeEventListener('yumzee_store_update', handleUpdate)
-  }, [])
 
   const getQuantity = (id: number) => quantities[id] || 1
 
@@ -96,16 +69,11 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-[#FAF8FD]">
       <Metadata
-        title="YumZee ? Campus Snacks & Group Orders"
-        description="Affordable snack and food delivery for university students. Order alone or combine with hostel friends for free delivery."
+        title="YumZee — Campus Snacks & Food Delivery"
+        description="Affordable snack and food delivery for university students. Fresh, fast, and student-priced."
       />
 
-      <JoinGroupModal
-        isOpen={isJoinModalOpen}
-        onClose={() => setIsJoinModalOpen(false)}
-      />
-
-      {/* HERO SECTION: Single Order vs Group Order Comparison */}
+      {/* HERO SECTION - CLEAN: Single order only, no Group Order */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#4B2E83] via-[#3B226B] to-[#251448] py-12 lg:py-16 text-white">
         {/* Glow ambient effects */}
         <div className="pointer-events-none absolute -left-20 -top-20 h-96 w-96 rounded-full bg-[#FFC928]/15 blur-3xl" />
@@ -125,11 +93,10 @@ const HomePage = () => {
               </h1>
 
               <p className="max-w-2xl text-base text-white/85 sm:text-lg">
-                Enjoy hot snacks, pastries, and campus meals. Order solo or join
-                your roommates to <span className="font-bold text-[#FFC928]">slash delivery fees to ?0</span>!
+                Enjoy hot snacks, pastries, and campus meals — freshly made, student-priced, and delivered fast to your hostel.
               </p>
 
-              {/* Action Buttons */}
+              {/* Action Buttons - CLEAN: only Browse Menu */}
               <div className="flex flex-wrap items-center justify-center gap-3 pt-2 lg:justify-start">
                 <button
                   type="button"
@@ -140,28 +107,23 @@ const HomePage = () => {
                   className="flex items-center gap-2 rounded-2xl bg-[#FFC928] px-7 py-3.5 text-base font-extrabold text-[#4B2E83] shadow-lg shadow-[#FFC928]/25 transition hover:bg-[#E5B420] active:scale-95"
                 >
                   <ShoppingBag className="h-5 w-5" />
-                  <span>Order for Myself</span>
+                  <span>Browse Menu</span>
                 </button>
-
-                <Link
-                  to={routes.createGroupOrder()}
-                  className="flex items-center gap-2 rounded-2xl border-2 border-white/30 bg-white/10 px-7 py-3.5 text-base font-extrabold text-white backdrop-blur-sm transition hover:bg-white/20 active:scale-95"
-                >
-                  <Users className="h-5 w-5 text-[#FFC928]" />
-                  <span>Start Group Order</span>
-                </Link>
 
                 <button
                   type="button"
-                  onClick={() => setIsJoinModalOpen(true)}
-                  className="flex items-center gap-2 rounded-2xl px-5 py-3.5 text-sm font-bold text-white/90 hover:text-white transition"
+                  onClick={() => {
+                    const menu = document.getElementById('menu-section')
+                    menu?.scrollIntoView({ behavior: 'smooth' })
+                  }}
+                  className="flex items-center gap-2 rounded-2xl border-2 border-white/30 bg-white/10 px-7 py-3.5 text-base font-extrabold text-white backdrop-blur-sm transition hover:bg-white/20 active:scale-95"
                 >
-                  <span>Have a Code? Join</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <Utensils className="h-5 w-5 text-[#FFC928]" />
+                  <span>Explore Categories</span>
                 </button>
               </div>
 
-              {/* Stats pill */}
+              {/* Stats pill - CLEAN: no group savings */}
               <div className="flex flex-wrap items-center justify-center gap-6 pt-3 text-xs text-white/70 lg:justify-start">
                 <div className="flex items-center gap-1.5">
                   <Star className="h-4 w-4 fill-[#FFC928] text-[#FFC928]" />
@@ -172,125 +134,72 @@ const HomePage = () => {
                   <span>15-20 Min Fast Campus Drop</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <TrendingDown className="h-4 w-4 text-emerald-400" />
-                  <span>Save up to 100% on Shared Routes</span>
+                  <Award className="h-4 w-4 text-emerald-400" />
+                  <span>Student-Priced Meals</span>
                 </div>
               </div>
             </div>
 
-            {/* Right: Interactive Single vs Group Comparison Card */}
+            {/* Right: Simple Value Props Card - CLEAN: no Single vs Group comparison */}
             <div className="lg:col-span-5">
               <div className="overflow-hidden rounded-3xl border border-white/20 bg-white/10 p-6 backdrop-blur-md shadow-2xl text-white">
                 <div className="mb-4 flex items-center justify-between border-b border-white/15 pb-3">
                   <h3 className="font-extrabold text-base uppercase tracking-wider text-[#FFC928]">
-                    How Would You Like to Order?
+                    Why Students Love YumZee
                   </h3>
-                  <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[10px] font-bold text-emerald-300 border border-emerald-500/40">
-                    2 Options
+                  <span className="rounded-full bg-[#FFC928] px-2.5 py-0.5 text-[10px] font-black text-[#4B2E83]">
+                    Fast & Fresh
                   </span>
                 </div>
 
-                <div className="space-y-4">
-                  {/* Single Order Pill */}
-                  <div className="group rounded-2xl border border-white/15 bg-white/5 p-4 transition hover:bg-white/10">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20 text-xs font-bold">1</span>
-                          <h4 className="font-bold text-base text-white">Single Order</h4>
-                        </div>
-                        <p className="text-xs text-white/70">
-                          Order only for yourself. Standard fast delivery to your room or hostel gate.
-                        </p>
-                      </div>
-                      <span className="rounded-lg bg-white/10 px-2.5 py-1 text-xs font-bold text-white/90">
-                        ?600 Delivery
-                      </span>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3 rounded-2xl border border-white/15 bg-white/5 p-4">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#FFC928] text-[#4B2E83]">
+                      <Flame className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-white">Hot & Fresh</h4>
+                      <p className="text-xs text-white/70">Cooked to order by verified campus kitchens.</p>
                     </div>
                   </div>
 
-                  {/* Group Order Pill */}
-                  <div className="group relative overflow-hidden rounded-2xl border-2 border-[#FFC928] bg-gradient-to-br from-[#FFC928]/20 to-[#FFC928]/5 p-4 shadow-md transition hover:border-[#FFC928]">
-                    <div className="absolute top-0 right-0 bg-[#FFC928] text-[#4B2E83] text-[10px] font-black uppercase px-2.5 py-0.5 rounded-bl-lg">
-                      Popular & Cheaper
+                  <div className="flex items-start gap-3 rounded-2xl border border-white/15 bg-white/5 p-4">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 text-white">
+                      <Clock className="h-5 w-5" />
                     </div>
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#FFC928] text-[#4B2E83] text-xs font-black">2</span>
-                          <h4 className="font-extrabold text-base text-[#FFC928]">Group Order</h4>
-                        </div>
-                        <p className="text-xs text-white/85">
-                          Combine orders with hostel roommates. One rider delivers all packages together!
-                        </p>
-                      </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-white">15-20 min delivery</h4>
+                      <p className="text-xs text-white/70">Straight to your hostel gate or faculty block.</p>
                     </div>
+                  </div>
 
-                    <div className="mt-3 flex items-center justify-between rounded-xl bg-black/30 px-3 py-2 text-xs">
-                      <span className="text-white/80">4+ Students Joining:</span>
-                      <span className="font-black text-emerald-400">100% FREE DELIVERY (?0)</span>
+                  <div className="flex items-start gap-3 rounded-2xl border border-white/15 bg-white/5 p-4">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      <TrendingDown className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-white">Student Prices</h4>
+                      <p className="text-xs text-white/70">Affordable meals starting from ₦250.</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-5 grid grid-cols-2 gap-3">
+                <div className="mt-5">
                   <button
                     onClick={() => {
                       const el = document.getElementById('menu-section')
                       el?.scrollIntoView({ behavior: 'smooth' })
                     }}
-                    className="rounded-xl bg-white/20 py-2.5 text-center text-xs font-bold text-white transition hover:bg-white/30"
+                    className="w-full rounded-xl bg-[#FFC928] py-3 text-center text-sm font-extrabold text-[#4B2E83] transition hover:bg-[#E5B420]"
                   >
-                    Browse Snacks
+                    View Today&apos;s Menu →
                   </button>
-                  <Link
-                    to={routes.createGroupOrder()}
-                    className="rounded-xl bg-[#FFC928] py-2.5 text-center text-xs font-extrabold text-[#4B2E83] transition hover:bg-[#E5B420]"
-                  >
-                    Start Group Room ?
-                  </Link>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* LIVE CAMPUS GROUP DROPS TICKER */}
-      {activeGroups.length > 0 && (
-        <div className="border-b border-[#E9E5EE] bg-[#FFF9E8] py-3">
-          <div className="container mx-auto px-4 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-xs font-bold text-[#4B2E83]">
-                ?? {activeGroups.length} Open Group Orders Happening Right Now on Campus:
-              </span>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              {activeGroups.slice(0, 2).map((grp) => (
-                <button
-                  key={grp.id}
-                  onClick={() => navigate(`/group/${grp.groupCode}`)}
-                  className="flex items-center gap-2 rounded-xl border border-amber-300 bg-white px-3 py-1 text-xs font-bold text-[#211F26] shadow-sm hover:border-[#4B2E83] transition"
-                >
-                  <span className="text-[#4B2E83]">{grp.hostelAddress}</span>
-                  <span className="rounded-md bg-[#4B2E83] px-1.5 py-0.2 text-[10px] text-white">
-                    {grp.participants.length} joined
-                  </span>
-                  <span className="text-emerald-700 font-bold">Join ?</span>
-                </button>
-              ))}
-              <button
-                onClick={() => setIsJoinModalOpen(true)}
-                className="text-xs font-bold text-[#4B2E83] underline hover:text-[#211F26]"
-              >
-                View all codes
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* MENU SECTION */}
       <section id="menu-section" className="py-12">
@@ -314,7 +223,7 @@ const HomePage = () => {
               <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#6F6B76]" />
               <input
                 type="text"
-                placeholder="Search Kilishi, Pie, Rice..."
+                placeholder="Search Jollof, Shawarma, Rice..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full rounded-2xl border border-[#E9E5EE] bg-white py-2.5 pl-10 pr-4 text-sm font-medium text-[#211F26] placeholder-[#A09BA8] shadow-sm focus:border-[#4B2E83] focus:outline-none"
@@ -359,11 +268,11 @@ const HomePage = () => {
                     />
                     {product.isPopular && (
                       <span className="absolute left-3 top-3 rounded-full bg-[#FFC928] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-[#4B2E83] shadow">
-                        ? Student Craving
+                        Student Craving
                       </span>
                     )}
                     <span className="absolute bottom-3 right-3 rounded-md bg-black/70 px-2.5 py-1 text-[11px] font-bold text-white backdrop-blur-sm">
-                      {product.prepTimeMinutes ? `? ${product.prepTimeMinutes}m prep` : '? Fast Prep'}
+                      {product.prepTimeMinutes ? `${product.prepTimeMinutes}m prep` : 'Fast Prep'}
                     </span>
                   </div>
 
@@ -395,11 +304,11 @@ const HomePage = () => {
                           <span className="text-xs text-[#6F6B76] block">Price</span>
                           <div className="flex items-baseline gap-2">
                             <span className="text-xl font-black text-[#4B2E83]">
-                              ?{product.price.toLocaleString()}
+                              ₦{product.price.toLocaleString()}
                             </span>
                             {product.originalPrice && (
                               <span className="text-xs text-[#A09BA8] line-through">
-                                ?{product.originalPrice.toLocaleString()}
+                                ₦{product.originalPrice.toLocaleString()}
                               </span>
                             )}
                           </div>
@@ -429,7 +338,7 @@ const HomePage = () => {
                         </div>
                       </div>
 
-                      {/* Action Buttons */}
+                      {/* Action Button - single checkout only */}
                       <div className="grid grid-cols-1 gap-2">
                         <button
                           type="button"
@@ -448,7 +357,7 @@ const HomePage = () => {
                           ) : (
                             <>
                               <ShoppingBag className="h-4 w-4" />
-                              <span>Add to Bag (?{(product.price * qty).toLocaleString()})</span>
+                              <span>Add to Bag (₦{(product.price * qty).toLocaleString()})</span>
                             </>
                           )}
                         </button>
@@ -470,18 +379,18 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* GROUP SAVINGS BANNER & EXPLAINER */}
+      {/* WHY YUMZEE BANNER - CLEAN: no group order, single order flow only */}
       <section className="bg-[#4B2E83] py-16 text-white">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center space-y-4">
             <span className="rounded-full bg-[#FFC928]/20 px-4 py-1 text-xs font-black uppercase text-[#FFC928] border border-[#FFC928]/30">
-              Why Pay Delivery Alone?
+              Student-First Delivery
             </span>
             <h2 className="text-3xl font-black md:text-5xl">
-              Order Together ? One Rider ? Free Delivery
+              Hot Food, Fast Delivery
             </h2>
             <p className="text-base text-white/85 max-w-2xl mx-auto">
-              Instead of sending 5 riders to the same hostel building, YumZee bundles your orders into one swift route.
+              Order your favorite campus meals in seconds — we cook fresh and deliver straight to your hostel gate.
             </p>
 
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
@@ -489,9 +398,9 @@ const HomePage = () => {
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FFC928] text-[#4B2E83] font-black text-lg mb-3">
                   1
                 </div>
-                <h4 className="text-base font-bold text-white mb-1">Create Group Room</h4>
+                <h4 className="text-base font-bold text-white mb-1">Browse Menu</h4>
                 <p className="text-xs text-white/70">
-                  Pick your hostel gate and set a deadline. Share the 6-character code on your hostel WhatsApp group.
+                  Explore meals, snacks, and drinks from verified campus kitchens.
                 </p>
               </div>
 
@@ -499,9 +408,9 @@ const HomePage = () => {
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FFC928] text-[#4B2E83] font-black text-lg mb-3">
                   2
                 </div>
-                <h4 className="text-base font-bold text-white mb-1">Friends Pick Their Own</h4>
+                <h4 className="text-base font-bold text-white mb-1">Add to Bag</h4>
                 <p className="text-xs text-white/70">
-                  Roommates add their own snacks and pay their exact share. No awkward money splitting afterwards!
+                  Pick your quantity and add to bag. Checkout in one tap.
                 </p>
               </div>
 
@@ -509,21 +418,24 @@ const HomePage = () => {
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FFC928] text-[#4B2E83] font-black text-lg mb-3">
                   3
                 </div>
-                <h4 className="text-base font-bold text-white mb-1">Shared Delivery Drop</h4>
+                <h4 className="text-base font-bold text-white mb-1">Fast Drop at Your Gate</h4>
                 <p className="text-xs text-white/70">
-                  One assigned rider delivers every labelled bag to your hostel reception in a single trip.
+                  Track your order and get it delivered hot in 15-20 minutes.
                 </p>
               </div>
             </div>
 
             <div className="pt-6">
-              <Link
-                to={routes.createGroupOrder()}
+              <button
+                onClick={() => {
+                  const el = document.getElementById('menu-section')
+                  el?.scrollIntoView({ behavior: 'smooth' })
+                }}
                 className="inline-flex items-center gap-2 rounded-2xl bg-[#FFC928] px-8 py-4 text-base font-black text-[#4B2E83] shadow-xl transition hover:bg-[#E5B420] active:scale-95"
               >
-                <Users className="h-5 w-5" />
-                <span>Start a Hostel Group Order Now</span>
-              </Link>
+                <ShoppingBag className="h-5 w-5" />
+                <span>Order Now — Browse Menu</span>
+              </button>
             </div>
           </div>
         </div>
