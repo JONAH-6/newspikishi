@@ -10,14 +10,29 @@ import {
   Save,
   Check,
   ShieldCheck,
+  LogOut,
+  AlertTriangle,
 } from 'lucide-react'
 
 import { Metadata } from '@redwoodjs/web'
+import { navigate, routes } from '@redwoodjs/router'
 
 import { useAuth } from 'src/contexts/AuthContexts'
 
 const ProfilePage = () => {
-  const { user } = useAuth()
+  const { user, logOut } = useAuth()
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    try {
+      await logOut()
+      navigate(routes.login())
+    } catch (e) {
+      console.error('Logout failed', e)
+      setIsLoggingOut(false)
+    }
+  }
 
   const [campus, setCampus] = useState('University of Lagos (UNILAG)')
   const [hostel, setHostel] = useState('New Hall, Block B, Room 304')
@@ -190,7 +205,17 @@ const ProfilePage = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-end border-t border-[#E9E5EE] pt-4">
+          <div className="flex items-center justify-between border-t border-[#E9E5EE] pt-4 gap-3">
+            <button
+              type="button"
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="flex items-center gap-2 rounded-2xl border border-red-200 bg-white px-5 py-3 text-sm font-bold text-red-600 hover:bg-red-50 hover:border-red-300 transition active:scale-95 disabled:opacity-50"
+            >
+              <LogOut className="h-4 w-4" />
+              <span>{isLoggingOut ? 'Logging out…' : 'Log Out'}</span>
+            </button>
+
             <button
               type="submit"
               className={`flex items-center gap-2 rounded-2xl px-6 py-3 text-sm font-bold shadow-md transition active:scale-95 ${
@@ -213,6 +238,24 @@ const ProfilePage = () => {
             </button>
           </div>
         </form>
+
+        {/* Logout helper - visible even when not editing */}
+        <div className="rounded-2xl border border-[#E9E5EE] bg-white p-4 flex items-start gap-3">
+          <div className="rounded-xl bg-red-50 p-2 text-red-600 border border-red-100">
+            <AlertTriangle className="h-5 w-5" />
+          </div>
+          <div className="flex-1">
+            <h4 className="text-sm font-bold text-[#211F26]">Need to switch account?</h4>
+            <p className="text-xs text-[#6F6B76] mt-1">Logging out will clear your session and return you to the login screen. Your bag and hostel details stay saved.</p>
+          </div>
+          <button
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="shrink-0 rounded-xl bg-[#211F26] px-4 py-2 text-xs font-bold text-white hover:bg-black transition disabled:opacity-50"
+          >
+            Log Out
+          </button>
+        </div>
       </div>
     </div>
   )
