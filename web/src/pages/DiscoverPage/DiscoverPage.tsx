@@ -113,7 +113,7 @@ const DiscoverPage = () => {
 
   return (
     <div className="min-h-screen bg-[#FAF8FD]">
-      <Metadata title="Discover — Search YumZee" description="Search campus meals, snacks and drinks. Like Glovo, made for students." />
+      <Metadata title="Discover — Search YumZee" description="Search snacks and treats. Simple discovery for everyone." />
 
       {/* Sticky search header - Glovo style */}
       <div className="sticky top-0 z-30 border-b border-[#E9E5EE] bg-white/95 backdrop-blur-md">
@@ -234,7 +234,7 @@ const DiscoverPage = () => {
             {/* Popular searches */}
             <div>
               <h3 className="flex items-center gap-2 text-sm font-extrabold text-[#211F26]">
-                <TrendingUp className="h-4 w-4 text-[#FFC928]" /> Popular on campus
+                <TrendingUp className="h-4 w-4 text-[#FFC928]" /> Popular now
               </h3>
               <div className="mt-3 flex flex-wrap gap-2">
                 {POPULAR_SEARCHES.map((p) => (

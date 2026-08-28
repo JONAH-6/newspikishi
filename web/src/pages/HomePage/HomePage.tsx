@@ -69,8 +69,8 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-[#FAF8FD]">
       <Metadata
-        title="YumZee — Campus Snacks & Food Delivery"
-        description="Affordable snack and food delivery for university students. Fresh, fast, and student-priced."
+        title="YumZee — Fresh Snacks & Fast Delivery"
+        description="Affordable snack delivery for everyone. Fresh, fast and simple to order."
       />
 
       {/* HERO SECTION - CLEAN: Single order only, no Group Order */}
@@ -84,16 +84,16 @@ const HomePage = () => {
             {/* Left Headline */}
             <div className="lg:col-span-7 space-y-5 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 rounded-full border border-[#FFC928]/40 bg-[#FFC928]/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#FFC928]">
-                <Zap className="h-3.5 w-3.5" /> University Food & Snack Delivery
+                <Zap className="h-3.5 w-3.5" /> Fresh Snack Delivery
               </div>
 
               <h1 className="text-3xl font-black tracking-tight sm:text-5xl lg:text-6xl">
                 Cravings Delivered to Your{' '}
-                <span className="text-[#FFC928]">Hostel Gate.</span>
+                <span className="text-[#FFC928]">Doorstep.</span>
               </h1>
 
               <p className="max-w-2xl text-base text-white/85 sm:text-lg">
-                Enjoy hot snacks, pastries, and campus meals — freshly made, student-priced, and delivered fast to your hostel.
+                Enjoy hot snacks, pastries and light meals — freshly made, affordable and delivered fast to you.
               </p>
 
               {/* Action Buttons - CLEAN: only Browse Menu */}
@@ -123,19 +123,19 @@ const HomePage = () => {
                 </button>
               </div>
 
-              {/* Stats pill - CLEAN: no group savings */}
+              {/* Stats pill */}
               <div className="flex flex-wrap items-center justify-center gap-6 pt-3 text-xs text-white/70 lg:justify-start">
                 <div className="flex items-center gap-1.5">
                   <Star className="h-4 w-4 fill-[#FFC928] text-[#FFC928]" />
-                  <span>4.9/5 Student Rating</span>
+                  <span>4.9/5 Customer Rating</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-4 w-4 text-[#FFC928]" />
-                  <span>15-20 Min Fast Campus Drop</span>
+                  <span>15-20 Min Fast Delivery</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Award className="h-4 w-4 text-emerald-400" />
-                  <span>Student-Priced Meals</span>
+                  <span>Affordable Prices</span>
                 </div>
               </div>
             </div>
@@ -145,7 +145,7 @@ const HomePage = () => {
               <div className="overflow-hidden rounded-3xl border border-white/20 bg-white/10 p-6 backdrop-blur-md shadow-2xl text-white">
                 <div className="mb-4 flex items-center justify-between border-b border-white/15 pb-3">
                   <h3 className="font-extrabold text-base uppercase tracking-wider text-[#FFC928]">
-                    Why Students Love YumZee
+                    Why Customers Love YumZee
                   </h3>
                   <span className="rounded-full bg-[#FFC928] px-2.5 py-0.5 text-[10px] font-black text-[#4B2E83]">
                     Fast & Fresh
@@ -159,7 +159,7 @@ const HomePage = () => {
                     </div>
                     <div>
                       <h4 className="font-bold text-sm text-white">Hot & Fresh</h4>
-                      <p className="text-xs text-white/70">Cooked to order by verified campus kitchens.</p>
+                      <p className="text-xs text-white/70">Made fresh to order by trusted kitchens.</p>
                     </div>
                   </div>
 
@@ -169,7 +169,7 @@ const HomePage = () => {
                     </div>
                     <div>
                       <h4 className="font-bold text-sm text-white">15-20 min delivery</h4>
-                      <p className="text-xs text-white/70">Straight to your hostel gate or faculty block.</p>
+                      <p className="text-xs text-white/70">Fast delivery straight to your doorstep.</p>
                     </div>
                   </div>
 
@@ -178,8 +178,8 @@ const HomePage = () => {
                       <TrendingDown className="h-5 w-5" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-sm text-white">Student Prices</h4>
-                      <p className="text-xs text-white/70">Affordable meals starting from ₦250.</p>
+                      <h4 className="font-bold text-sm text-white">Affordable Prices</h4>
+                      <p className="text-xs text-white/70">Tasty snacks starting from ₦250.</p>
                     </div>
                   </div>
                 </div>
@@ -214,7 +214,7 @@ const HomePage = () => {
                 </h2>
               </div>
               <p className="mt-1 text-sm text-[#6F6B76]">
-                Freshly prepared, student-priced, and packed for campus delivery.
+                Freshly prepared, affordable and packed for quick delivery.
               </p>
             </div>
 
@@ -268,7 +268,7 @@ const HomePage = () => {
                     />
                     {product.isPopular && (
                       <span className="absolute left-3 top-3 rounded-full bg-[#FFC928] px-3 py-1 text-[10px] font-black uppercase tracking-wider text-[#4B2E83] shadow">
-                        Student Craving
+                        Popular
                       </span>
                     )}
                     <span className="absolute bottom-3 right-3 rounded-md bg-black/70 px-2.5 py-1 text-[11px] font-bold text-white backdrop-blur-sm">
@@ -384,13 +384,13 @@ const HomePage = () => {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center space-y-4">
             <span className="rounded-full bg-[#FFC928]/20 px-4 py-1 text-xs font-black uppercase text-[#FFC928] border border-[#FFC928]/30">
-              Student-First Delivery
+              Fast & Fresh
             </span>
             <h2 className="text-3xl font-black md:text-5xl">
-              Hot Food, Fast Delivery
+              Hot Snacks, Fast Delivery
             </h2>
             <p className="text-base text-white/85 max-w-2xl mx-auto">
-              Order your favorite campus meals in seconds — we cook fresh and deliver straight to your hostel gate.
+              Order your favorite snacks in seconds — we make them fresh and deliver quickly to you.
             </p>
 
             <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
@@ -400,7 +400,7 @@ const HomePage = () => {
                 </div>
                 <h4 className="text-base font-bold text-white mb-1">Browse Menu</h4>
                 <p className="text-xs text-white/70">
-                  Explore meals, snacks, and drinks from verified campus kitchens.
+                  Explore snacks, meals and drinks from trusted kitchens.
                 </p>
               </div>
 
@@ -418,9 +418,9 @@ const HomePage = () => {
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FFC928] text-[#4B2E83] font-black text-lg mb-3">
                   3
                 </div>
-                <h4 className="text-base font-bold text-white mb-1">Fast Drop at Your Gate</h4>
+                <h4 className="text-base font-bold text-white mb-1">Fast Delivery</h4>
                 <p className="text-xs text-white/70">
-                  Track your order and get it delivered hot in 15-20 minutes.
+                  Track your order and get it hot in 15-20 minutes.
                 </p>
               </div>
             </div>

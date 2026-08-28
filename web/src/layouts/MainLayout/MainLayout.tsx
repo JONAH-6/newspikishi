@@ -134,7 +134,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 className="hidden sm:flex items-center gap-1.5 rounded-2xl border border-[#E9E5EE] px-4 py-2 text-xs font-bold text-[#211F26] hover:border-[#4B2E83] transition"
               >
                 <User className="h-3.5 w-3.5" />
-                <span>Student Login</span>
+                <span>Login</span>
               </Link>
             )}
 
@@ -186,7 +186,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="flex items-center gap-2 rounded-xl bg-[#4B2E83] p-2.5 text-xs font-bold text-white"
               >
-                <User className="h-4 w-4" /> Student Login
+                <User className="h-4 w-4" /> Login
               </Link>
             )}
           </div>
@@ -219,7 +219,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 <div className="py-16 text-center space-y-3">
                   <ShoppingBag className="mx-auto h-16 w-16 text-[#6F6B76]/30" />
                   <h4 className="font-extrabold text-base text-[#211F26]">Bag is empty</h4>
-                  <p className="text-xs text-[#6F6B76]">Add yummy snacks from the campus menu.</p>
+                  <p className="text-xs text-[#6F6B76]">Add tasty snacks from the menu.</p>
                 </div>
               ) : (
                 <div className="divide-y divide-[#E9E5EE]">
@@ -281,7 +281,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                   <ShoppingBag className="h-4 w-4" />
                   <span>Checkout — Continue to Delivery</span>
                 </button>
-                <p className="text-center text-[11px] text-[#6F6B76]">Fast campus delivery • Pay on delivery or online</p>
+                <p className="text-center text-[11px] text-[#6F6B76]">Fast delivery • Pay on delivery or online</p>
               </div>
             )}
           </div>
@@ -301,7 +301,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 <span className="text-[#FFC928]">ZEE</span>
               </div>
               <p className="text-xs text-white/70 leading-relaxed">
-                Campus food & snack delivery tailored for university students. Fresh, affordable, and delivered fast to your hostel.
+                Fresh snacks & treats delivered fast to your doorstep. Simple, affordable ordering for everyone.
               </p>
             </div>
 
@@ -326,9 +326,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             </div>
 
             <div className="space-y-2 text-xs text-white/70">
-              <h4 className="font-extrabold uppercase tracking-wider text-[#FFC928]">Campus Support</h4>
+              <h4 className="font-extrabold uppercase tracking-wider text-[#FFC928]">Support</h4>
               <p className="flex items-center gap-2">
-                <Phone className="h-3.5 w-3.5 text-[#FFC928]" /> 080-YUMZEE-CAMPUS
+                <Phone className="h-3.5 w-3.5 text-[#FFC928]" /> 080-YUMZEE-HELLO
               </p>
               <p className="flex items-center gap-2">
                 <Mail className="h-3.5 w-3.5 text-[#FFC928]" /> support@yumzee.edu.ng
@@ -337,7 +337,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </div>
 
           <div className="border-t border-white/10 pt-6 text-center text-xs text-white/40">
-            © {new Date().getFullYear()} YumZee Nigeria. Student-First Campus Food Ordering.
+            © {new Date().getFullYear()} YumZee. Fresh snacks — simple ordering for everyone.
           </div>
         </div>
       </footer>

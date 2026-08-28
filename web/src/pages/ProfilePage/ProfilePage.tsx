@@ -19,10 +19,10 @@ import { useAuth } from 'src/contexts/AuthContexts'
 
 const ProfilePage = () => {
   const { user, logOut, isAuthenticated, loading } = useAuth()
-  const [campus, setCampus] = useState('University of Lagos (UNILAG)')
-  const [hostel, setHostel] = useState('New Hall, Block B, Room 304')
+  const [campus, setCampus] = useState('Lagos Mainland')
+  const [hostel, setHostel] = useState('12 Allen Avenue, Ikeja')
   const [phone, setPhone] = useState('08012345678')
-  const [deliveryNotes, setDeliveryNotes] = useState('Please call when you reach the gate security.')
+  const [deliveryNotes, setDeliveryNotes] = useState('Please call when you arrive.')
   const [isSaved, setIsSaved] = useState(false)
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
@@ -44,10 +44,10 @@ const ProfilePage = () => {
   }
 
   const getDisplayName = () => {
-    if (!user) return 'Student'
+    if (!user) return 'Guest'
     if (user.displayName) return user.displayName
     if (user.email) return user.email.split('@')[0]
-    return 'Student'
+    return 'Guest'
   }
 
   if (loading) {
@@ -68,7 +68,7 @@ const ProfilePage = () => {
               <UserIcon className="h-8 w-8" />
             </div>
             <h1 className="mt-4 text-xl font-extrabold text-[#211F26]">You’re not logged in</h1>
-            <p className="mt-2 text-sm text-[#6F6B76]">Log in to save your hostel, phone and delivery notes — so riders find you fast.</p>
+            <p className="mt-2 text-sm text-[#6F6B76]">Log in to save your delivery details and track your snack orders.</p>
             <Link
               to={routes.login()}
               className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-[#4B2E83] px-6 py-3 text-sm font-bold text-white shadow hover:bg-[#371F62] transition"
@@ -92,7 +92,7 @@ const ProfilePage = () => {
         {/* Header */}
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight text-[#211F26] sm:text-3xl">My Profile</h1>
-          <p className="mt-1 text-sm text-[#6F6B76]">Your campus identity for fast, accurate delivery.</p>
+          <p className="mt-1 text-sm text-[#6F6B76]">Manage your details for fast, accurate delivery — for anyone.</p>
         </div>
 
         {/* User card - clean */}
@@ -123,29 +123,29 @@ const ProfilePage = () => {
           <div className="grid gap-4 md:grid-cols-2">
             <div className="md:col-span-2">
               <label htmlFor="campus" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#6F6B76]">
-                University Campus
+                City / Area
               </label>
               <div className="relative">
-                <School className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A09BA8]" />
+                <MapPin className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A09BA8]" />
                 <select
                   id="campus"
                   value={campus}
                   onChange={(e) => setCampus(e.target.value)}
                   className="w-full rounded-2xl border border-[#E9E5EE] bg-[#FAF8FD] py-3 pl-10 pr-4 text-sm font-medium text-[#211F26] focus:border-[#4B2E83] focus:outline-none focus:ring-2 focus:ring-[#4B2E83]/10"
                 >
-                  <option>University of Lagos (UNILAG)</option>
-                  <option>Lagos State University (LASU)</option>
-                  <option>University of Benin (UNIBEN)</option>
-                  <option>University of Nigeria (UNN)</option>
-                  <option>Covenant University</option>
-                  <option>Babcock University</option>
+                  <option>Lagos Mainland</option>
+                  <option>Yaba / Akoka</option>
+                  <option>Surulere</option>
+                  <option>Ikeja</option>
+                  <option>Lekki / Ajah</option>
+                  <option>Other</option>
                 </select>
               </div>
             </div>
 
             <div className="md:col-span-2">
               <label htmlFor="hostel" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#6F6B76]">
-                Hostel / Hall & Room
+                Street Address
               </label>
               <div className="relative">
                 <Building className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A09BA8]" />
@@ -153,7 +153,7 @@ const ProfilePage = () => {
                   id="hostel"
                   value={hostel}
                   onChange={(e) => setHostel(e.target.value)}
-                  placeholder="e.g. Moremi Hall, Room 212"
+                  placeholder="e.g. 12 Allen Avenue, Ikeja"
                   required
                   className="w-full rounded-2xl border border-[#E9E5EE] bg-[#FAF8FD] py-3 pl-10 pr-4 text-sm font-medium text-[#211F26] placeholder-[#A09BA8] focus:border-[#4B2E83] focus:outline-none focus:ring-2 focus:ring-[#4B2E83]/10"
                 />
@@ -162,7 +162,7 @@ const ProfilePage = () => {
 
             <div>
               <label htmlFor="phone" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-[#6F6B76]">
-                WhatsApp Number
+                Phone Number
               </label>
               <div className="relative">
                 <Phone className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A09BA8]" />
