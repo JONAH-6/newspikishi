@@ -7,7 +7,6 @@ import { useCart } from 'src/components/CartContext/CartContext'
 import {
   ShoppingCart,
   User,
-  Heart,
   LogOut,
   Menu as MenuIcon,
   X,
@@ -17,10 +16,8 @@ import {
   Phone,
   Mail,
   Home,
-  Grid,
-  Info,
+  Search,
   Utensils,
-  Sparkles,
 } from 'lucide-react'
 
 interface MainLayoutProps {
@@ -64,7 +61,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <span className="text-[#FFC928]">ZEE</span>
             </Link>
 
-            {/* Desktop Navigation Links - ONLY customer links */}
+            {/* Desktop Navigation Links - Home, Discover, Orders, Profile */}
             <nav className="hidden lg:flex items-center gap-6 text-xs font-extrabold uppercase tracking-wider text-[#6F6B76]">
               <Link
                 to={routes.home()}
@@ -75,46 +72,29 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
               <button
                 onClick={scrollToMenu}
-                className="transition hover:text-[#4B2E83]"
+                className={`transition hover:text-[#4B2E83] ${location.pathname === '/' ? '' : ''}`}
               >
-                Categories
+                Discover
               </button>
 
               <Link
-                to={routes.favorites()}
-                className={`transition hover:text-[#4B2E83] ${isActive('/favorites') ? 'text-[#4B2E83] font-black' : ''}`}
+                to={routes.orders()}
+                className={`transition hover:text-[#4B2E83] ${isActive('/orders') ? 'text-[#4B2E83] font-black border-b-2 border-[#4B2E83] pb-1' : ''}`}
               >
-                Favorites
+                Orders
               </Link>
 
               <Link
-                to={routes.about()}
-                className={`flex items-center gap-1.5 transition hover:text-[#4B2E83] ${isActive('/about') ? 'text-[#4B2E83] font-black border-b-2 border-[#FFC928] pb-1' : ''}`}
+                to={routes.profile()}
+                className={`transition hover:text-[#4B2E83] ${isActive('/profile') ? 'text-[#4B2E83] font-black border-b-2 border-[#4B2E83] pb-1' : ''}`}
               >
-                <Sparkles className="h-3 w-3 text-[#FFC928]" />
-                About
-              </Link>
-
-              <Link
-                to={routes.contact()}
-                className={`transition hover:text-[#4B2E83] ${isActive('/contact') ? 'text-[#4B2E83] font-black' : ''}`}
-              >
-                Contact
+                Profile
               </Link>
             </nav>
           </div>
 
           {/* Right Header Actions */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Favorites - desktop */}
-            <Link
-              to={routes.favorites()}
-              className="hidden sm:flex items-center gap-1.5 rounded-xl border border-[#E9E5EE] bg-[#FAF8FD] px-3 py-2 text-xs font-bold text-[#4B2E83] hover:border-[#4B2E83] transition"
-              title="Favorites"
-            >
-              <Heart className="h-3.5 w-3.5" />
-              <span>Favorites</span>
-            </Link>
 
             {/* Cart Button */}
             <button
@@ -169,7 +149,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu - CLEAN: only customer links */}
+        {/* Mobile Dropdown Menu - Home, Discover, Orders, Profile */}
         {isMobileMenuOpen && (
           <div className="border-t border-[#E9E5EE] bg-white p-4 lg:hidden space-y-1 animate-fadeIn">
             <Link
@@ -186,36 +166,21 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               }}
               className="flex w-full items-center gap-2 rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD] text-left"
             >
-              <Grid className="h-4 w-4 text-[#4B2E83]" /> Categories
+              <Search className="h-4 w-4 text-[#4B2E83]" /> Discover
             </button>
-            <Link
-              to={routes.favorites()}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
-            >
-              <Heart className="h-4 w-4 text-[#4B2E83]" /> Favorites
-            </Link>
-            <Link
-              to={routes.about()}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
-            >
-              <Sparkles className="h-4 w-4 text-[#FFC928]" /> About — Our Story
-            </Link>
-            <Link
-              to={routes.contact()}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="flex items-center gap-2 rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
-            >
-              <Mail className="h-4 w-4 text-[#4B2E83]" /> Contact
-            </Link>
-            <div className="border-t border-[#E9E5EE] my-2" />
             <Link
               to={routes.orders()}
               onClick={() => setIsMobileMenuOpen(false)}
               className="flex items-center gap-2 rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
             >
-              <ShoppingBag className="h-4 w-4" /> My Orders
+              <ShoppingBag className="h-4 w-4 text-[#4B2E83]" /> Orders
+            </Link>
+            <Link
+              to={routes.profile()}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-2 rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
+            >
+              <User className="h-4 w-4 text-[#4B2E83]" /> Profile
             </Link>
             {!isAuthenticated && (
               <Link
@@ -346,10 +311,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <h4 className="font-extrabold uppercase tracking-wider text-[#FFC928]">Quick Links</h4>
               <ul className="space-y-1.5 text-white/70">
                 <li><Link to={routes.home()} className="hover:text-white">Home</Link></li>
-                <li><button onClick={scrollToMenu} className="hover:text-white">Categories</button></li>
-                <li><Link to={routes.favorites()} className="hover:text-white">Favorites</Link></li>
-                <li><Link to={routes.about()} className="hover:text-white">About</Link></li>
-                <li><Link to={routes.contact()} className="hover:text-white">Contact</Link></li>
+                <li><button onClick={scrollToMenu} className="hover:text-white">Discover</button></li>
+                <li><Link to={routes.orders()} className="hover:text-white">Orders</Link></li>
+                <li><Link to={routes.profile()} className="hover:text-white">Profile</Link></li>
               </ul>
             </div>
 
@@ -357,9 +321,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <h4 className="font-extrabold uppercase tracking-wider text-[#FFC928]">Explore</h4>
               <ul className="space-y-1.5 text-white/70">
                 <li><Link to={routes.home()} className="hover:text-white flex items-center gap-1"><Utensils className="h-3 w-3" /> Food Menu</Link></li>
-                <li><Link to={routes.orders()} className="hover:text-white flex items-center gap-1"><ShoppingBag className="h-3 w-3" /> My Orders</Link></li>
-                <li><Link to={routes.favorites()} className="hover:text-white flex items-center gap-1"><Heart className="h-3 w-3" /> Favorites</Link></li>
-                <li><Link to={routes.about()} className="hover:text-white flex items-center gap-1"><Sparkles className="h-3 w-3 text-[#FFC928]" /> About YumZee</Link></li>
+                <li><Link to={routes.orders()} className="hover:text-white flex items-center gap-1"><ShoppingBag className="h-3 w-3" /> Orders</Link></li>
+                <li><Link to={routes.profile()} className="hover:text-white flex items-center gap-1"><User className="h-3 w-3" /> Profile</Link></li>
+                <li><Link to={routes.contact()} className="hover:text-white flex items-center gap-1"><Mail className="h-3 w-3" /> Contact</Link></li>
               </ul>
             </div>
 
@@ -380,9 +344,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         </div>
       </footer>
 
-      {/* 5. Bottom Nav - CLEAN: ONLY 5 items */}
+      {/* 5. Bottom Nav - Home, Discover, Orders, Profile */}
       <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-[#E9E5EE] bg-white shadow-[0_-4px_20px_rgba(0,0,0,0.08)] lg:hidden">
-        <div className="grid grid-cols-5 gap-1 px-2 py-2">
+        <div className="grid grid-cols-4 gap-1 px-2 py-2">
           <Link
             to={routes.home()}
             className={`flex flex-col items-center justify-center gap-1 rounded-xl py-1.5 text-[10px] font-bold transition ${isActive('/') ? 'text-[#4B2E83] bg-[#F5F1FB]' : 'text-[#6F6B76] hover:text-[#4B2E83]'}`}
@@ -395,33 +359,24 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             onClick={scrollToMenu}
             className="flex flex-col items-center justify-center gap-1 rounded-xl py-1.5 text-[10px] font-bold text-[#6F6B76] hover:text-[#4B2E83] transition"
           >
-            <Grid className="h-5 w-5" />
-            <span>Categories</span>
+            <Search className="h-5 w-5" />
+            <span>Discover</span>
           </button>
 
           <Link
-            to={routes.favorites()}
-            className={`flex flex-col items-center justify-center gap-1 rounded-xl py-1.5 text-[10px] font-bold transition ${isActive('/favorites') ? 'text-[#4B2E83] bg-[#F5F1FB]' : 'text-[#6F6B76] hover:text-[#4B2E83]'}`}
+            to={routes.orders()}
+            className={`flex flex-col items-center justify-center gap-1 rounded-xl py-1.5 text-[10px] font-bold transition ${isActive('/orders') ? 'text-[#4B2E83] bg-[#F5F1FB]' : 'text-[#6F6B76] hover:text-[#4B2E83]'}`}
           >
-            <Heart className={`h-5 w-5 ${isActive('/favorites') ? 'fill-[#4B2E83] text-[#4B2E83]' : ''}`} />
-            <span>Favorites</span>
+            <ShoppingBag className="h-5 w-5" />
+            <span>Orders</span>
           </Link>
 
           <Link
-            to={routes.about()}
-            className={`relative flex flex-col items-center justify-center gap-1 rounded-xl py-1.5 text-[10px] font-bold transition ${isActive('/about') ? 'text-[#4B2E83] bg-[#FFC928] shadow-sm' : 'text-[#6F6B76] hover:text-[#4B2E83] hover:bg-[#FFC928]/10'}`}
+            to={routes.profile()}
+            className={`flex flex-col items-center justify-center gap-1 rounded-xl py-1.5 text-[10px] font-bold transition ${isActive('/profile') ? 'text-[#4B2E83] bg-[#F5F1FB]' : 'text-[#6F6B76] hover:text-[#4B2E83]'}`}
           >
-            <Sparkles className={`h-5 w-5 ${isActive('/about') ? 'fill-[#4B2E83]/20' : 'text-[#4B2E83]/60'}`} />
-            <span>About</span>
-            {!isActive('/about') && <span className="absolute top-1 right-5 h-1.5 w-1.5 rounded-full bg-[#FFC928] animate-pulse" />}
-          </Link>
-
-          <Link
-            to={routes.contact()}
-            className={`flex flex-col items-center justify-center gap-1 rounded-xl py-1.5 text-[10px] font-bold transition ${isActive('/contact') ? 'text-[#4B2E83] bg-[#F5F1FB]' : 'text-[#6F6B76] hover:text-[#4B2E83]'}`}
-          >
-            <Phone className="h-5 w-5" />
-            <span>Contact</span>
+            <User className="h-5 w-5" />
+            <span>Profile</span>
           </Link>
         </div>
       </nav>
