@@ -70,12 +70,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 Home
               </Link>
 
-              <button
-                onClick={scrollToMenu}
-                className={`transition hover:text-[#4B2E83] ${location.pathname === '/' ? '' : ''}`}
+              <Link
+                to={routes.discover()}
+                className={`transition hover:text-[#4B2E83] ${isActive('/discover') ? 'text-[#4B2E83] font-black border-b-2 border-[#4B2E83] pb-1' : ''}`}
               >
                 Discover
-              </button>
+              </Link>
 
               <Link
                 to={routes.orders()}
@@ -159,15 +159,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             >
               <Home className="h-4 w-4 text-[#4B2E83]" /> Home
             </Link>
-            <button
-              onClick={() => {
-                setIsMobileMenuOpen(false)
-                scrollToMenu()
-              }}
-              className="flex w-full items-center gap-2 rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD] text-left"
+            <Link
+              to={routes.discover()}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="flex items-center gap-2 rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
             >
               <Search className="h-4 w-4 text-[#4B2E83]" /> Discover
-            </button>
+            </Link>
             <Link
               to={routes.orders()}
               onClick={() => setIsMobileMenuOpen(false)}
@@ -311,7 +309,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <h4 className="font-extrabold uppercase tracking-wider text-[#FFC928]">Quick Links</h4>
               <ul className="space-y-1.5 text-white/70">
                 <li><Link to={routes.home()} className="hover:text-white">Home</Link></li>
-                <li><button onClick={scrollToMenu} className="hover:text-white">Discover</button></li>
+                <li><Link to={routes.discover()} className="hover:text-white">Discover</Link></li>
                 <li><Link to={routes.orders()} className="hover:text-white">Orders</Link></li>
                 <li><Link to={routes.profile()} className="hover:text-white">Profile</Link></li>
               </ul>
@@ -355,13 +353,13 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <span>Home</span>
           </Link>
 
-          <button
-            onClick={scrollToMenu}
-            className="flex flex-col items-center justify-center gap-1 rounded-xl py-1.5 text-[10px] font-bold text-[#6F6B76] hover:text-[#4B2E83] transition"
+          <Link
+            to={routes.discover()}
+            className={`flex flex-col items-center justify-center gap-1 rounded-xl py-1.5 text-[10px] font-bold transition ${isActive('/discover') ? 'text-[#4B2E83] bg-[#F5F1FB]' : 'text-[#6F6B76] hover:text-[#4B2E83]'}`}
           >
-            <Search className="h-5 w-5" />
+            <Search className={`h-5 w-5 ${isActive('/discover') ? 'text-[#4B2E83]' : ''}`} />
             <span>Discover</span>
-          </button>
+          </Link>
 
           <Link
             to={routes.orders()}

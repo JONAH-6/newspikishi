@@ -18,6 +18,7 @@ import ProfilePage from './pages/ProfilePage/ProfilePage'
 import SettingsPage from './pages/SettingsPage/SettingsPage'
 import ContactPage from './pages/ContactPage/ContactPage'
 import AboutPage from './pages/AboutPage/AboutPage'
+import DiscoverPage from './pages/DiscoverPage/DiscoverPage'
 import LoginPage from './pages/LoginPage/LoginPage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
 
@@ -45,6 +46,7 @@ const Routes = () => {
         <Route path="/settings" page={SettingsPage} name="settings" />
         <Route path="/contact" page={ContactPage} name="contact" />
         <Route path="/about" page={AboutPage} name="about" />
+        <Route path="/discover" page={DiscoverPage} name="discover" />
       </Set>
 
       {/* Auth & Error Routes */}
