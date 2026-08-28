@@ -61,9 +61,6 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <Link to={routes.home()} className="flex items-center gap-1.5 text-2xl sm:text-3xl font-black tracking-tight">
               <span className="text-[#4B2E83]">YUM</span>
               <span className="text-[#FFC928]">ZEE</span>
-              <span className="ml-1 rounded-full bg-[#FFC928]/30 px-2 py-0.5 text-[9px] font-black uppercase text-[#4B2E83] border border-[#FFC928]">
-                Campus
-              </span>
             </Link>
 
             {/* Desktop Navigation Links - ONLY customer links */}
