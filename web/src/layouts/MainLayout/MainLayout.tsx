@@ -20,6 +20,7 @@ import {
   Grid,
   Info,
   Utensils,
+  Sparkles,
 } from 'lucide-react'
 
 interface MainLayoutProps {
@@ -87,13 +88,10 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               </Link>
 
               <Link
-                to={routes.home()}
-                onClick={(e) => {
-                  // About is informational - scroll to footer for now
-                  // Replace with routes.about() when AboutPage exists
-                }}
-                className="transition hover:text-[#4B2E83]"
+                to={routes.about()}
+                className={`flex items-center gap-1.5 transition hover:text-[#4B2E83] ${isActive('/about') ? 'text-[#4B2E83] font-black border-b-2 border-[#FFC928] pb-1' : ''}`}
               >
+                <Sparkles className="h-3 w-3 text-[#FFC928]" />
                 About
               </Link>
 
@@ -198,11 +196,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
               <Heart className="h-4 w-4 text-[#4B2E83]" /> Favorites
             </Link>
             <Link
-              to={routes.home()}
+              to={routes.about()}
               onClick={() => setIsMobileMenuOpen(false)}
               className="flex items-center gap-2 rounded-xl p-2.5 text-xs font-bold text-[#211F26] hover:bg-[#FAF8FD]"
             >
-              <Info className="h-4 w-4 text-[#4B2E83]" /> About
+              <Sparkles className="h-4 w-4 text-[#FFC928]" /> About — Our Story
             </Link>
             <Link
               to={routes.contact()}
@@ -350,6 +348,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 <li><Link to={routes.home()} className="hover:text-white">Home</Link></li>
                 <li><button onClick={scrollToMenu} className="hover:text-white">Categories</button></li>
                 <li><Link to={routes.favorites()} className="hover:text-white">Favorites</Link></li>
+                <li><Link to={routes.about()} className="hover:text-white">About</Link></li>
                 <li><Link to={routes.contact()} className="hover:text-white">Contact</Link></li>
               </ul>
             </div>
@@ -360,7 +359,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
                 <li><Link to={routes.home()} className="hover:text-white flex items-center gap-1"><Utensils className="h-3 w-3" /> Food Menu</Link></li>
                 <li><Link to={routes.orders()} className="hover:text-white flex items-center gap-1"><ShoppingBag className="h-3 w-3" /> My Orders</Link></li>
                 <li><Link to={routes.favorites()} className="hover:text-white flex items-center gap-1"><Heart className="h-3 w-3" /> Favorites</Link></li>
-                <li><Link to={routes.contact()} className="hover:text-white flex items-center gap-1"><Info className="h-3 w-3" /> About YumZee</Link></li>
+                <li><Link to={routes.about()} className="hover:text-white flex items-center gap-1"><Sparkles className="h-3 w-3 text-[#FFC928]" /> About YumZee</Link></li>
               </ul>
             </div>
 
@@ -409,11 +408,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           </Link>
 
           <Link
-            to={routes.contact()}
-            className={`flex flex-col items-center justify-center gap-1 rounded-xl py-1.5 text-[10px] font-bold transition ${isActive('/contact') ? 'text-[#4B2E83] bg-[#F5F1FB]' : 'text-[#6F6B76] hover:text-[#4B2E83]'}`}
+            to={routes.about()}
+            className={`relative flex flex-col items-center justify-center gap-1 rounded-xl py-1.5 text-[10px] font-bold transition ${isActive('/about') ? 'text-[#4B2E83] bg-[#FFC928] shadow-sm' : 'text-[#6F6B76] hover:text-[#4B2E83] hover:bg-[#FFC928]/10'}`}
           >
-            <Info className="h-5 w-5" />
+            <Sparkles className={`h-5 w-5 ${isActive('/about') ? 'fill-[#4B2E83]/20' : 'text-[#4B2E83]/60'}`} />
             <span>About</span>
+            {!isActive('/about') && <span className="absolute top-1 right-5 h-1.5 w-1.5 rounded-full bg-[#FFC928] animate-pulse" />}
           </Link>
 
           <Link

@@ -17,6 +17,7 @@ import FavoritesPage from './pages/FavoritesPage/FavoritesPage'
 import ProfilePage from './pages/ProfilePage/ProfilePage'
 import SettingsPage from './pages/SettingsPage/SettingsPage'
 import ContactPage from './pages/ContactPage/ContactPage'
+import AboutPage from './pages/AboutPage/AboutPage'
 import LoginPage from './pages/LoginPage/LoginPage'
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage'
 
@@ -43,6 +44,7 @@ const Routes = () => {
         <Route path="/profile" page={ProfilePage} name="profile" />
         <Route path="/settings" page={SettingsPage} name="settings" />
         <Route path="/contact" page={ContactPage} name="contact" />
+        <Route path="/about" page={AboutPage} name="about" />
       </Set>
 
       {/* Auth & Error Routes */}
