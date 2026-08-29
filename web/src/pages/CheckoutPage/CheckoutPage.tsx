@@ -138,9 +138,8 @@ const CheckoutPage = () => {
     setTimeout(() => setCopied(false), 1500)
   }
 
-  const deliveryFeeSingle = deliveryType === 'delivery' ? rules.baseDeliveryFee : 0
-  const serviceFee = rules.serviceFee
-  const grandTotalSingle = totalPrice + deliveryFeeSingle + serviceFee
+  const deliveryFeeSingle = deliveryType === 'delivery' ? 500 : 0
+  const grandTotalSingle = totalPrice + deliveryFeeSingle
 
   const groupTotals = activeGroup ? calculateGroupTotal(activeGroup) : null
   const isHost = activeGroup ? activeGroup.hostUserId === uid : false
@@ -171,7 +170,7 @@ const CheckoutPage = () => {
     const created = OrderStore.createSingleOrder({
       customerName, customerPhone, deliveryType, hostelAddress: selectedHostel, deliveryAddress: selectedHostel, roomNumber, deliveryInstructions: deliveryNotes,
       items: cart.map((item) => ({ productId: item.id, name: item.name, price: item.price, quantity: item.quantity, image: item.image })),
-      foodSubtotal: totalPrice, foodTotal: totalPrice, deliveryFee: deliveryFeeSingle, serviceFee, totalAmount: grandTotalSingle, grandTotal: grandTotalSingle,
+      foodSubtotal: totalPrice, foodTotal: totalPrice, deliveryFee: deliveryFeeSingle, serviceFee: 0, totalAmount: grandTotalSingle, grandTotal: grandTotalSingle,
     })
     clearCart()
     navigate(`/track/${created.id}`)
@@ -356,10 +355,10 @@ const CheckoutPage = () => {
                         ))}
                       </div>
                     ))}
-                    <div className="space-y-2 text-sm border-t pt-3">
+                    <div className="space-y-2 text-xs border-t pt-3">
                       <div className="flex justify-between text-[#6F6B76]"><span>Subtotal</span><span className="font-bold text-[#211F26]">₦{groupTotals.subtotal.toLocaleString()}</span></div>
-                      <div className="flex justify-between text-[#6F6B76]"><span>Delivery Fee {groupTotals.memberTotals.length >= 2 ? '(30% OFF)' : ''}</span><span className="font-bold text-[#211F26]">{groupTotals.memberTotals.length >= 2 ? `₦200 → ₦${groupTotals.deliveryFee}` : `₦${groupTotals.deliveryFee}`}</span></div>
-                      <div className="border-t pt-3 flex justify-between items-baseline"><span className="text-sm font-extrabold block">GRAND TOTAL</span><span className="text-xl font-black text-[#4B2E83]">₦{groupTotals.grandTotal.toLocaleString()}</span></div>
+                      <div className="flex justify-between text-[#6F6B76]"><span>Delivery Fee {groupTotals.memberTotals.length >= 2 ? <span className="ml-1 rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-bold text-emerald-700">-30%</span> : null}</span><span className="font-bold text-[#211F26]">{groupTotals.memberTotals.length >= 2 ? <><span className="line-through text-[#A09BA8]">₦{groupTotals.baseFee}</span> → ₦{groupTotals.deliveryFee}</> : `₦${groupTotals.baseFee}`}</span></div>
+                      <div className="border-t pt-3 flex justify-between items-baseline"><span className="text-xs font-bold block">GRAND TOTAL</span><span className="text-lg font-bold text-[#4B2E83]">₦{groupTotals.grandTotal.toLocaleString()}</span></div>
                     </div>
                     {!isHost && <p className="text-xs text-center text-amber-700 font-bold">Only host can pay</p>}
                     {error && <div className="flex items-center gap-2 rounded-2xl bg-rose-50 p-3 text-xs font-bold text-rose-700"><AlertCircle className="h-4 w-4" /><span>{error}</span></div>}
@@ -370,11 +369,10 @@ const CheckoutPage = () => {
                 ) : (
                   <>
                     <h3 className="font-bold text-xs border-b pb-3">Payment Summary</h3>
-                    <div className="space-y-3 text-sm">
+                    <div className="space-y-2 text-xs">
                       <div className="flex justify-between text-[#6F6B76]"><span>Food Subtotal</span><span className="font-bold text-[#211F26]">₦{totalPrice.toLocaleString()}</span></div>
-                      <div className="flex justify-between text-[#6F6B76]"><span>Delivery Fee</span><span className="font-bold text-[#211F26]">{deliveryType === 'pickup' ? 'FREE (Pickup)' : `₦${deliveryFeeSingle.toLocaleString()}`}</span></div>
-                      <div className="flex justify-between text-[#6F6B76]"><span>Service Fee</span><span className="font-bold text-[#211F26]">₦{serviceFee.toLocaleString()}</span></div>
-                      <div className="border-t pt-3 flex justify-between items-baseline"><span className="text-sm font-extrabold block">Total</span><span className="text-xl font-black text-[#4B2E83]">₦{grandTotalSingle.toLocaleString()}</span></div>
+                      <div className="flex justify-between text-[#6F6B76]"><span>Delivery Fee</span><span className="font-bold text-[#211F26]">{deliveryType === 'pickup' ? 'FREE' : `₦500`}</span></div>
+                      <div className="border-t pt-3 flex justify-between items-baseline"><span className="text-xs font-bold block">Total</span><span className="text-lg font-bold text-[#4B2E83]">₦{grandTotalSingle.toLocaleString()}</span></div>
                     </div>
                     {error && <div className="flex items-center gap-2 rounded-2xl bg-rose-50 p-3 text-xs font-bold text-rose-700"><AlertCircle className="h-4 w-4" /><span>{error}</span></div>}
                     <button type="submit" className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[#FFC928] py-3 text-sm font-bold text-[#4B2E83] shadow">

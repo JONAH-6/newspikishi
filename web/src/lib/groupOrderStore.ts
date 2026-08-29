@@ -37,7 +37,7 @@ export interface GroupOrder {
 
 const STORAGE_KEY = 'yumzee_group_orders_yz'
 const EVENT = 'yumzee_group_update'
-const BASE_FEE = 200
+const BASE_FEE = 500
 const DISCOUNT = 0.3
 const EXPIRY = 60 * 60 * 1000
 

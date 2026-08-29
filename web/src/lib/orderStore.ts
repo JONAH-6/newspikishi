@@ -139,7 +139,7 @@ export const STORAGE_KEYS = {
 } as const
 
 export const DEFAULT_GROUP_RULES: GroupOrderRules = {
-  baseDeliveryFee: 600,
+  baseDeliveryFee: 500,
   minGroupSizeForDiscount: 2,
   discountTiers: [
     { minParticipants: 2, discountPercent: 30 },
@@ -148,7 +148,7 @@ export const DEFAULT_GROUP_RULES: GroupOrderRules = {
     { minParticipants: 8, discountPercent: 100 },
   ],
   maxDeadlineMinutes: 60,
-  serviceFee: 100,
+  serviceFee: 0,
   eligibleLocations: [
     { id: 'moremi', name: 'Moremi Hall — Main Gate', zone: 'Female Halls', active: true },
     { id: 'awolowo', name: 'Awolowo Hall — Junction', zone: 'Male Halls', active: true },
