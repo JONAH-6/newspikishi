@@ -25,10 +25,12 @@ import {
 
 const categories = [
   'All Items',
-  'Meals',
-  'Snacks',
-  'Sides',
-  'Drinks',
+  'Savory Snacks',
+  'Pastries',
+  'Fast Food',
+  'Cakes & Desserts',
+  'Beverages',
+  'Healthy Bites',
 ]
 
 const HomePage = () => {

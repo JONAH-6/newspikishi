@@ -20,15 +20,17 @@ import {
   Trash2,
 } from 'lucide-react'
 
-const CATEGORIES = ['All', 'Meals', 'Snacks', 'Sides', 'Drinks'] as const
-const POPULAR_SEARCHES = ['Jollof', 'Shawarma', 'Suya', 'Puff Puff', 'Zobo', 'Egusi', 'Chicken', 'Indomie']
+const CATEGORIES = ['All', 'Savory Snacks', 'Pastries', 'Fast Food', 'Cakes & Desserts', 'Beverages', 'Healthy Bites'] as const
+const POPULAR_SEARCHES = ['Meat pie', 'Suya', 'Shawarma', 'Cake', 'Smoothie', 'Burger', 'Yogurt', 'Chicken']
 const STORAGE_KEY = 'yumzee_recent_searches'
 
 const categoryEmoji: Record<string, string> = {
-  Meals: '🍛',
-  Snacks: '🌯',
-  Sides: '🍟',
-  Drinks: '🥤',
+  'Savory Snacks': '🥟',
+  Pastries: '🥐',
+  'Fast Food': '🍕',
+  'Cakes & Desserts': '🍰',
+  Beverages: '🥤',
+  'Healthy Bites': '🥗',
 }
 
 const DiscoverPage = () => {
@@ -253,7 +255,7 @@ const DiscoverPage = () => {
             <div>
               <h3 className="text-sm font-extrabold text-[#211F26]">Browse categories</h3>
               <div className="mt-3 grid grid-cols-2 gap-3">
-                {(['Meals', 'Snacks', 'Sides', 'Drinks'] as const).map((cat) => (
+                {(['Savory Snacks', 'Pastries', 'Fast Food', 'Cakes & Desserts', 'Beverages', 'Healthy Bites'] as const).map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setSelectedCat(cat)}
