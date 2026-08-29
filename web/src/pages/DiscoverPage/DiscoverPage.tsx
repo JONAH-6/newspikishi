@@ -291,7 +291,10 @@ const DiscoverPage = () => {
                         <div className="flex-1 min-w-0">
                           <div className="text-[11px] font-bold uppercase tracking-wider text-[#4B2E83]">{product.category}</div>
                           <div className="text-sm font-bold text-[#211F26] truncate">{product.name}</div>
-                          <div className="text-xs font-bold text-[#211F26]">₦{product.price.toLocaleString()}</div>
+                          <div className="flex items-baseline gap-1.5">
+                            <span className="text-xs font-black text-[#211F26]">₦{product.price.toLocaleString()}</span>
+                            {product.originalPrice && <span className="text-[11px] text-[#A09BA8] line-through">₦{product.originalPrice.toLocaleString()}</span>}
+                          </div>
                           <div className="mt-2 flex items-center gap-2">
                             <div className="flex items-center rounded-full border border-[#E9E5EE] bg-[#FAF8FD] p-0.5">
                               <button onClick={() => changeQty(product.id, -1)} className="h-6 w-6 rounded-full bg-white flex items-center justify-center hover:bg-gray-100">
@@ -362,7 +365,10 @@ const DiscoverPage = () => {
                           <p className="mt-1 text-[11px] text-[#A09BA8]">{product.sellerName}</p>
                         </div>
                         <div className="flex items-center justify-between border-t border-[#F5F1FB] pt-3">
-                          <span className="text-base font-black text-[#4B2E83]">₦{product.price.toLocaleString()}</span>
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-base font-black text-[#4B2E83]">₦{product.price.toLocaleString()}</span>
+                            {product.originalPrice && <span className="text-xs text-[#A09BA8] line-through">₦{product.originalPrice.toLocaleString()}</span>}
+                          </div>
                           <div className="flex items-center gap-2">
                             <div className="flex items-center rounded-full border border-[#E9E5EE] bg-[#FAF8FD] p-0.5">
                               <button onClick={() => changeQty(product.id, -1)} className="h-7 w-7 rounded-full bg-white flex items-center justify-center shadow-sm"><Minus className="h-3 w-3" /></button>

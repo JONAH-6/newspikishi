@@ -121,7 +121,12 @@ const HomePage = () => {
                       <h3 className="mt-1 text-sm font-bold text-[#211F26]">{product.name}</h3>
                     </div>
                     <div className="flex items-center justify-between pt-3 border-t border-[#F5F1FB]">
-                      <span className="text-base font-black text-[#211F26]">₦{product.price.toLocaleString()}</span>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-base font-black text-[#211F26]">₦{product.price.toLocaleString()}</span>
+                        {product.originalPrice && (
+                          <span className="text-xs text-[#A09BA8] line-through">₦{product.originalPrice.toLocaleString()}</span>
+                        )}
+                      </div>
                       <div className="flex items-center gap-2">
                         <div className="flex items-center rounded-full border border-[#E9E5EE] bg-[#FAF8FD] p-0.5">
                           <button onClick={() => handleQtyChange(product.id, -1)} className="h-7 w-7 rounded-full bg-white flex items-center justify-center hover:bg-gray-50">
