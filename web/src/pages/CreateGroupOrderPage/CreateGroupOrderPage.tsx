@@ -97,41 +97,41 @@ const CreateGroupOrderPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF8FD] py-10">
+    <div className="min-h-screen bg-[#FAF8FD] py-4 sm:py-6">
       <Metadata
         title="Create a Group Order ? YumZee"
         description="Start a hostel group order and share delivery costs with fellow students."
       />
 
-      <div className="container mx-auto max-w-3xl px-4">
+      <div className="container mx-auto max-w-3xl px-2 sm:px-4">
         {createdGroup ? (
           /* SUCCESS / SHARE SCREEN */
-          <div className="overflow-hidden rounded-3xl border border-[#E9E5EE] bg-white shadow-xl animate-fadeIn">
-            <div className="bg-gradient-to-r from-[#4B2E83] to-[#371F62] p-8 text-center text-white space-y-3">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl bg-[#FFC928] text-[#4B2E83] font-black shadow-lg">
-                <Sparkles className="h-8 w-8" />
+          <div className="overflow-hidden rounded-2xl border border-[#E9E5EE] bg-white shadow-xl animate-fadeIn">
+            <div className="bg-gradient-to-r from-[#4B2E83] to-[#371F62] p-6 text-center text-white space-y-2">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#FFC928] text-[#4B2E83] font-black shadow-lg">
+                <Sparkles className="h-6 w-6" />
               </div>
-              <h2 className="text-2xl sm:text-3xl font-black">Group Order Created!</h2>
-              <p className="text-sm text-white/85 max-w-md mx-auto">
+              <h2 className="text-xl font-black">Group Order Created!</h2>
+              <p className="text-xs text-white/85 max-w-md mx-auto">
                 Share this link or code with friends in <b>{createdGroup.hostelAddress}</b>. As more friends join, delivery drops to <b>?0</b>!
               </p>
             </div>
 
-            <div className="p-6 sm:p-8 space-y-6">
+            <div className="p-4 space-y-4">
               {/* Group Code Showcase Card */}
-              <div className="rounded-3xl border-2 border-[#FFC928] bg-[#FFF9E8] p-6 text-center space-y-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#6F6B76]">
+              <div className="rounded-2xl border-2 border-[#FFC928] bg-[#FFF9E8] p-4 text-center space-y-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#6F6B76]">
                   Your Unique Group Order Code
                 </span>
-                <div className="flex items-center justify-center gap-3">
-                  <span className="font-mono text-3xl sm:text-4xl font-black tracking-widest text-[#4B2E83]">
+                <div className="flex items-center justify-center gap-2">
+                  <span className="font-mono text-2xl font-black tracking-widest text-[#4B2E83]">
                     {createdGroup.groupCode}
                   </span>
                   <button
                     onClick={handleCopyCode}
-                    className="flex items-center gap-1 rounded-xl bg-white border border-amber-300 px-3 py-1.5 text-xs font-bold text-[#4B2E83] shadow-sm hover:bg-amber-50"
+                    className="flex items-center gap-1 rounded-lg bg-white border border-amber-300 px-2.5 py-1 text-xs font-bold text-[#4B2E83] shadow-sm hover:bg-amber-50"
                   >
-                    {copiedCode ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />}
+                    {copiedCode ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
                     <span>{copiedCode ? 'Copied' : 'Copy'}</span>
                   </button>
                 </div>
@@ -141,38 +141,38 @@ const CreateGroupOrderPage = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="space-y-3">
+              <div className="space-y-2.5">
                 <a
                   href={`https://wa.me/?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 py-4 text-base font-extrabold text-white shadow-lg shadow-emerald-600/30 hover:bg-emerald-700 transition active:scale-95"
+                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-emerald-600 py-3 text-sm font-bold text-white shadow hover:bg-emerald-700 transition"
                 >
-                  <MessageCircle className="h-5 w-5" />
+                  <MessageCircle className="h-4 w-4" />
                   <span>Share on WhatsApp Hostel Group</span>
                 </a>
 
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <button
                     onClick={handleCopyLink}
-                    className="flex-1 flex items-center justify-center gap-2 rounded-2xl border-2 border-[#E9E5EE] bg-[#FAF8FD] py-3.5 text-sm font-bold text-[#211F26] hover:bg-gray-100 transition"
+                    className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-[#E9E5EE] bg-[#FAF8FD] py-3 text-xs font-bold text-[#211F26] hover:bg-gray-100 transition"
                   >
-                    {copiedLink ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />}
+                    {copiedLink ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
                     <span>{copiedLink ? 'Link Copied!' : 'Copy Direct Link'}</span>
                   </button>
 
                   <button
                     onClick={() => navigate(`/group/${createdGroup.groupCode}`)}
-                    className="flex-1 flex items-center justify-center gap-2 rounded-2xl bg-[#4B2E83] py-3.5 text-sm font-extrabold text-white hover:bg-[#371F62] transition shadow"
+                    className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-[#4B2E83] py-3 text-xs font-bold text-white hover:bg-[#371F62] transition"
                   >
                     <span>Enter Group Room</span>
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-3.5 w-3.5" />
                   </button>
                 </div>
               </div>
 
               {/* Summary details */}
-              <div className="rounded-2xl border border-[#E9E5EE] bg-[#FAF8FD] p-4 text-xs text-[#6F6B76] space-y-2">
+              <div className="rounded-xl border border-[#E9E5EE] bg-[#FAF8FD] p-3 text-xs text-[#6F6B76] space-y-1.5">
                 <div className="flex justify-between">
                   <span>Host:</span>
                   <span className="font-bold text-[#211F26]">{createdGroup.hostName}</span>
@@ -190,23 +190,23 @@ const CreateGroupOrderPage = () => {
           </div>
         ) : (
           /* FORM TO CREATE GROUP ORDER */
-          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 sm:p-8 shadow-sm space-y-6">
+          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4">
             <div>
               <div className="flex items-center gap-2">
-                <span className="rounded-md bg-[#FFC928] px-2.5 py-0.5 text-xs font-black uppercase tracking-wider text-[#4B2E83]">
+                <span className="rounded-md bg-[#FFC928] px-2 py-0.5 text-[11px] font-black uppercase tracking-wider text-[#4B2E83]">
                   Option 2
                 </span>
-                <h1 className="text-2xl sm:text-3xl font-black text-[#211F26]">
+                <h1 className="text-xl font-black text-[#211F26]">
                   Create a Hostel Group Order
                 </h1>
               </div>
-              <p className="mt-1 text-xs sm:text-sm text-[#6F6B76]">
+              <p className="mt-1 text-xs text-[#6F6B76]">
                 One combined delivery route to your hostel. Free delivery unlocked at 4+ students!
               </p>
             </div>
 
             {/* Discount Tiers Visual */}
-            <div className="rounded-2xl border border-[#E9E5EE] bg-[#FAF8FD] p-4 space-y-3">
+            <div className="rounded-xl border border-[#E9E5EE] bg-[#FAF8FD] p-3 space-y-2">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black uppercase tracking-wider text-[#4B2E83]">
                   Shared Delivery Discount Engine
@@ -362,12 +362,12 @@ const CreateGroupOrderPage = () => {
                 </div>
               )}
 
-              {/* Submit Button */}
+              {/* Submit Button - FULL WIDTH, reduced padding, small text */}
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[#FFC928] py-4 text-base font-black text-[#4B2E83] shadow-lg shadow-[#FFC928]/30 transition hover:bg-[#E5B420] active:scale-95"
+                className="w-full flex items-center justify-center gap-1.5 rounded-xl bg-[#FFC928] py-3 text-sm font-bold text-[#4B2E83] shadow hover:bg-[#E5B420] transition"
               >
-                <Users className="h-5 w-5" />
+                <Users className="h-4 w-4" />
                 <span>Create Group & Get Shareable Link</span>
               </button>
             </form>

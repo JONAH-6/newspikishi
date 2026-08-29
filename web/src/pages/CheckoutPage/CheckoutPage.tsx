@@ -396,7 +396,7 @@ const CheckoutPage = () => {
 
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[#FFC928] py-4 text-base font-black text-[#4B2E83] shadow-lg shadow-[#FFC928]/30 transition hover:bg-[#E5B420] active:scale-95"
+                  className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[#FFC928] py-3 text-sm font-bold text-[#4B2E83] shadow-lg shadow-[#FFC928]/30 transition hover:bg-[#E5B420] active:scale-95"
                 >
                   <span>Pay & Place Order</span>
                   <ArrowRight className="h-5 w-5" />

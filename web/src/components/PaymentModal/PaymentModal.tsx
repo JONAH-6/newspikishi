@@ -198,7 +198,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({
                 type="button"
                 onClick={handlePay}
                 disabled={isProcessing}
-                className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[#FFC928] py-4 text-base font-extrabold text-[#4B2E83] shadow-lg transition hover:bg-[#E5B420] active:scale-95 disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[#FFC928] py-3 text-sm font-bold text-[#4B2E83] shadow-lg transition hover:bg-[#E5B420] active:scale-95 disabled:opacity-50"
               >
                 {isProcessing ? (
                   <>
