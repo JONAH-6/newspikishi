@@ -72,58 +72,34 @@ const SellerPortalPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF8FD] py-8">
-      <Metadata
-        title="Campus Kitchen & Vendor Portal ? YumZee"
-        description="Kitchen dashboard for preparing and aggregating campus snack orders."
-      />
+    <div className="min-h-screen bg-[#FAF8FD] py-6">
+      <Metadata title="Kitchen — YumZee" description="Prepare orders." />
 
       <div className="container mx-auto max-w-6xl px-4 space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#4B2E83] text-white shadow-md">
-              <ChefHat className="h-6 w-6" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#4B2E83] text-white">
+              <ChefHat className="h-5 w-5" />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="rounded-md bg-emerald-500/10 px-2 py-0.5 text-[11px] font-black uppercase text-emerald-700 border border-emerald-500/20">
-                  Kitchen Dispatch Live
-                </span>
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-black text-[#211F26]">
-                Campus Kitchen & Prep Hub
-              </h1>
-            </div>
+            <h1 className="text-xl font-black text-[#211F26]">Kitchen</h1>
           </div>
 
-          {/* Filter Tabs */}
+          {/* Filter */}
           <div className="flex rounded-2xl border border-[#E9E5EE] bg-white p-1 shadow-sm">
             {(['all', 'pending', 'preparing', 'ready'] as const).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setFilter(tab)}
-                className={`rounded-xl px-4 py-2 text-xs font-bold capitalize transition ${
-                  filter === tab
-                    ? 'bg-[#4B2E83] text-white shadow'
-                    : 'text-[#6F6B76] hover:text-[#211F26]'
-                }`}
-              >
-                {tab}
-              </button>
+              <button key={tab} onClick={() => setFilter(tab)} className={`rounded-xl px-4 py-2 text-xs font-bold capitalize ${filter===tab ? 'bg-[#4B2E83] text-white' : 'text-[#6F6B76]'}`}>{tab}</button>
             ))}
           </div>
         </div>
 
-        {/* Orders Queue */}
-        <div className="space-y-6">
+        {/* Orders */}
+        <div className="space-y-4">
           {filteredOrders.length === 0 ? (
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-12 text-center shadow-sm">
-              <Utensils className="mx-auto h-16 w-16 text-[#6F6B76]/40 mb-3" />
-              <h3 className="text-lg font-bold text-[#211F26]">No orders in this queue</h3>
-              <p className="text-xs text-[#6F6B76] mt-1">
-                New student orders will appear here automatically in real time.
-              </p>
+            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
+              <Utensils className="mx-auto h-10 w-10 text-[#6F6B76]/40 mb-2" />
+              <h3 className="text-sm font-bold text-[#211F26]">No orders</h3>
+              <p className="text-xs text-[#6F6B76] mt-1">New orders will appear here.</p>
             </div>
           ) : (
             filteredOrders.map((order) => {
@@ -138,7 +114,7 @@ const SellerPortalPage = () => {
                   className="overflow-hidden rounded-3xl border border-[#E9E5EE] bg-white shadow-sm transition hover:shadow-md"
                 >
                   {/* Order Top Bar */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E9E5EE] bg-[#FAF8FD] p-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E9E5EE] bg-[#FAF8FD] p-4">
                     <div className="flex items-center gap-3">
                       <span
                         className={`rounded-xl px-3 py-1 text-xs font-black uppercase tracking-wider ${
@@ -165,19 +141,15 @@ const SellerPortalPage = () => {
                   </div>
 
                   {/* Order Content */}
-                  <div className="p-6 space-y-5">
+                  <div className="p-4 space-y-4">
                     {isGroup && groupData ? (
                       /* GROUP ORDER PREP MATRIX */
                       <div className="space-y-4">
-                        {/* Aggregated Kitchen Prep List */}
-                        <div className="rounded-2xl border-2 border-dashed border-[#4B2E83]/30 bg-[#F5F1FB]/60 p-4 space-y-3">
+                        {/* Prep List */}
+                        <div className="rounded-xl border border-[#E9E5EE] bg-[#FAF8FD] p-4 space-y-3">
                           <div className="flex items-center justify-between">
-                            <span className="text-xs font-black uppercase tracking-wider text-[#4B2E83] flex items-center gap-1.5">
-                              <Utensils className="h-4 w-4" /> Bulk Kitchen Prep Checklist ({aggregatedItems.length} Unique Items)
-                            </span>
-                            <span className="text-xs font-extrabold text-[#4B2E83]">
-                              {groupData.participants.length} Student Bags to Pack
-                            </span>
+                            <span className="text-xs font-bold text-[#4B2E83]">Prep list — {aggregatedItems.length} items</span>
+                            <span className="text-xs font-bold text-[#4B2E83]">{groupData.participants.length} bags</span>
                           </div>
 
                           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -197,11 +169,9 @@ const SellerPortalPage = () => {
                           </div>
                         </div>
 
-                        {/* Individual Student Bag Packing Breakdown */}
+                        {/* Bag Labels */}
                         <div className="space-y-2">
-                          <span className="text-xs font-bold uppercase tracking-wider text-[#6F6B76]">
-                            Student Bag Labels for Packing:
-                          </span>
+                          <span className="text-xs font-bold text-[#6F6B76]">Bag labels:</span>
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             {groupData.participants.map((p, idx) => (
                               <div

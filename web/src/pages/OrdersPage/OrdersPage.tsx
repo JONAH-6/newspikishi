@@ -48,21 +48,21 @@ const OrdersPage = () => {
       case 'picked_up':
       case 'rider_assigned':
         return (
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#4B2E83]/20 bg-[#4B2E83]/10 px-3 py-1 text-xs font-bold text-[#4B2E83]">
-            <Truck className="h-3.5 w-3.5 animate-bounce" /> On The Way
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#4B2E83]/20 bg-[#4B2E83]/10 px-2.5 py-1 text-xs font-bold text-[#4B2E83]">
+            <Truck className="h-3.5 w-3.5" /> On the way
           </span>
         )
       case 'preparing':
       case 'ready_for_pickup':
       case 'sent_to_sellers':
         return (
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-700">
-            <Clock className="h-3.5 w-3.5" /> Preparing in Kitchen
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-bold text-amber-700">
+            <Clock className="h-3.5 w-3.5" /> Preparing
           </span>
         )
       case 'delivered':
         return (
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-700">
             <CheckCircle2 className="h-3.5 w-3.5" /> Delivered
           </span>
         )
@@ -70,8 +70,8 @@ const OrdersPage = () => {
       case 'payment_confirmed':
       default:
         return (
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-purple-200 bg-purple-50 px-3 py-1 text-xs font-bold text-purple-700">
-            <Package className="h-3.5 w-3.5" /> Order Placed
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-purple-200 bg-purple-50 px-2.5 py-1 text-xs font-bold text-purple-700">
+            <Package className="h-3.5 w-3.5" /> Placed
           </span>
         )
     }
@@ -91,19 +91,15 @@ const OrdersPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF8FD] py-8">
-      <Metadata title="My Orders & Group Rooms ? YumZee" description="Track and view your campus food orders." />
+    <div className="min-h-screen bg-[#FAF8FD] py-6">
+      <Metadata title="Orders — YumZee" description="Track your orders." />
 
       <div className="container mx-auto max-w-4xl space-y-6 px-4">
         {/* Header */}
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <div>
-            <h1 className="text-3xl font-black text-[#211F26]">
-              Order History
-            </h1>
-            <p className="mt-1 text-xs sm:text-sm text-[#6F6B76]">
-              View your single deliveries and collaborative hostel group orders.
-            </p>
+            <h1 className="text-2xl font-black text-[#211F26]">Orders</h1>
+            <p className="mt-1 text-xs text-[#6F6B76]">Your orders and group orders.</p>
           </div>
 
           <div className="flex rounded-2xl border border-[#E9E5EE] bg-white p-1 shadow-sm">
@@ -128,14 +124,14 @@ const OrdersPage = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Users className="h-5 w-5 text-[#4B2E83]" />
-              <h2 className="text-lg font-black text-[#211F26]">Hostel Group Orders</h2>
+              <h2 className="text-sm font-black text-[#211F26]">Group Orders</h2>
             </div>
 
             <div className="space-y-4">
               {groupOrders.map((grp) => (
                 <div
                   key={grp.id}
-                  className="rounded-3xl border-2 border-[#E9E5EE] bg-white p-6 shadow-sm transition hover:shadow-md hover:border-[#4B2E83]/40"
+                  className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm transition hover:shadow-md"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E9E5EE] pb-4">
                     <div className="flex items-center gap-3">
@@ -200,21 +196,21 @@ const OrdersPage = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Package className="h-5 w-5 text-[#4B2E83]" />
-              <h2 className="text-lg font-black text-[#211F26]">Single Individual Orders</h2>
+              <h2 className="text-sm font-black text-[#211F26]">Single Orders</h2>
             </div>
 
             {singleOrders.length === 0 ? (
-              <div className="rounded-3xl border border-[#E9E5EE] bg-white p-10 text-center shadow-sm">
-                <ShoppingBag className="mx-auto h-12 w-12 text-[#6F6B76]/40 mb-2" />
-                <h3 className="font-bold text-[#211F26]">No single orders yet</h3>
-                <p className="text-xs text-[#6F6B76] mt-1">Browse snacks to place an individual order.</p>
+              <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
+                <ShoppingBag className="mx-auto h-10 w-10 text-[#6F6B76]/40 mb-2" />
+                <h3 className="text-sm font-bold text-[#211F26]">No orders yet</h3>
+                <p className="text-xs text-[#6F6B76] mt-1">Browse snacks to place an order.</p>
               </div>
             ) : (
               <div className="space-y-4">
                 {singleOrders.map((order) => (
                   <div
                     key={order.id}
-                    className="rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm transition hover:shadow-md"
+                    className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm transition hover:shadow-md"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E9E5EE] pb-4">
                       <div className="flex items-center gap-3">

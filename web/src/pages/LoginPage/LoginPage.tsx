@@ -104,13 +104,8 @@ const LoginPage = () => {
             <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F5F1FB] text-[#4B2E83] shadow-sm">
               <span className="text-2xl">🍔</span>
             </div>
-            <h2 className="text-2xl font-extrabold text-[#211F26] md:text-3xl">
-              Welcome Back
-            </h2>
-            <p className="mt-2 text-sm text-[#6F6B76]">
-              Sign in with your Google account to order fresh snacks and track
-              deliveries
-            </p>
+            <h2 className="text-2xl font-extrabold text-[#211F26]">Welcome Back</h2>
+            <p className="mt-2 text-xs text-[#6F6B76]">Sign in to order and track.</p>
           </div>
 
           {errorMessage && (
@@ -123,14 +118,14 @@ const LoginPage = () => {
             type="button"
             onClick={handleGoogleSignIn}
             disabled={isSigningIn || (loading && isAuthenticated)}
-            className="flex w-full items-center justify-center gap-3 rounded-2xl border border-[#DADCE0] bg-white px-6 py-3.5 shadow-sm transition-all duration-200 hover:border-[#4B2E83] hover:bg-[#F8F9FA] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#4B2E83]/30 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-3 rounded-2xl border border-[#DADCE0] bg-white px-6 py-3 shadow-sm transition hover:border-[#4B2E83] hover:bg-[#F8F9FA] focus:outline-none focus:ring-2 focus:ring-[#4B2E83]/30 active:scale-[0.99] disabled:opacity-60"
           >
             {isSigningIn ? (
-              <div className="h-6 w-6 animate-spin rounded-full border-2 border-[#4B2E83] border-t-transparent"></div>
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-[#4B2E83] border-t-transparent"></div>
             ) : (
               <GoogleIcon />
             )}
-            <span className="text-base font-semibold text-[#3C4043]">
+            <span className="text-sm font-semibold text-[#3C4043]">
               {isSigningIn ? 'Signing in...' : 'Continue with Google'}
             </span>
           </button>

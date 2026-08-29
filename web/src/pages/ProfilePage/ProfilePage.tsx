@@ -85,18 +85,18 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FBF9FE] py-8">
-      <Metadata title="My Profile" description="Manage your campus profile and delivery details" />
+    <div className="min-h-screen bg-[#FBF9FE] py-6">
+      <Metadata title="My Profile" description="Manage your delivery details" />
 
       <div className="container mx-auto max-w-3xl space-y-6 px-4">
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-[#211F26] sm:text-3xl">My Profile</h1>
-          <p className="mt-1 text-sm text-[#6F6B76]">Manage your details for fast, accurate delivery — for anyone.</p>
+          <h1 className="text-2xl font-extrabold text-[#211F26]">My Profile</h1>
+          <p className="mt-1 text-xs text-[#6F6B76]">Manage your delivery details.</p>
         </div>
 
-        {/* User card - clean */}
-        <div className="flex items-center gap-4 rounded-3xl border border-[#E9E5EE] bg-white p-5 shadow-sm">
+        {/* User card */}
+        <div className="flex items-center gap-4 rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
           {user.photoURL ? (
             <img src={user.photoURL} alt="Avatar" className="h-14 w-14 rounded-2xl border border-[#E9E5EE] object-cover" />
           ) : (
@@ -117,7 +117,7 @@ const ProfilePage = () => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSave} className="rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm md:p-7 space-y-5">
+        <form onSubmit={handleSave} className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4">
           <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#211F26]">Delivery details</h3>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -213,8 +213,8 @@ const ProfilePage = () => {
           </div>
         </form>
 
-        {/* Account - single, well-arranged logout */}
-        <div className="rounded-3xl border border-[#E9E5EE] bg-white p-5 shadow-sm">
+        {/* Account */}
+        <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
           <h3 className="text-sm font-extrabold text-[#211F26]">Account</h3>
           <p className="mt-1 text-xs text-[#6F6B76]">You’re signed in as {user.email}. Logging out clears your session on this device.</p>
           <button

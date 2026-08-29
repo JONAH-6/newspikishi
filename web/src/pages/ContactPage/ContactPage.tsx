@@ -22,29 +22,23 @@ const ContactPage = () => {
         description="Get in touch with the YumZee campus team"
       />
 
-      {/* ===== HERO SECTION ===== */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#4B2E83] via-[#3A2366] to-[#251543] py-20 text-white">
-        <div className="relative mx-auto max-w-3xl px-4 text-center">
-          <h1 className="mb-4 text-4xl font-extrabold md:text-5xl">
+      {/* Hero */}
+      <section className="bg-gradient-to-br from-[#4B2E83] via-[#3A2366] to-[#251543] py-10 text-white">
+        <div className="mx-auto max-w-3xl px-4 text-center">
+          <h1 className="text-3xl font-black">
             Contact <span className="text-[#FFC928]">YumZee</span>
           </h1>
-
-          <p className="text-lg opacity-90">
-            Have questions, catering requests, or need instant food drop
-            assistance on your campus?
-          </p>
+          <p className="mt-2 text-sm text-white/80">Questions or help with an order? Get in touch.</p>
         </div>
       </section>
 
-      {/* ===== MAIN CONTENT ===== */}
-      <div className="min-h-screen bg-[#FBF9FE] py-16">
+      {/* Main */}
+      <div className="min-h-screen bg-[#FBF9FE] py-6">
         <div className="container mx-auto max-w-6xl px-4">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {/* Contact Information */}
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-8 shadow-sm">
-              <h2 className="mb-6 text-2xl font-extrabold text-[#211F26]">
-                Get in Touch
-              </h2>
+            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+              <h2 className="mb-4 text-lg font-extrabold text-[#211F26]">Get in Touch</h2>
 
               <div className="space-y-6">
                 {/* Phone Section */}
@@ -53,9 +47,7 @@ const ContactPage = () => {
                     <Phone className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-[#211F26]">
-                      Direct Hotline & WhatsApp
-                    </h3>
+                    <h3 className="font-bold text-[#211F26] text-sm">Phone & WhatsApp</h3>
 
                     {phoneNumbers.map((number) => (
                       <div
@@ -113,10 +105,8 @@ const ContactPage = () => {
               </div>
 
               {/* Business Hours */}
-              <div className="mt-10 border-t border-[#E9E5EE] pt-6">
-                <h3 className="mb-4 text-lg font-bold text-[#211F26]">
-                  Kitchen Operating Hours
-                </h3>
+              <div className="mt-6 border-t border-[#E9E5EE] pt-4">
+                <h3 className="mb-3 text-sm font-bold text-[#211F26]">Hours</h3>
 
                 <div className="space-y-2 text-sm text-[#6F6B76]">
                   <div className="flex justify-between">
@@ -144,10 +134,8 @@ const ContactPage = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-8 shadow-sm">
-              <h2 className="mb-6 text-2xl font-extrabold text-[#211F26]">
-                Send us a Message
-              </h2>
+            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+              <h2 className="mb-4 text-lg font-extrabold text-[#211F26]">Send a Message</h2>
 
               <form
                 action="https://formspree.io/f/mnjvegkl"
@@ -223,7 +211,7 @@ const ContactPage = () => {
 
                 <button
                   type="submit"
-                  className="w-full rounded-2xl bg-[#FFC928] px-8 py-3.5 text-base font-bold text-[#4B2E83] shadow-md transition hover:bg-[#E5B420] active:scale-95"
+                  className="w-full rounded-2xl bg-[#FFC928] px-6 py-3 text-sm font-bold text-[#4B2E83] shadow-md transition hover:bg-[#E5B420] active:scale-95"
                 >
                   Send Message
                 </button>

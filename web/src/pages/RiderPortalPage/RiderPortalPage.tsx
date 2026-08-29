@@ -54,42 +54,28 @@ const RiderPortalPage = () => {
   ].filter((o) => o.status !== 'created' && o.status !== 'cancelled')
 
   return (
-    <div className="min-h-screen bg-[#FAF8FD] py-8">
-      <Metadata
-        title="Campus Dispatch Rider Portal ? YumZee"
-        description="Dispatch dashboard for campus deliveries and shared group drops."
-      />
+    <div className="min-h-screen bg-[#FAF8FD] py-6">
+      <Metadata title="Rider — YumZee" description="Delivery dashboard." />
 
       <div className="container mx-auto max-w-5xl px-4 space-y-6">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#4B2E83] text-white shadow-md">
-              <Truck className="h-6 w-6" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="rounded-md bg-emerald-100 px-2 py-0.5 text-[11px] font-black uppercase text-emerald-800">
-                  Rider Online: Ibrahim Musa
-                </span>
-                <span className="text-xs text-[#6F6B76]">Bajaj Boxer (AGL-492-LG)</span>
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-black text-[#211F26]">
-                Campus Delivery Dashboard
-              </h1>
-            </div>
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#4B2E83] text-white">
+            <Truck className="h-5 w-5" />
+          </div>
+          <div>
+            <h1 className="text-xl font-black text-[#211F26]">Delivery Dashboard</h1>
+            <p className="text-xs text-[#6F6B76]">Ibrahim Musa — Bajaj Boxer (AGL-492-LG)</p>
           </div>
         </div>
 
-        {/* Orders List */}
-        <div className="space-y-6">
+        {/* Orders */}
+        <div className="space-y-4">
           {allOrders.length === 0 ? (
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-12 text-center shadow-sm">
-              <Truck className="mx-auto h-16 w-16 text-[#6F6B76]/40 mb-3" />
-              <h3 className="text-lg font-bold text-[#211F26]">No active dispatch jobs</h3>
-              <p className="text-xs text-[#6F6B76] mt-1">
-                When campus kitchens mark orders ready, delivery requests will appear here.
-              </p>
+            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
+              <Truck className="mx-auto h-10 w-10 text-[#6F6B76]/40 mb-2" />
+              <h3 className="text-sm font-bold text-[#211F26]">No jobs</h3>
+              <p className="text-xs text-[#6F6B76] mt-1">Ready orders will appear here.</p>
             </div>
           ) : (
             allOrders.map((order) => {
@@ -104,7 +90,7 @@ const RiderPortalPage = () => {
                   className="overflow-hidden rounded-3xl border border-[#E9E5EE] bg-white shadow-sm transition hover:shadow-md"
                 >
                   {/* Top Bar */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E9E5EE] bg-[#FAF8FD] p-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E9E5EE] bg-[#FAF8FD] p-4">
                     <div className="flex items-center gap-3">
                       <span
                         className={`rounded-xl px-3 py-1 text-xs font-black uppercase tracking-wider ${
@@ -127,8 +113,8 @@ const RiderPortalPage = () => {
                     </span>
                   </div>
 
-                  {/* Route & Package Details */}
-                  <div className="p-6 space-y-5">
+                  {/* Route & Package */}
+                  <div className="p-4 space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {/* Pickup Info */}
                       <div className="rounded-2xl border border-[#E9E5EE] bg-[#FAF8FD] p-4 space-y-2">

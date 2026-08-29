@@ -108,36 +108,26 @@ const AdminPortalPage = () => {
   }, 0)
 
   return (
-    <div className="min-h-screen bg-[#FAF8FD] py-8">
-      <Metadata
-        title="Admin Control Center ? YumZee"
-        description="Configure campus group order rules, discount thresholds, locations, and oversee all orders."
-      />
+    <div className="min-h-screen bg-[#FAF8FD] py-6">
+      <Metadata title="Admin — YumZee" description="Manage orders and rules." />
 
       <div className="container mx-auto max-w-6xl px-4 space-y-6">
         {/* Top Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#4B2E83] text-white shadow-md">
-              <ShieldCheck className="h-6 w-6" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#4B2E83] text-white">
+              <ShieldCheck className="h-5 w-5" />
             </div>
-            <div>
-              <span className="rounded-md bg-[#4B2E83] px-2 py-0.5 text-[10px] font-black uppercase text-[#FFC928]">
-                Administrator Control Center
-              </span>
-              <h1 className="text-2xl sm:text-3xl font-black text-[#211F26]">
-                YumZee Operations & Rules Engine
-              </h1>
-            </div>
+            <h1 className="text-xl font-black text-[#211F26]">Admin</h1>
           </div>
 
-          {/* Navigation Tabs */}
+          {/* Tabs */}
           <div className="flex rounded-2xl border border-[#E9E5EE] bg-white p-1 shadow-sm overflow-x-auto">
             {[
-              { key: 'orders', label: 'All Orders', icon: Package },
-              { key: 'rules', label: 'Group Rules Engine', icon: Settings },
-              { key: 'locations', label: 'Campus Locations', icon: MapPin },
-              { key: 'analytics', label: 'Financials & Savings', icon: TrendingDown },
+              { key: 'orders', label: 'Orders', icon: Package },
+              { key: 'rules', label: 'Rules', icon: Settings },
+              { key: 'locations', label: 'Locations', icon: MapPin },
+              { key: 'analytics', label: 'Analytics', icon: TrendingDown },
             ].map((tab) => (
               <button
                 key={tab.key}
@@ -155,18 +145,14 @@ const AdminPortalPage = () => {
           </div>
         </div>
 
-        {/* TAB 1: ALL ORDERS MANAGEMENT */}
+        {/* TAB 1: ORDERS */}
         {activeTab === 'orders' && (
           <div className="space-y-6">
-            {/* Group Orders Section */}
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm space-y-4">
-              <div className="flex items-center justify-between border-b border-[#E9E5EE] pb-3">
-                <div className="flex items-center gap-2">
-                  <Users className="h-5 w-5 text-[#4B2E83]" />
-                  <h3 className="font-extrabold text-base text-[#211F26]">
-                    Active & Recent Group Orders ({groupOrders.length})
-                  </h3>
-                </div>
+            {/* Group Orders */}
+            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4">
+              <div className="flex items-center gap-2 border-b border-[#E9E5EE] pb-3">
+                <Users className="h-4 w-4 text-[#4B2E83]" />
+                <h3 className="font-bold text-sm text-[#211F26]">Group Orders ({groupOrders.length})</h3>
               </div>
 
               <div className="overflow-x-auto">
@@ -229,15 +215,11 @@ const AdminPortalPage = () => {
               </div>
             </div>
 
-            {/* Single Orders Section */}
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm space-y-4">
-              <div className="flex items-center justify-between border-b border-[#E9E5EE] pb-3">
-                <div className="flex items-center gap-2">
-                  <Package className="h-5 w-5 text-[#4B2E83]" />
-                  <h3 className="font-extrabold text-base text-[#211F26]">
-                    Single Individual Orders ({singleOrders.length})
-                  </h3>
-                </div>
+            {/* Single Orders */}
+            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4">
+              <div className="flex items-center gap-2 border-b border-[#E9E5EE] pb-3">
+                <Package className="h-4 w-4 text-[#4B2E83]" />
+                <h3 className="font-bold text-sm text-[#211F26]">Single Orders ({singleOrders.length})</h3>
               </div>
 
               <div className="overflow-x-auto">
@@ -297,17 +279,13 @@ const AdminPortalPage = () => {
           </div>
         )}
 
-        {/* TAB 2: GROUP ORDER RULES ENGINE */}
+        {/* TAB 2: RULES */}
         {activeTab === 'rules' && (
           <form onSubmit={handleSaveRules} className="space-y-6">
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 sm:p-8 shadow-sm space-y-6">
-              <div className="border-b border-[#E9E5EE] pb-4">
-                <h3 className="font-black text-lg text-[#211F26]">
-                  Group Order Pricing & Discount Thresholds
-                </h3>
-                <p className="text-xs text-[#6F6B76] mt-1">
-                  Adjust global delivery parameters. Any changes will immediately recompute active open groups.
-                </p>
+            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4">
+              <div className="border-b border-[#E9E5EE] pb-3">
+                <h3 className="font-bold text-sm text-[#211F26]">Pricing & Discounts</h3>
+                <p className="text-xs text-[#6F6B76] mt-1">Changes apply to open groups.</p>
               </div>
 
               {/* Base Fees */}
@@ -381,33 +359,24 @@ const AdminPortalPage = () => {
                 </div>
               </div>
 
-              {/* Save Button */}
+              {/* Save */}
               <div className="flex items-center justify-between border-t border-[#E9E5EE] pt-4">
                 {savedSuccess ? (
-                  <span className="flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
-                    <CheckCircle2 className="h-4 w-4" /> Rules Saved & Applied Globally!
-                  </span>
+                  <span className="flex items-center gap-1 text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200"><CheckCircle2 className="h-4 w-4" /> Saved</span>
                 ) : (
-                  <span className="text-xs text-[#6F6B76]">Click below to commit changes.</span>
+                  <span className="text-xs text-[#6F6B76]">Commit changes.</span>
                 )}
-
-                <button
-                  type="submit"
-                  className="rounded-2xl bg-[#FFC928] px-8 py-3.5 text-sm font-black text-[#4B2E83] shadow-md hover:bg-[#E5B420] transition active:scale-95"
-                >
-                  Save Group Rules
-                </button>
+                <button type="submit" className="rounded-2xl bg-[#FFC928] px-6 py-3 text-sm font-bold text-[#4B2E83]">Save Rules</button>
               </div>
             </div>
           </form>
         )}
 
-        {/* TAB 3: CAMPUS DELIVERY LOCATIONS */}
+        {/* TAB 3: LOCATIONS */}
         {activeTab === 'locations' && (
           <div className="space-y-6">
-            {/* Add Location Form */}
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm space-y-4">
-              <h3 className="font-black text-base text-[#211F26]">Add Eligible Campus Delivery Spot</h3>
+            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-3">
+              <h3 className="font-bold text-sm text-[#211F26]">Add Location</h3>
               <form onSubmit={handleAddLocation} className="flex flex-col sm:flex-row gap-3">
                 <input
                   type="text"
@@ -438,10 +407,8 @@ const AdminPortalPage = () => {
             </div>
 
             {/* Locations List */}
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm space-y-4">
-              <h3 className="font-black text-base text-[#211F26]">
-                Eligible Campus Drop-off Locations ({rules.eligibleLocations.length})
-              </h3>
+            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-3">
+              <h3 className="font-bold text-sm text-[#211F26]">Locations ({rules.eligibleLocations.length})</h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {rules.eligibleLocations.map((loc) => (
@@ -471,39 +438,23 @@ const AdminPortalPage = () => {
           </div>
         )}
 
-        {/* TAB 4: ANALYTICS & STUDENT SAVINGS */}
+        {/* TAB 4: ANALYTICS */}
         {activeTab === 'analytics' && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#6F6B76]">
-                Total Student Food GMV
-              </span>
-              <div className="text-3xl font-black text-[#4B2E83]">
-                ?{totalRevenue.toLocaleString()}
-              </div>
-              <p className="text-xs text-[#6F6B76]">Combined single and group orders processed.</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#6F6B76]">Revenue</span>
+              <div className="text-2xl font-black text-[#4B2E83]">₦{totalRevenue.toLocaleString()}</div>
+              <p className="text-xs text-[#6F6B76]">Combined orders.</p>
             </div>
-
-            <div className="rounded-3xl border-2 border-emerald-500 bg-emerald-50 p-6 shadow-sm space-y-2">
-              <span className="text-xs font-black uppercase tracking-wider text-emerald-800">
-                Student Delivery Fee Savings
-              </span>
-              <div className="text-3xl font-black text-emerald-700">
-                ?{totalDeliverySavings.toLocaleString()}
-              </div>
-              <p className="text-xs text-emerald-800">
-                Saved by university students through shared group orders!
-              </p>
+            <div className="rounded-3xl border border-emerald-500 bg-emerald-50 p-4 shadow-sm">
+              <span className="text-xs font-black uppercase tracking-wider text-emerald-800">Delivery Savings</span>
+              <div className="text-2xl font-black text-emerald-700">₦{totalDeliverySavings.toLocaleString()}</div>
+              <p className="text-xs text-emerald-800">Saved via group orders.</p>
             </div>
-
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm space-y-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#6F6B76]">
-                Total Completed Routes
-              </span>
-              <div className="text-3xl font-black text-[#211F26]">
-                {singleOrders.length + groupOrders.length}
-              </div>
-              <p className="text-xs text-[#6F6B76]">Reduced carbon footprint via grouped drops.</p>
+            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#6F6B76]">Routes</span>
+              <div className="text-2xl font-black text-[#211F26]">{singleOrders.length + groupOrders.length}</div>
+              <p className="text-xs text-[#6F6B76]">Total orders.</p>
             </div>
           </div>
         )}

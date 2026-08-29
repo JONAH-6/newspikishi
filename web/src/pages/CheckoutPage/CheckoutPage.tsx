@@ -14,7 +14,6 @@ import {
   ArrowRight,
   Plus,
   Minus,
-  ShieldCheck,
   Phone,
   User,
   AlertCircle,
@@ -90,15 +89,15 @@ const CheckoutPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF8FD] py-8">
-      <Metadata title="Single Order Checkout — YumZee" description="Complete your single order checkout." />
+    <div className="min-h-screen bg-[#FAF8FD] py-6">
+      <Metadata title="Checkout — YumZee" description="Complete your checkout." />
 
       <PaymentModal
         isOpen={isPaymentOpen}
         onClose={() => setIsPaymentOpen(false)}
         onSuccess={handlePaymentSuccess}
         amount={grandTotal}
-        orderTitle="Single Order Checkout"
+        orderTitle="Checkout"
         studentName={customerName}
       />
 
@@ -106,63 +105,45 @@ const CheckoutPage = () => {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="rounded-md bg-[#4B2E83] px-2.5 py-0.5 text-xs font-black uppercase tracking-wider text-white">
-                Option 1
-              </span>
-              <h1 className="text-2xl sm:text-3xl font-black text-[#211F26]">
-                Single Order Checkout
-              </h1>
-            </div>
-            <p className="mt-1 text-xs sm:text-sm text-[#6F6B76]">
-              Standard individual order delivered directly to you.
-            </p>
+            <h1 className="text-2xl font-black text-[#211F26]">Checkout</h1>
+            <p className="mt-1 text-xs text-[#6F6B76]">Review your items and delivery details.</p>
           </div>
           <Link
             to={routes.home()}
-            className="text-xs sm:text-sm font-bold text-[#4B2E83] hover:text-[#FFC928] transition"
+            className="text-xs font-bold text-[#4B2E83] hover:text-[#FFC928] transition"
           >
             ← Back to Menu
           </Link>
         </div>
 
-        {/* Group Savings Banner */}
-        <div className="rounded-3xl border-2 border-[#FFC928] bg-gradient-to-r from-[#FFF9E8] to-[#FFF3D0] p-5 shadow-sm">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <div className="flex items-start gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#FFC928] text-[#4B2E83] font-black">
-                <Users className="h-5 w-5" />
+        {/* Group Order nudge */}
+        <div className="rounded-2xl border border-[#FFC928] bg-[#FFF9E8] p-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#FFC928] text-[#4B2E83]">
+                <Users className="h-4 w-4" />
               </div>
-              <div>
-                <h4 className="text-sm font-black text-[#4B2E83]">
-                  Want to Save ₦{rules.baseDeliveryFee.toLocaleString()} on Delivery?
-                </h4>
-                <p className="text-xs text-[#6F6B76]">
-                  Convert your cart into a <b>Hostel Group Order</b>! When 4+ students join, delivery is 100% Free!
-                </p>
-              </div>
+              <p className="text-xs font-bold text-[#4B2E83]">Save on delivery with a Group Order — free with 4+.</p>
             </div>
             <Link
               to={routes.createGroupOrder()}
-              className="whitespace-nowrap rounded-2xl bg-[#4B2E83] px-5 py-2.5 text-xs font-black text-white hover:bg-[#371F62] transition shadow"
+              className="whitespace-nowrap rounded-xl bg-[#4B2E83] px-4 py-2 text-xs font-bold text-white hover:bg-[#371F62] transition"
             >
-              Start Group Order Instead →
+              Start Group Order →
             </Link>
           </div>
         </div>
 
         {cart.length === 0 ? (
-          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-12 text-center shadow-sm">
-            <ShoppingBag className="mx-auto h-16 w-16 text-[#6F6B76]/40 mb-3" />
-            <h3 className="text-lg font-bold text-[#211F26]">Your bag is empty</h3>
-            <p className="text-xs text-[#6F6B76] mt-1 mb-6">
-              Browse our snacks and add delicious campus treats to start an order.
-            </p>
+          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
+            <ShoppingBag className="mx-auto h-12 w-12 text-[#6F6B76]/40 mb-3" />
+            <h3 className="text-sm font-bold text-[#211F26]">Your bag is empty</h3>
+            <p className="text-xs text-[#6F6B76] mt-1 mb-4">Add snacks to start an order.</p>
             <Link
               to={routes.home()}
-              className="inline-flex items-center gap-2 rounded-2xl bg-[#FFC928] px-8 py-3 text-sm font-extrabold text-[#4B2E83] shadow transition hover:bg-[#E5B420]"
+              className="inline-flex items-center gap-2 rounded-2xl bg-[#FFC928] px-6 py-3 text-sm font-extrabold text-[#4B2E83] shadow transition hover:bg-[#E5B420]"
             >
-              Browse Campus Menu
+              Browse Menu
             </Link>
           </div>
         ) : (
@@ -170,7 +151,7 @@ const CheckoutPage = () => {
             {/* Left Column */}
             <div className="lg:col-span-7 space-y-6">
               {/* Delivery Details */}
-              <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm space-y-4">
+              <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4">
                 <div className="flex items-center gap-2 border-b border-[#E9E5EE] pb-3">
                   <MapPin className="h-5 w-5 text-[#4B2E83]" />
                   <h3 className="font-extrabold text-base text-[#211F26]">
@@ -205,10 +186,10 @@ const CheckoutPage = () => {
                   </button>
                 </div>
 
-                {/* Hostel Picker */}
+                {/* Location Picker */}
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-[#6F6B76] mb-1">
-                    Campus Hostel / Delivery Spot
+                    Delivery Location
                   </label>
                   <select
                     value={selectedHostel}
@@ -227,7 +208,7 @@ const CheckoutPage = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-[#6F6B76] mb-1">
-                      Student Name
+                      Name
                     </label>
                     <div className="relative">
                       <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#A09BA8]" />
@@ -244,7 +225,7 @@ const CheckoutPage = () => {
 
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-[#6F6B76] mb-1">
-                      Phone Number (WhatsApp)
+                      Phone Number
                     </label>
                     <div className="relative">
                       <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#A09BA8]" />
@@ -290,7 +271,7 @@ const CheckoutPage = () => {
               </div>
 
               {/* Items in Bag */}
-              <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm space-y-4">
+              <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4">
                 <div className="flex items-center justify-between border-b border-[#E9E5EE] pb-3">
                   <div className="flex items-center gap-2">
                     <ShoppingBag className="h-5 w-5 text-[#4B2E83]" />
@@ -353,8 +334,8 @@ const CheckoutPage = () => {
 
             {/* Right Column: Order Summary */}
             <div className="lg:col-span-5">
-              <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm space-y-5 sticky top-20">
-                <h3 className="font-extrabold text-lg text-[#211F26] border-b border-[#E9E5EE] pb-3">
+              <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4 sticky top-20">
+                <h3 className="font-extrabold text-sm text-[#211F26] border-b border-[#E9E5EE] pb-3">
                   Payment Summary
                 </h3>
 
@@ -372,16 +353,15 @@ const CheckoutPage = () => {
                   </div>
 
                   <div className="flex justify-between text-[#6F6B76]">
-                    <span>Campus Service & Packaging</span>
+                    <span>Service Fee</span>
                     <span className="font-bold text-[#211F26]">₦{serviceFee.toLocaleString()}</span>
                   </div>
 
                   <div className="border-t border-[#E9E5EE] pt-3 flex justify-between items-baseline">
                     <div>
-                      <span className="text-base font-extrabold text-[#211F26] block">Final Amount</span>
-                      <span className="text-[11px] text-[#6F6B76]">Includes all fees</span>
+                      <span className="text-sm font-extrabold text-[#211F26] block">Total</span>
                     </div>
-                    <span className="text-2xl font-black text-[#4B2E83]">
+                    <span className="text-xl font-black text-[#4B2E83]">
                       ₦{grandTotal.toLocaleString()}
                     </span>
                   </div>
@@ -401,11 +381,6 @@ const CheckoutPage = () => {
                   <span>Pay & Place Order</span>
                   <ArrowRight className="h-5 w-5" />
                 </button>
-
-                <div className="flex items-center justify-center gap-1.5 text-xs text-[#6F6B76] text-center">
-                  <ShieldCheck className="h-4 w-4 text-emerald-600" />
-                  <span>Instant Confirmation & Real-time Rider Tracking</span>
-                </div>
               </div>
             </div>
           </form>

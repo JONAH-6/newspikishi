@@ -90,25 +90,18 @@ const FavoritesPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FBF9FE] py-8">
-      <Metadata
-        title="Favorite Snacks"
-        description="Your saved favorite items"
-      />
+    <div className="min-h-screen bg-[#FBF9FE] py-6">
+      <Metadata title="Favorites — YumZee" description="Your saved items" />
 
       <div className="container mx-auto max-w-5xl space-y-6 px-4">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <Heart className="h-6 w-6 fill-pink-600 text-pink-600" />
-              <h1 className="text-3xl font-extrabold text-[#211F26]">
-                My Favorite Snacks
-              </h1>
+              <Heart className="h-5 w-5 fill-pink-600 text-pink-600" />
+              <h1 className="text-xl font-black text-[#211F26]">Favorites</h1>
             </div>
-            <p className="mt-1 text-sm text-[#6F6B76]">
-              Your personal shortlist for lightning-fast campus orders
-            </p>
+            <p className="mt-1 text-xs text-[#6F6B76]">Your saved snacks.</p>
           </div>
 
           <Link
@@ -119,33 +112,22 @@ const FavoritesPage = () => {
           </Link>
         </div>
 
-        {/* List of Favorites */}
+        {/* List */}
         {favorites.length === 0 ? (
-          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-12 text-center shadow-sm">
-            <Heart className="mx-auto mb-3 h-16 w-16 text-gray-300" />
-            <h3 className="text-lg font-bold text-[#211F26]">
-              No favorites saved yet
-            </h3>
-            <p className="mx-auto mb-6 mt-1 max-w-sm text-sm text-[#6F6B76]">
-              Browse the menu and click the heart icon on any snack to add it
-              here.
-            </p>
-            <Link
-              to={routes.home()}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#FFC928] px-6 py-2.5 text-sm font-bold text-[#4B2E83] shadow transition hover:bg-[#E5B420]"
-            >
-              Browse Menu <ArrowRight className="h-4 w-4" />
-            </Link>
+          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
+            <Heart className="mx-auto mb-3 h-10 w-10 text-gray-300" />
+            <h3 className="text-sm font-bold text-[#211F26]">No favorites yet</h3>
+            <p className="mx-auto mb-4 mt-1 max-w-sm text-xs text-[#6F6B76]">Browse and save snacks to see them here.</p>
+            <Link to={routes.home()} className="inline-flex items-center gap-2 rounded-xl bg-[#FFC928] px-6 py-3 text-sm font-bold text-[#4B2E83]">Browse Menu <ArrowRight className="h-4 w-4" /></Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {favorites.map((item) => {
               const isAdded = addedIds.includes(item.id)
-
               return (
                 <div
                   key={item.id}
-                  className="flex flex-col justify-between gap-4 rounded-3xl border border-[#E9E5EE] bg-white p-5 shadow-sm transition hover:shadow-md sm:flex-row"
+                  className="flex flex-col justify-between gap-4 rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm sm:flex-row"
                 >
                   <img
                     src={item.image}

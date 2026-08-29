@@ -183,18 +183,17 @@ const DiscoverPage = () => {
       </div>
 
       <div className="container mx-auto max-w-3xl px-4 py-6 space-y-6">
-        {/* Suggestions dropdown - appears while typing */}
+        {/* Suggestions dropdown */}
         {suggestions.length > 0 && (
           <div className="rounded-2xl border border-[#E9E5EE] bg-white shadow-sm overflow-hidden">
             {suggestions.map((s) => (
               <button
                 key={s}
                 onClick={() => handleSelectSuggestion(s)}
-                className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-[#FAF8FD] transition border-b border-[#F5F1FB] last:border-0"
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-[#FAF8FD] transition border-b border-[#F5F1FB] last:border-0"
               >
                 <Search className="h-4 w-4 text-[#A09BA8] shrink-0" />
                 <span className="text-sm font-medium text-[#211F26]">{s}</span>
-                <span className="ml-auto text-xs text-[#A09BA8]">in menu</span>
               </button>
             ))}
           </div>
@@ -202,8 +201,8 @@ const DiscoverPage = () => {
 
         {!isSearching ? (
           <>
-            {/* Recent searches - Facebook style */}
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-5 shadow-sm">
+            {/* Recent searches */}
+            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
               <div className="flex items-center justify-between">
                 <h3 className="flex items-center gap-2 text-sm font-extrabold text-[#211F26]">
                   <Clock className="h-4 w-4 text-[#6F6B76]" /> Recent searches
@@ -215,7 +214,7 @@ const DiscoverPage = () => {
                 )}
               </div>
               {recent.length === 0 ? (
-                <p className="mt-3 text-xs text-[#A09BA8]">No recent searches — try “Suya” or “Jollof”.</p>
+                <p className="mt-3 text-xs text-[#A09BA8]">No recent searches.</p>
               ) : (
                 <div className="mt-3 flex flex-wrap gap-2">
                   {recent.map((t) => (
@@ -336,7 +335,7 @@ const DiscoverPage = () => {
               <div className="rounded-3xl border border-dashed border-[#E9E5EE] bg-white p-10 text-center">
                 <Search className="mx-auto h-10 w-10 text-[#A09BA8]/40" />
                 <h3 className="mt-3 text-sm font-bold text-[#211F26]">No results for “{query}”{selectedCat !== 'All' ? ` in ${selectedCat}` : ''}</h3>
-                <p className="mt-1 text-xs text-[#6F6B76]">Try “Jollof”, “Suya” or check the category.</p>
+                <p className="mt-1 text-xs text-[#6F6B76]">Try a different term or category.</p>
                 <div className="mt-4 flex flex-wrap justify-center gap-2">
                   {POPULAR_SEARCHES.slice(0, 4).map((p) => (
                     <button key={p} onClick={() => setQuery(p)} className="rounded-full border border-[#E9E5EE] bg-[#FAF8FD] px-3 py-1.5 text-xs font-bold text-[#4B2E83] hover:bg-white">

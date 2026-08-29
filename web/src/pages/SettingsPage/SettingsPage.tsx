@@ -29,21 +29,14 @@ const SettingsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#FBF9FE] py-8">
-      <Metadata
-        title="Account Settings"
-        description="Manage your YumZee preferences"
-      />
+    <div className="min-h-screen bg-[#FBF9FE] py-6">
+      <Metadata title="Settings — YumZee" description="Manage your preferences" />
 
       <div className="container mx-auto max-w-3xl space-y-6 px-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-extrabold text-[#211F26]">
-              Account Settings
-            </h1>
-            <p className="mt-1 text-sm text-[#6F6B76]">
-              Customize your notifications and account preferences
-            </p>
+            <h1 className="text-2xl font-black text-[#211F26]">Settings</h1>
+            <p className="mt-1 text-xs text-[#6F6B76]">Notifications and account.</p>
           </div>
 
           {savedToast && (
@@ -54,22 +47,16 @@ const SettingsPage = () => {
         </div>
 
         {/* Notifications Card */}
-        <div className="space-y-6 rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm md:p-8">
-          <h2 className="flex items-center gap-2 text-lg font-extrabold text-[#211F26]">
-            <Bell className="h-5 w-5 text-[#4B2E83]" />
-            <span>Notification Preferences</span>
+        <div className="space-y-4 rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+          <h2 className="flex items-center gap-2 text-sm font-black text-[#211F26]">
+            <Bell className="h-4 w-4 text-[#4B2E83]" /> Notifications
           </h2>
 
           <div className="space-y-4 divide-y divide-[#E9E5EE]">
             <div className="flex items-center justify-between pt-3">
               <div>
-                <p className="text-sm font-bold text-[#211F26]">
-                  Order Status Notifications
-                </p>
-                <p className="text-xs text-[#6F6B76]">
-                  Receive live updates when your snack is being prepared and
-                  delivered
-                </p>
+                <p className="text-sm font-bold text-[#211F26]">Order updates</p>
+                <p className="text-xs text-[#6F6B76]">Get updates when your order moves.</p>
               </div>
               <button
                 type="button"
@@ -89,12 +76,8 @@ const SettingsPage = () => {
 
             <div className="flex items-center justify-between pt-4">
               <div>
-                <p className="text-sm font-bold text-[#211F26]">
-                  WhatsApp Receipts & Drop-off PIN
-                </p>
-                <p className="text-xs text-[#6F6B76]">
-                  Get order confirmation directly on WhatsApp for convenience
-                </p>
+                <p className="text-sm font-bold text-[#211F26]">WhatsApp receipts</p>
+                <p className="text-xs text-[#6F6B76]">Get confirmations on WhatsApp.</p>
               </div>
               <button
                 type="button"
@@ -114,12 +97,8 @@ const SettingsPage = () => {
 
             <div className="flex items-center justify-between pt-4">
               <div>
-                <p className="text-sm font-bold text-[#211F26]">
-                  Campus Discounts & Flash Deals
-                </p>
-                <p className="text-xs text-[#6F6B76]">
-                  Exclusive student discount alerts and combo deals
-                </p>
+                <p className="text-sm font-bold text-[#211F26]">Deals & discounts</p>
+                <p className="text-xs text-[#6F6B76]">Get combo and discount alerts.</p>
               </div>
               <button
                 type="button"
@@ -140,10 +119,9 @@ const SettingsPage = () => {
         </div>
 
         {/* Security & Account Card */}
-        <div className="space-y-6 rounded-3xl border border-[#E9E5EE] bg-white p-6 shadow-sm md:p-8">
-          <h2 className="flex items-center gap-2 text-lg font-extrabold text-[#211F26]">
-            <Shield className="h-5 w-5 text-[#4B2E83]" />
-            <span>Account Actions</span>
+        <div className="space-y-4 rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+          <h2 className="flex items-center gap-2 text-sm font-black text-[#211F26]">
+            <Shield className="h-4 w-4 text-[#4B2E83]" /> Account
           </h2>
 
           <div className="flex flex-col justify-between gap-4 pt-2 sm:flex-row sm:items-center">
