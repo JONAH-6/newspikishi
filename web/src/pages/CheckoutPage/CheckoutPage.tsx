@@ -92,7 +92,11 @@ const CheckoutPage = () => {
       setJoinError('')
       setGroupModalOpen(false)
       setModalView('choice')
-    } catch (e: any) { setJoinError(e.message) }
+    } catch (e: any) {
+      const all = GroupOrderStore.getAll().filter(g => g.status === 'active')
+      const list = all.length ? `Active on this device: ${all.map(g=>g.code).join(', ')}` : 'No active groups on this browser — click INVITE to create one. Codes expire after 1 hour and are local to this browser (for real cross-phone sharing we need Firebase — ask me to enable).'
+      setJoinError(`${e.message}. ${list}`)
+    }
   }
 
   const handleCopy = (code: string) => {
@@ -178,23 +182,30 @@ const CheckoutPage = () => {
               )}
 
               {modalView === 'join' && (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <h4 className="font-bold text-sm text-center">Enter Group Code</h4>
-                  <input value={joinCodeInput} onChange={(e) => { setJoinCodeInput(e.target.value.toUpperCase()); setJoinError('') }} placeholder="YZ-XXXX-XXXX" className="w-full rounded-2xl border border-[#E9E5EE] bg-[#FAF8FD] px-4 py-3 text-sm font-mono font-bold tracking-widest text-center focus:border-[#4B2E83] focus:outline-none" />
-                  {joinError && <p className="text-xs font-bold text-red-600 text-center">{joinError}</p>}
-                  <button onClick={handleJoin} className="w-full rounded-2xl bg-[#4B2E83] py-3 text-sm font-black text-white">JOIN GROUP</button>
+                  <input value={joinCodeInput} onChange={(e) => { setJoinCodeInput(e.target.value.toUpperCase()); setJoinError('') }} placeholder="YZ-XXXX-XXXX" className="w-full rounded-xl border border-[#E9E5EE] bg-[#FAF8FD] px-3 py-3 text-sm font-mono font-bold tracking-widest text-center focus:border-[#4B2E83] focus:outline-none" />
+                  {joinError && <p className="text-xs font-bold text-red-600 text-center whitespace-pre-wrap">{joinError}</p>}
+                  <div className="rounded-xl bg-[#F5F1FB] p-3 text-xs text-[#6F6B76]">
+                    <div className="font-bold text-[#211F26]">Active codes on this device:</div>
+                    <div className="font-mono mt-1">{GroupOrderStore.getAll().filter(g=>g.status==='active').map(g=>g.code).join(', ') || 'None — click INVITE to create one.'}</div>
+                    <div className="text-[11px] mt-1">Tip: Code is created via INVITE. If you typed YZ-8XMM-4K33 and it says invalid, that code was never created on this browser. For cross-phone sharing, we need Firebase — I can enable it. Ask me.</div>
+                  </div>
+                  <button onClick={handleJoin} className="w-full rounded-xl bg-[#4B2E83] py-3 text-sm font-bold text-white">JOIN GROUP</button>
                   <button onClick={() => setModalView('choice')} className="w-full text-xs font-bold text-[#6F6B76]">← Back</button>
                 </div>
               )}
 
               {modalView === 'invite' && (
-                <div className="space-y-4 text-center">
+                <div className="space-y-3 text-center">
                   <h4 className="font-bold text-sm">Share This Code</h4>
-                  <div className="mx-auto rounded-2xl bg-[#4B2E83] text-white font-mono text-xl font-black tracking-widest py-4 px-6">{inviteCode}</div>
-                  <button onClick={() => handleCopy(inviteCode)} className="w-full flex items-center justify-center gap-2 rounded-2xl border border-[#E9E5EE] bg-white py-3 text-sm font-bold hover:bg-gray-50">
+                  <div className="mx-auto rounded-xl bg-[#4B2E83] text-white font-mono text-xl font-bold tracking-widest py-3 px-6">{inviteCode}</div>
+                  <p className="text-xs text-[#6F6B76]">Code stays same — add banana, plantain, etc. they join same group. Share this same code.</p>
+                  <button onClick={() => handleCopy(inviteCode)} className="w-full flex items-center justify-center gap-2 rounded-xl border border-[#E9E5EE] bg-white py-2.5 text-xs font-bold hover:bg-gray-50">
                     {copied ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />} {copied ? 'Copied' : '📋 COPY CODE'}
                   </button>
-                  <button onClick={() => { setGroupModalOpen(false); setModalView('choice') }} className="w-full rounded-2xl bg-emerald-600 py-3 text-sm font-bold text-white">Done</button>
+                  <a href={`https://wa.me/?text=${encodeURIComponent(`Join my YumZee group ${inviteCode} http://localhost:40000/checkout`)}`} target="_blank" rel="noopener noreferrer" className="w-full inline-block rounded-xl bg-emerald-600 py-2.5 text-xs font-bold text-white">Share via WhatsApp</a>
+                  <button onClick={() => { setGroupModalOpen(false); setModalView('choice') }} className="w-full rounded-xl bg-[#4B2E83] py-2.5 text-xs font-bold text-white">Done — code won&apos;t change when you add items</button>
                 </div>
               )}
             </div>
