@@ -211,16 +211,14 @@ const CheckoutPage = () => {
           <Link to={routes.home()} className="text-xs font-bold text-[#4B2E83]">← Back to Menu</Link>
         </div>
 
-        {/* SAVE ON DELIVERY — checkout nudge */}
+        {/* SAVE ON DELIVERY — clean, arranged */}
         {!activeGroup ? (
-          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-4 space-y-3">
-            <h3 className="font-black text-sm text-center tracking-wider">═══ SAVE ON DELIVERY ═══</h3>
-            <p className="text-xs text-center text-[#6F6B76]">Save on delivery with a Group Order</p>
-            <button onClick={() => setGroupModalOpen(true)} className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[#FFC928] py-3 text-sm font-bold text-[#4B2E83] hover:bg-[#E5B420] transition">
+          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-5 space-y-3 text-center">
+            <h3 className="font-black text-sm tracking-wider">═══ SAVE ON DELIVERY ═══</h3>
+            <p className="text-xs text-[#6F6B76]">Save on delivery with a Group Order</p>
+            <button onClick={() => setGroupModalOpen(true)} className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[#FFC928] py-3 text-sm font-bold text-[#4B2E83] hover:bg-[#E5B420] transition shadow-sm">
               <Users className="h-4 w-4" /> Start Group Order
             </button>
-            <div className="flex items-center gap-2 text-xs text-[#A09BA8]"><span className="h-px flex-1 bg-[#E9E5EE]" /> OR <span className="h-px flex-1 bg-[#E9E5EE]" /></div>
-            <div className="text-xs text-center text-[#6F6B76]">Continue as single order</div>
           </div>
         ) : (
           <div className="rounded-2xl border-2 border-[#FFC928] bg-[#FFF9E8] p-4 flex items-center justify-between">
@@ -243,47 +241,6 @@ const CheckoutPage = () => {
         ) : (
           <form onSubmit={handleStartPayment} className="grid grid-cols-1 gap-6 lg:grid-cols-12">
             <div className="lg:col-span-7 space-y-6">
-              <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4">
-                <div className="flex items-center gap-2 border-b border-[#E9E5EE] pb-3">
-                  <MapPin className="h-5 w-5 text-[#4B2E83]" />
-                  <h3 className="font-extrabold text-sm text-[#211F26]">Drop-off Location & Details</h3>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <button type="button" onClick={() => setDeliveryType('delivery')} className={`flex items-center justify-center gap-2 rounded-2xl border p-3 text-xs font-bold transition ${deliveryType === 'delivery' ? 'border-[#4B2E83] bg-[#F5F1FB] text-[#4B2E83]' : 'border-[#E9E5EE] text-[#6F6B76]'}`}>
-                    <Truck className="h-4 w-4" /> Rider Delivery (₦{rules.baseDeliveryFee})
-                  </button>
-                  <button type="button" onClick={() => setDeliveryType('pickup')} className={`flex items-center justify-center gap-2 rounded-2xl border p-3 text-xs font-bold transition ${deliveryType === 'pickup' ? 'border-[#4B2E83] bg-[#F5F1FB] text-[#4B2E83]' : 'border-[#E9E5EE] text-[#6F6B76]'}`}>
-                    <Building2 className="h-4 w-4" /> Kitchen Pickup (Free)
-                  </button>
-                </div>
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-[#6F6B76] mb-1">Delivery Location</label>
-                  <select value={selectedHostel} onChange={(e) => setSelectedHostel(e.target.value)} className="w-full rounded-2xl border border-[#E9E5EE] bg-[#FAF8FD] p-3 text-sm font-semibold text-[#211F26] focus:border-[#4B2E83] focus:outline-none">
-                    {locations.map((loc) => <option key={loc.id} value={loc.name}>{loc.name} ({loc.zone})</option>)}
-                  </select>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#6F6B76] mb-1">Name</label>
-                    <div className="relative"><User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#A09BA8]" /><input type="text" required value={customerName} onChange={(e) => setCustomerName(e.target.value)} className="w-full rounded-2xl border border-[#E9E5EE] bg-[#FAF8FD] py-2.5 pl-10 pr-3 text-sm font-semibold focus:border-[#4B2E83] focus:outline-none" placeholder="Your full name" /></div>
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#6F6B76] mb-1">Phone Number</label>
-                    <div className="relative"><Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#A09BA8]" /><input type="tel" required value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} className="w-full rounded-2xl border border-[#E9E5EE] bg-[#FAF8FD] py-2.5 pl-10 pr-3 text-sm font-semibold focus:border-[#4B2E83] focus:outline-none" placeholder="08123456789" /></div>
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#6F6B76] mb-1">Room / Block Number</label>
-                    <input type="text" value={roomNumber} onChange={(e) => setRoomNumber(e.target.value)} className="w-full rounded-2xl border border-[#E9E5EE] bg-[#FAF8FD] p-2.5 text-sm font-semibold focus:border-[#4B2E83] focus:outline-none" placeholder="e.g. Block A Room 204" />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#6F6B76] mb-1">Delivery Note for Rider</label>
-                    <input type="text" value={deliveryNotes} onChange={(e) => setDeliveryNotes(e.target.value)} className="w-full rounded-2xl border border-[#E9E5EE] bg-[#FAF8FD] p-2.5 text-sm font-semibold focus:border-[#4B2E83] focus:outline-none" placeholder="e.g. Call when entering gate" />
-                  </div>
-                </div>
-              </div>
-
               <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4">
                 <div className="flex items-center justify-between border-b border-[#E9E5EE] pb-3">
                   <div className="flex items-center gap-2"><ShoppingBag className="h-5 w-5 text-[#4B2E83]" /><h3 className="font-extrabold text-sm text-[#211F26]">Selected Snacks ({activeGroup ? activeGroup.items.length : cart.length})</h3></div>
