@@ -1,5 +1,7 @@
-// web/src/lib/groupOrderStore.ts — simple YZ group order for checkout popup
+// web/src/lib/groupOrderStore.ts — simple YZ group order for checkout popup (local + Firestore for cross-phone)
 import { Product } from 'src/lib/orderStore'
+import { db } from 'src/lib/firebase'
+import { doc, setDoc, getDoc, updateDoc } from 'firebase/firestore'
 
 export type GroupOrderStatus = 'active' | 'checkout' | 'completed' | 'expired'
 
@@ -73,9 +75,27 @@ export function calculateGroupTotal(g: GroupOrder) {
   const deliveryFee = calculateDeliveryFee(g.members.length)
   return { memberTotals, subtotal, deliveryFee, grandTotal: subtotal + deliveryFee, baseFee: BASE_FEE }
 }
+// Firestore helpers — fire-and-forget, fallback to local
+async function firestoreSave(g: GroupOrder) {
+  try { await setDoc(doc(db, 'groupOrders', g.code), g, { merge: true }) } catch {}
+}
+async function firestoreGet(code: string): Promise<GroupOrder | null> {
+  try {
+    const snap = await getDoc(doc(db, 'groupOrders', code.toUpperCase()))
+    if (snap.exists()) return snap.data() as GroupOrder
+  } catch {}
+  return null
+}
 export const GroupOrderStore = {
   getAll() { return loadAll() },
   getByCode(code: string) { return loadAll().find(g => g.code.toUpperCase() === code.trim().toUpperCase()) },
+  async getByCodeAsync(code: string): Promise<GroupOrder | null> {
+    const local = loadAll().find(g => g.code.toUpperCase() === code.trim().toUpperCase())
+    if (local) return local
+    const remote = await firestoreGet(code)
+    if (remote) { saveAll([remote, ...loadAll()]); return remote }
+    return null
+  },
   getActiveForUser(uid: string) { return loadAll().find(g => g.status === 'active' && g.members.some(m => m.userId === uid)) },
   createGroupOrder(params: { hostUserId: string; hostName: string; items: { product: Product; quantity: number }[] }): GroupOrder {
     let code = generateGroupCode()
@@ -88,18 +108,35 @@ export const GroupOrderStore = {
       createdAt: now.toISOString(), expiresAt: new Date(now.getTime() + EXPIRY).toISOString(),
     }
     saveAll([g, ...loadAll()])
+    firestoreSave(g)
     return g
+  },
+  async joinGroupOrderAsync(code: string, user: { userId: string; name: string }): Promise<GroupOrder> {
+    const up = code.trim().toUpperCase()
+    let g = await firestoreGet(up)
+    if (g) {
+      if (g.status !== 'active') throw new Error('Group not active — create new via INVITE')
+      if (new Date(g.expiresAt).getTime() < Date.now()) throw new Error('Code expired after 1 hour')
+      if (g.members.some(m => m.userId === user.userId)) throw new Error('Already joined')
+      g.members.push({ userId: user.userId, name: user.name, role: 'joiner' })
+      try { await updateDoc(doc(db, 'groupOrders', up), { members: g.members }) } catch { await setDoc(doc(db, 'groupOrders', up), g) }
+      saveAll([g, ...loadAll().filter(x => x.code !== up)])
+      return g
+    }
+    // fallback local
+    return GroupOrderStore.joinGroupOrder(code, user)
   },
   joinGroupOrder(code: string, user: { userId: string; name: string }) {
     const all = loadAll()
     const idx = all.findIndex(g => g.code.toUpperCase() === code.trim().toUpperCase())
-    if (idx === -1) throw new Error('Invalid code')
+    if (idx === -1) throw new Error('No group found for ' + code.toUpperCase() + ' — click INVITE to create one')
     const g = all[idx]
-    if (g.status !== 'active') throw new Error('Group not active')
-    if (new Date(g.expiresAt).getTime() < Date.now()) { g.status = 'expired'; saveAll(all); throw new Error('Code expired') }
+    if (new Date(g.expiresAt).getTime() < Date.now()) { g.status = 'expired'; saveAll(all); throw new Error('Code expired after 1 hour — ask host to INVITE again') }
+    if (g.status !== 'active') throw new Error('Group not active — create new via INVITE')
     if (g.members.some(m => m.userId === user.userId)) throw new Error('Already joined')
     g.members.push({ userId: user.userId, name: user.name, role: 'joiner' })
     saveAll(all)
+    firestoreSave(g)
     return g
   },
   addItem(code: string, userId: string, product: Product, qty: number) {

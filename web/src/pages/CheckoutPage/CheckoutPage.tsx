@@ -83,18 +83,22 @@ const CheckoutPage = () => {
     } catch (e: any) { setJoinError(e.message) }
   }
 
-  const handleJoin = () => {
+  const handleJoin = async () => {
     const code = joinCodeInput.trim().toUpperCase()
     if (!code) { setJoinError('Enter code'); return }
     try {
-      const g = GroupOrderStore.joinGroupOrder(code, { userId: uid, name: displayName })
-      setActiveGroup(g)
+      let g: GroupOrder | null = null
+      try { g = GroupOrderStore.joinGroupOrder(code, { userId: uid, name: displayName }) } catch (localErr: any) {
+        // try Firestore (cross-phone)
+        try { g = await GroupOrderStore.joinGroupOrderAsync(code, { userId: uid, name: displayName }) } catch (e: any) { throw localErr }
+      }
+      setActiveGroup(g!)
       setJoinError('')
       setGroupModalOpen(false)
       setModalView('choice')
     } catch (e: any) {
       const all = GroupOrderStore.getAll().filter(g => g.status === 'active')
-      const list = all.length ? `Active on this device: ${all.map(g=>g.code).join(', ')}` : 'No active groups on this browser — click INVITE to create one. Codes expire after 1 hour and are local to this browser (for real cross-phone sharing we need Firebase — ask me to enable).'
+      const list = all.length ? `Active on this device: ${all.map(g=>g.code).join(', ')}` : 'No active groups on this device — click INVITE to create one. Tip: Codes are now cross-phone via Firestore — ask host to re-INVITE if expired (1 hour).'
       setJoinError(`${e.message}. ${list}`)
     }
   }
