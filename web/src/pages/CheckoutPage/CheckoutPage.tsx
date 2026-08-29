@@ -295,7 +295,7 @@ const CheckoutPage = () => {
           <div className="rounded-xl border border-[#FFC928] bg-[#FFF9E8] p-3 flex items-center justify-between">
             <div>
               <div className="text-xs font-bold">GROUP ORDER</div>
-              <div className="font-mono text-xs font-bold">{activeGroup.code} • {activeGroup.members.length} members</div>
+              <div className="font-mono text-xs font-bold">{(activeGroup as any).productSelectionCode || activeGroup.code} • {activeGroup.members.length} members</div>
               <div className="text-xs text-[#6F6B76]">{activeGroup.members.map(m => `${m.name} (${m.role})`).join(', ')}</div>
             </div>
             <button onClick={() => { const all = GroupOrderStore.getAll(); const g = all.find(x=>x.code===activeGroup.code); if(g){g.status='expired' as any; localStorage.setItem('yumzee_group_orders_yz', JSON.stringify(all)); setActiveGroup(null)} }} className="text-xs font-bold text-red-600">Leave</button>

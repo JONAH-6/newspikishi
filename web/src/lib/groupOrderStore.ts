@@ -85,6 +85,12 @@ function loadAll(): GroupOrder[] {
     const now = Date.now()
     let changed = false
     const fixed = arr.map(g => {
+      // migrate old groups without productSelectionCode — generate from items
+      if (!g.productSelectionCode && g.items && g.items.length) {
+        const code = g.items.map((it: any) => it.quantity > 1 ? `${it.productId}x${it.quantity}` : `${it.productId}`).join(',')
+        g.productSelectionCode = code
+        changed = true
+      }
       if (g.status === 'active' && new Date(g.expiresAt).getTime() < now) { changed = true; return { ...g, status: 'expired' as GroupOrderStatus } }
       return g
     })
