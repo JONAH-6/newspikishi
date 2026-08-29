@@ -11,7 +11,6 @@ import {
   Flame,
   TrendingUp,
   ArrowLeft,
-  Star,
   Plus,
   Minus,
   ShoppingBag,
@@ -292,10 +291,7 @@ const DiscoverPage = () => {
                         <div className="flex-1 min-w-0">
                           <div className="text-[11px] font-bold uppercase tracking-wider text-[#4B2E83]">{product.category}</div>
                           <div className="text-sm font-bold text-[#211F26] truncate">{product.name}</div>
-                          <div className="flex items-center gap-1 text-xs font-bold text-amber-600">
-                            <Star className="h-3 w-3 fill-[#FFC928] text-[#FFC928]" /> {product.rating}
-                            <span className="text-[#A09BA8] font-medium">• ₦{product.price.toLocaleString()}</span>
-                          </div>
+                          <div className="text-xs font-bold text-[#211F26]">₦{product.price.toLocaleString()}</div>
                           <div className="mt-2 flex items-center gap-2">
                             <div className="flex items-center rounded-full border border-[#E9E5EE] bg-[#FAF8FD] p-0.5">
                               <button onClick={() => changeQty(product.id, -1)} className="h-6 w-6 rounded-full bg-white flex items-center justify-center hover:bg-gray-100">
@@ -360,10 +356,7 @@ const DiscoverPage = () => {
                       </div>
                       <div className="p-4 space-y-3">
                         <div>
-                          <div className="flex items-center justify-between text-xs">
-                            <span className="font-bold uppercase tracking-wider text-[#4B2E83]">{product.category}</span>
-                            <span className="flex items-center gap-1 font-bold text-amber-600"><Star className="h-3 w-3 fill-[#FFC928] text-[#FFC928]" />{product.rating}</span>
-                          </div>
+                          <div className="text-[11px] font-bold uppercase tracking-wider text-[#4B2E83]">{product.category}</div>
                           <h3 className="mt-1 text-sm font-extrabold text-[#211F26]">{product.name}</h3>
                           <p className="mt-1 line-clamp-2 text-xs text-[#6F6B76]">{product.description}</p>
                           <p className="mt-1 text-[11px] text-[#A09BA8]">{product.sellerName}</p>
