@@ -7,8 +7,8 @@ import { Utensils, ShoppingBag, Plus, Minus, Check, Search } from 'lucide-react'
 
 const categories = [
   'All Items',
-  'Savory Snacks',
   'Pastries',
+  'Savory Snacks',
   'Fast Food',
   'Cakes & Desserts',
   'Beverages',
