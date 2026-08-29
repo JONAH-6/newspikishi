@@ -98,7 +98,7 @@ const OrdersPage = () => {
         {/* Header */}
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <div>
-            <h1 className="text-2xl font-black text-[#211F26]">Orders</h1>
+            <h1 className="text-xl font-bold text-[#211F26]">Orders</h1>
             <p className="mt-1 text-xs text-[#6F6B76]">Your orders and group orders.</p>
           </div>
 
@@ -131,7 +131,7 @@ const OrdersPage = () => {
               {groupOrders.map((grp) => (
                 <div
                   key={grp.id}
-                  className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm transition hover:shadow-md"
+                  className="rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm transition hover:shadow-md"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E9E5EE] pb-4">
                     <div className="flex items-center gap-3">
@@ -200,7 +200,7 @@ const OrdersPage = () => {
             </div>
 
             {singleOrders.length === 0 ? (
-              <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
+              <div className="rounded-2xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
                 <ShoppingBag className="mx-auto h-10 w-10 text-[#6F6B76]/40 mb-2" />
                 <h3 className="text-sm font-bold text-[#211F26]">No orders yet</h3>
                 <p className="text-xs text-[#6F6B76] mt-1">Browse snacks to place an order.</p>
@@ -210,7 +210,7 @@ const OrdersPage = () => {
                 {singleOrders.map((order) => (
                   <div
                     key={order.id}
-                    className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm transition hover:shadow-md"
+                    className="rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm transition hover:shadow-md"
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E9E5EE] pb-4">
                       <div className="flex items-center gap-3">

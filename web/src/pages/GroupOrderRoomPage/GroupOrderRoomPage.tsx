@@ -45,7 +45,7 @@ const GroupOrderRoomPage = () => {
   if (!group) {
     return (
       <div className="min-h-screen bg-[#FAF8FD] flex items-center justify-center p-4">
-        <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 text-center max-w-md shadow-sm space-y-3">
+        <div className="rounded-2xl border border-[#E9E5EE] bg-white p-6 text-center max-w-md shadow-sm space-y-3">
           <Users className="mx-auto h-10 w-10 text-[#6F6B76]/40" />
           <h2 className="text-base font-bold text-[#211F26]">Group Order Not Found</h2>
           <p className="text-xs text-[#6F6B76]">No group found for code <b>{code}</b>.</p>
@@ -120,9 +120,9 @@ const GroupOrderRoomPage = () => {
       {payingParticipant && (
         <PaymentModal isOpen={!!payingParticipant} onClose={() => setPayingParticipant(null)} onSuccess={handlePaymentSuccess} amount={payingParticipant.totalAmount} orderTitle={`Pay: ${group.title}`} studentName={payingParticipant.name} />
       )}
-      <div className="container mx-auto max-w-5xl px-4 space-y-6">
+      <div className="w-full max-w-5xl mx-auto px-2 sm:px-3 space-y-6">
         {/* Header */}
-        <div className="overflow-hidden rounded-3xl border border-[#E9E5EE] bg-white shadow-sm">
+        <div className="overflow-hidden rounded-2xl border border-[#E9E5EE] bg-white shadow-sm">
           <div className="bg-[#4B2E83] p-4 text-white">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="space-y-1">
@@ -190,7 +190,7 @@ const GroupOrderRoomPage = () => {
 
             <div className="space-y-4">
               {group.participants.map((participant) => (
-                <div key={participant.id} className="overflow-hidden rounded-3xl border border-[#E9E5EE] bg-white">
+                <div key={participant.id} className="overflow-hidden rounded-2xl border border-[#E9E5EE] bg-white">
                   <div className="flex items-center justify-between border-b border-[#E9E5EE] bg-[#FAF8FD] p-4">
                     <div className="flex items-center gap-2.5">
                       <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#4B2E83] font-black text-xs text-white">{participant.name[0]}</div>
@@ -250,7 +250,7 @@ const GroupOrderRoomPage = () => {
           </div>
 
           <div className="lg:col-span-5 space-y-6">
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4 sticky top-20">
+            <div className="rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm space-y-4 sticky top-20">
               <div className="flex items-center justify-between border-b pb-3">
                 <h3 className="font-bold text-sm text-[#211F26]">Group Summary</h3>
                 <span className="rounded-md bg-[#4B2E83] px-2 py-0.5 text-xs font-bold text-white">{totalParticipants} bags</span>

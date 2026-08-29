@@ -63,7 +63,7 @@ const ProfilePage = () => {
       <div className="min-h-screen bg-[#FBF9FE] py-10">
         <Metadata title="Profile — Please login" description="Login to manage your profile" />
         <div className="container mx-auto max-w-md px-4">
-          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-8 shadow-sm text-center">
+          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-8 shadow-sm text-center">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F5F1FB] text-[#4B2E83]">
               <UserIcon className="h-8 w-8" />
             </div>
@@ -91,12 +91,12 @@ const ProfilePage = () => {
       <div className="container mx-auto max-w-3xl space-y-6 px-4">
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-extrabold text-[#211F26]">My Profile</h1>
+          <h1 className="text-xl font-bold text-[#211F26]">My Profile</h1>
           <p className="mt-1 text-xs text-[#6F6B76]">Manage your delivery details.</p>
         </div>
 
         {/* User card */}
-        <div className="flex items-center gap-4 rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+        <div className="flex items-center gap-4 rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm">
           {user.photoURL ? (
             <img src={user.photoURL} alt="Avatar" className="h-14 w-14 rounded-2xl border border-[#E9E5EE] object-cover" />
           ) : (
@@ -117,7 +117,7 @@ const ProfilePage = () => {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSave} className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4">
+        <form onSubmit={handleSave} className="rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm space-y-4">
           <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#211F26]">Delivery details</h3>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -214,7 +214,7 @@ const ProfilePage = () => {
         </form>
 
         {/* Account */}
-        <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+        <div className="rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm">
           <h3 className="text-sm font-extrabold text-[#211F26]">Account</h3>
           <p className="mt-1 text-xs text-[#6F6B76]">You’re signed in as {user.email}. Logging out clears your session on this device.</p>
           <button

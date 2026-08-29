@@ -34,10 +34,10 @@ const ContactPage = () => {
 
       {/* Main */}
       <div className="min-h-screen bg-[#FBF9FE] py-6">
-        <div className="container mx-auto max-w-6xl px-4">
+        <div className="w-full max-w-6xl mx-auto px-2 sm:px-3">
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {/* Contact Information */}
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+            <div className="rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm">
               <h2 className="mb-4 text-lg font-extrabold text-[#211F26]">Get in Touch</h2>
 
               <div className="space-y-6">
@@ -134,7 +134,7 @@ const ContactPage = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+            <div className="rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm">
               <h2 className="mb-4 text-lg font-extrabold text-[#211F26]">Send a Message</h2>
 
               <form

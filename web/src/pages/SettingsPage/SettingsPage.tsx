@@ -35,7 +35,7 @@ const SettingsPage = () => {
       <div className="container mx-auto max-w-3xl space-y-6 px-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-black text-[#211F26]">Settings</h1>
+            <h1 className="text-xl font-bold text-[#211F26]">Settings</h1>
             <p className="mt-1 text-xs text-[#6F6B76]">Notifications and account.</p>
           </div>
 
@@ -47,7 +47,7 @@ const SettingsPage = () => {
         </div>
 
         {/* Notifications Card */}
-        <div className="space-y-4 rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+        <div className="space-y-4 rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm">
           <h2 className="flex items-center gap-2 text-sm font-black text-[#211F26]">
             <Bell className="h-4 w-4 text-[#4B2E83]" /> Notifications
           </h2>
@@ -119,7 +119,7 @@ const SettingsPage = () => {
         </div>
 
         {/* Security & Account Card */}
-        <div className="space-y-4 rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+        <div className="space-y-4 rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm">
           <h2 className="flex items-center gap-2 text-sm font-black text-[#211F26]">
             <Shield className="h-4 w-4 text-[#4B2E83]" /> Account
           </h2>

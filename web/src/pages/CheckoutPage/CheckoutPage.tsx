@@ -202,29 +202,29 @@ const CheckoutPage = () => {
         </div>
       )}
 
-      <div className="container mx-auto max-w-4xl px-4 space-y-6">
+      <div className="w-full max-w-4xl mx-auto px-2 sm:px-3 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-black text-[#211F26]">Checkout</h1>
-            <p className="mt-1 text-xs text-[#6F6B76]">Review your items and delivery details.</p>
+            <h1 className="text-xl font-bold text-[#211F26]">Checkout</h1>
+            <p className="mt-1 text-xs text-[#6F6B76]">Review your items.</p>
           </div>
-          <Link to={routes.home()} className="text-xs font-bold text-[#4B2E83]">← Back to Menu</Link>
+          <Link to={routes.home()} className="text-xs font-bold text-[#4B2E83]">← Back</Link>
         </div>
 
-        {/* SAVE ON DELIVERY — clean, arranged */}
+        {/* SAVE ON DELIVERY — full width */}
         {!activeGroup ? (
-          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-5 space-y-3 text-center">
-            <h3 className="font-black text-sm tracking-wider">═══ SAVE ON DELIVERY ═══</h3>
+          <div className="rounded-xl border border-[#E9E5EE] bg-white p-3 space-y-2.5 text-center">
+            <h3 className="font-bold text-xs tracking-wider">═══ SAVE ON DELIVERY ═══</h3>
             <p className="text-xs text-[#6F6B76]">Save on delivery with a Group Order</p>
-            <button onClick={() => setGroupModalOpen(true)} className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[#FFC928] py-3 text-sm font-bold text-[#4B2E83] hover:bg-[#E5B420] transition shadow-sm">
-              <Users className="h-4 w-4" /> Start Group Order
+            <button onClick={() => setGroupModalOpen(true)} className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#FFC928] py-2.5 text-xs font-bold text-[#4B2E83] hover:bg-[#E5B420] transition">
+              <Users className="h-3.5 w-3.5" /> Start Group Order
             </button>
           </div>
         ) : (
-          <div className="rounded-2xl border-2 border-[#FFC928] bg-[#FFF9E8] p-4 flex items-center justify-between">
+          <div className="rounded-xl border border-[#FFC928] bg-[#FFF9E8] p-3 flex items-center justify-between">
             <div>
-              <div className="text-xs font-black">GROUP ORDER</div>
-              <div className="font-mono text-sm font-black">{activeGroup.code} • {activeGroup.members.length} members</div>
+              <div className="text-xs font-bold">GROUP ORDER</div>
+              <div className="font-mono text-xs font-bold">{activeGroup.code} • {activeGroup.members.length} members</div>
               <div className="text-xs text-[#6F6B76]">{activeGroup.members.map(m => `${m.name} (${m.role})`).join(', ')}</div>
             </div>
             <button onClick={() => { const all = GroupOrderStore.getAll(); const g = all.find(x=>x.code===activeGroup.code); if(g){g.status='expired' as any; localStorage.setItem('yumzee_group_orders_yz', JSON.stringify(all)); setActiveGroup(null)} }} className="text-xs font-bold text-red-600">Leave</button>
@@ -232,39 +232,39 @@ const CheckoutPage = () => {
         )}
 
         {cart.length === 0 && !activeGroup ? (
-          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
+          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
             <ShoppingBag className="mx-auto h-12 w-12 text-[#6F6B76]/40 mb-3" />
             <h3 className="text-sm font-bold text-[#211F26]">Your bag is empty</h3>
             <p className="text-xs text-[#6F6B76] mt-1 mb-4">Add snacks to start an order.</p>
             <Link to={routes.home()} className="inline-flex items-center gap-2 rounded-2xl bg-[#FFC928] px-6 py-3 text-sm font-bold text-[#4B2E83]">Browse Menu</Link>
           </div>
         ) : (
-          <form onSubmit={handleStartPayment} className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-            <div className="lg:col-span-7 space-y-6">
-              <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4">
-                <div className="flex items-center justify-between border-b border-[#E9E5EE] pb-3">
-                  <div className="flex items-center gap-2"><ShoppingBag className="h-5 w-5 text-[#4B2E83]" /><h3 className="font-extrabold text-sm text-[#211F26]">Selected Snacks ({activeGroup ? activeGroup.items.length : cart.length})</h3></div>
+          <form onSubmit={handleStartPayment} className="grid grid-cols-1 gap-3 lg:grid-cols-12">
+            <div className="lg:col-span-7 space-y-4">
+              <div className="rounded-xl border border-[#E9E5EE] bg-white p-3 shadow-sm space-y-3">
+                <div className="flex items-center justify-between border-b border-[#E9E5EE] pb-2">
+                  <div className="flex items-center gap-1.5"><ShoppingBag className="h-4 w-4 text-[#4B2E83]" /><h3 className="font-bold text-xs text-[#211F26]">Selected Snacks ({activeGroup ? activeGroup.items.length : cart.length})</h3></div>
                   {!activeGroup && <button type="button" onClick={clearCart} className="text-xs font-bold text-rose-600 hover:underline">Clear All</button>}
                 </div>
                 <div className="divide-y divide-[#E9E5EE]">
                   {(activeGroup ? activeGroup.items : cart.map(c => ({ id: c.id, productName: c.name, productImage: c.image, price: c.price, quantity: c.quantity, addedByName: 'You' })) as any).map((item: any) => (
-                    <div key={item.id || item.productId} className="flex items-center justify-between py-3.5 gap-3">
-                      <img src={item.productImage || item.image} alt={item.productName || item.name} className="h-14 w-14 rounded-2xl border border-[#E9E5EE] object-cover" />
-                      <div className="flex-1">
-                        <h4 className="text-sm font-bold line-clamp-1">{item.productName || item.name}</h4>
-                        {activeGroup && <p className="text-[11px] text-[#6F6B76]">{item.addedByName}</p>}
-                        <p className="text-xs text-[#6F6B76]">₦{item.price.toLocaleString()} each</p>
+                    <div key={item.id || item.productId} className="flex items-center justify-between py-2.5 gap-2">
+                      <img src={item.productImage || item.image} alt={item.productName || item.name} className="h-10 w-10 rounded-xl border border-[#E9E5EE] object-cover" />
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-xs font-bold truncate">{item.productName || item.name}</h4>
+                        {activeGroup && <p className="text-[10px] text-[#6F6B76]">{item.addedByName}</p>}
+                        <p className="text-xs text-[#6F6B76]">₦{item.price.toLocaleString()} <span className="text-[10px]">each</span></p>
                       </div>
                       {!activeGroup ? (
-                        <div className="flex items-center rounded-xl border bg-[#FAF8FD] p-1">
-                          <button type="button" onClick={() => updateQuantity(item.id, item.quantity - 1)} className="h-6 w-6 flex items-center justify-center rounded-lg bg-white text-xs font-bold shadow-sm"><Minus className="h-3 w-3" /></button>
-                          <span className="w-7 text-center text-xs font-black">{item.quantity}</span>
-                          <button type="button" onClick={() => updateQuantity(item.id, item.quantity + 1)} className="h-6 w-6 flex items-center justify-center rounded-lg bg-white text-xs font-bold shadow-sm"><Plus className="h-3 w-3" /></button>
+                        <div className="flex items-center rounded-lg border bg-[#FAF8FD] p-0.5">
+                          <button type="button" onClick={() => updateQuantity(item.id, item.quantity - 1)} className="h-6 w-6 flex items-center justify-center rounded bg-white text-xs font-bold shadow-sm"><Minus className="h-3 w-3" /></button>
+                          <span className="w-5 text-center text-xs font-bold">{item.quantity}</span>
+                          <button type="button" onClick={() => updateQuantity(item.id, item.quantity + 1)} className="h-6 w-6 flex items-center justify-center rounded bg-white text-xs font-bold shadow-sm"><Plus className="h-3 w-3" /></button>
                         </div>
                       ) : (
                         <span className="text-xs font-bold">x{item.quantity}</span>
                       )}
-                      <div className="text-right min-w-[70px]"><span className="text-sm font-extrabold text-[#4B2E83]">₦{(item.price * item.quantity).toLocaleString()}</span></div>
+                      <div className="text-right min-w-[50px]"><span className="text-xs font-bold text-[#4B2E83]">₦{(item.price * item.quantity).toLocaleString()}</span></div>
                     </div>
                   ))}
                 </div>
@@ -272,10 +272,10 @@ const CheckoutPage = () => {
             </div>
 
             <div className="lg:col-span-5">
-              <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4 sticky top-20">
+              <div className="rounded-xl border border-[#E9E5EE] bg-white p-3 shadow-sm space-y-3 sticky top-20">
                 {activeGroup && groupTotals ? (
                   <>
-                    <h3 className="font-extrabold text-sm border-b pb-3">═══ GROUP ORDER ═══<br /><span className="font-mono text-xs font-normal">Code: {activeGroup.code}</span></h3>
+                    <h3 className="font-bold text-xs border-b pb-3">═══ GROUP ORDER ═══<br /><span className="font-mono text-xs font-normal">Code: {activeGroup.code}</span></h3>
                     {groupTotals.memberTotals.map((m: any) => (
                       <div key={m.userId} className="text-xs">
                         <div className="font-bold">👤 {m.name} {m.role === 'host' ? '(Host)' : '(Joined)'}</div>
@@ -297,7 +297,7 @@ const CheckoutPage = () => {
                   </>
                 ) : (
                   <>
-                    <h3 className="font-extrabold text-sm border-b pb-3">Payment Summary</h3>
+                    <h3 className="font-bold text-xs border-b pb-3">Payment Summary</h3>
                     <div className="space-y-3 text-sm">
                       <div className="flex justify-between text-[#6F6B76]"><span>Food Subtotal</span><span className="font-bold text-[#211F26]">₦{totalPrice.toLocaleString()}</span></div>
                       <div className="flex justify-between text-[#6F6B76]"><span>Delivery Fee</span><span className="font-bold text-[#211F26]">{deliveryType === 'pickup' ? 'FREE (Pickup)' : `₦${deliveryFeeSingle.toLocaleString()}`}</span></div>

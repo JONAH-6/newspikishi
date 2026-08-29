@@ -46,7 +46,7 @@ const HomePage = () => {
 
       {/* HERO - minimal */}
       <section className="bg-gradient-to-br from-[#4B2E83] via-[#3B226B] to-[#251448] py-14 text-white">
-        <div className="container mx-auto px-4">
+        <div className="w-full mx-auto px-2 sm:px-3">
           <div className="mx-auto max-w-3xl text-center space-y-6">
             <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
               Cravings Delivered to Your <span className="text-[#FFC928]">Doorstep.</span>
@@ -71,9 +71,9 @@ const HomePage = () => {
 
       {/* MENU */}
       <section id="menu-section" className="py-10">
-        <div className="container mx-auto px-4 space-y-6">
+        <div className="w-full mx-auto px-2 sm:px-3 space-y-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <h2 className="text-2xl font-black text-[#211F26]">Menu</h2>
+            <h2 className="text-xl font-bold text-[#211F26]">Menu</h2>
             <div className="relative w-full md:w-72">
               <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A09BA8]" />
               <input
@@ -106,7 +106,7 @@ const HomePage = () => {
               const qty = getQuantity(product.id)
               const added = addedIds.includes(product.id)
               return (
-                <div key={product.id} className="flex flex-col overflow-hidden rounded-3xl border border-[#E9E5EE] bg-white">
+                <div key={product.id} className="flex flex-col overflow-hidden rounded-2xl border border-[#E9E5EE] bg-white">
                   <div className="relative h-44 bg-gray-100">
                     <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
                     {product.isPopular && (
@@ -152,7 +152,7 @@ const HomePage = () => {
           </div>
 
           {filteredProducts.length === 0 && (
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-10 text-center">
+            <div className="rounded-2xl border border-[#E9E5EE] bg-white p-10 text-center">
               <p className="text-sm font-bold text-[#211F26]">No items found</p>
               <p className="text-xs text-[#6F6B76] mt-1">Try another category or search.</p>
             </div>

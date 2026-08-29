@@ -43,7 +43,7 @@ const DashboardPage = () => {
       <div className="container mx-auto max-w-6xl space-y-6 px-4">
         {/* Welcome */}
         <div className="rounded-3xl bg-[#4B2E83] p-6 text-white">
-          <h1 className="text-2xl font-black">Welcome back, <span className="text-[#FFC928]">{getFirstName()}</span></h1>
+          <h1 className="text-xl font-bold">Welcome back, <span className="text-[#FFC928]">{getFirstName()}</span></h1>
           <p className="mt-1 text-sm text-white/80">Fresh snacks for everyone — quick ordering, fast delivery.</p>
           <div className="mt-4 flex flex-wrap gap-3">
             <Link to={routes.home()} className="inline-flex items-center gap-2 rounded-2xl bg-[#FFC928] px-6 py-3 text-sm font-bold text-[#4B2E83] hover:bg-[#E5B420] transition"><ShoppingBag className="h-4 w-4" /> Order Now</Link>
@@ -52,7 +52,7 @@ const DashboardPage = () => {
         </div>
 
         {/* Current order - minimal */}
-        <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4">
+        <div className="rounded-2xl border border-[#E9E5EE] bg-white p-4">
           <div className="flex items-center justify-between border-b border-[#E9E5EE] pb-3">
             <h2 className="text-sm font-black text-[#211F26]">Recent order</h2>
             <Link to={routes.orders()} className="text-xs font-bold text-[#4B2E83]">View all →</Link>
@@ -96,13 +96,13 @@ const DashboardPage = () => {
 
         {/* Shortcuts */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <Link to={routes.favorites()} className="rounded-3xl border border-[#E9E5EE] bg-white p-4 hover:border-[#4B2E83]/20 transition">
+          <Link to={routes.favorites()} className="rounded-2xl border border-[#E9E5EE] bg-white p-4 hover:border-[#4B2E83]/20 transition">
             <Heart className="h-5 w-5 text-pink-600" /><h3 className="mt-2 text-sm font-bold text-[#211F26]">Favorites</h3><p className="text-xs text-[#6F6B76]">Your saved snacks.</p>
           </Link>
-          <Link to={routes.profile()} className="rounded-3xl border border-[#E9E5EE] bg-white p-4 hover:border-[#4B2E83]/20 transition">
+          <Link to={routes.profile()} className="rounded-2xl border border-[#E9E5EE] bg-white p-4 hover:border-[#4B2E83]/20 transition">
             <User className="h-5 w-5 text-[#4B2E83]" /><h3 className="mt-2 text-sm font-bold text-[#211F26]">Delivery details</h3><p className="text-xs text-[#6F6B76]">Address and contact.</p>
           </Link>
-          <Link to={routes.contact()} className="rounded-3xl border border-[#E9E5EE] bg-white p-4 hover:border-[#4B2E83]/20 transition">
+          <Link to={routes.contact()} className="rounded-2xl border border-[#E9E5EE] bg-white p-4 hover:border-[#4B2E83]/20 transition">
             <Coffee className="h-5 w-5 text-amber-600" /><h3 className="mt-2 text-sm font-bold text-[#211F26]">Support</h3><p className="text-xs text-[#6F6B76]">Need help? Contact us.</p>
           </Link>
         </div>

@@ -57,7 +57,7 @@ const RiderPortalPage = () => {
     <div className="min-h-screen bg-[#FAF8FD] py-6">
       <Metadata title="Rider — YumZee" description="Delivery dashboard." />
 
-      <div className="container mx-auto max-w-5xl px-4 space-y-6">
+      <div className="w-full max-w-5xl mx-auto px-2 sm:px-3 space-y-6">
         {/* Header */}
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#4B2E83] text-white">
@@ -72,7 +72,7 @@ const RiderPortalPage = () => {
         {/* Orders */}
         <div className="space-y-4">
           {allOrders.length === 0 ? (
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
+            <div className="rounded-2xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
               <Truck className="mx-auto h-10 w-10 text-[#6F6B76]/40 mb-2" />
               <h3 className="text-sm font-bold text-[#211F26]">No jobs</h3>
               <p className="text-xs text-[#6F6B76] mt-1">Ready orders will appear here.</p>
@@ -87,7 +87,7 @@ const RiderPortalPage = () => {
               return (
                 <div
                   key={order.id}
-                  className="overflow-hidden rounded-3xl border border-[#E9E5EE] bg-white shadow-sm transition hover:shadow-md"
+                  className="overflow-hidden rounded-2xl border border-[#E9E5EE] bg-white shadow-sm transition hover:shadow-md"
                 >
                   {/* Top Bar */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E9E5EE] bg-[#FAF8FD] p-4">
@@ -121,7 +121,7 @@ const RiderPortalPage = () => {
                         <span className="text-[10px] font-bold uppercase tracking-wider text-[#6F6B76] block">
                           1. Pickup Location
                         </span>
-                        <p className="font-extrabold text-sm text-[#211F26]">
+                        <p className="font-bold text-xs text-[#211F26]">
                           Campus Central Kitchen / Bakery Hub
                         </p>
                         <p className="text-xs text-[#6F6B76]">
@@ -134,7 +134,7 @@ const RiderPortalPage = () => {
                         <span className="text-[10px] font-bold uppercase tracking-wider text-[#6F6B76] block">
                           2. Destination Drop-off
                         </span>
-                        <p className="font-extrabold text-sm text-[#211F26] flex items-center gap-1.5">
+                        <p className="font-bold text-xs text-[#211F26] flex items-center gap-1.5">
                           <MapPin className="h-4 w-4 text-[#4B2E83]" />
                           {order.hostelAddress}
                         </p>

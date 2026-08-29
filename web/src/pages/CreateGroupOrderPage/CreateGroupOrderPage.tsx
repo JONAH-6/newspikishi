@@ -69,7 +69,7 @@ const CreateGroupOrderPage = () => {
   return (
     <div className="min-h-screen bg-[#FAF8FD] py-6">
       <Metadata title="Create Group Order — YumZee" description="Start a group order and share delivery." />
-      <div className="container mx-auto max-w-3xl px-4">
+      <div className="w-full max-w-3xl mx-auto px-2 sm:px-3">
         {createdGroup ? (
           <div className="overflow-hidden rounded-2xl border border-[#E9E5EE] bg-white shadow-sm">
             <div className="bg-[#4B2E83] p-4 text-center text-white">
@@ -109,7 +109,7 @@ const CreateGroupOrderPage = () => {
             </div>
           </div>
         ) : (
-          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-4 shadow-sm space-y-4">
+          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm space-y-4">
             <div>
               <h1 className="text-xl font-black text-[#211F26]">Create Group Order</h1>
               <p className="mt-1 text-xs text-[#6F6B76]">Share delivery with others. Free with 4+.</p>

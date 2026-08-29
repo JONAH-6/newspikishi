@@ -114,7 +114,7 @@ const FavoritesPage = () => {
 
         {/* List */}
         {favorites.length === 0 ? (
-          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
+          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
             <Heart className="mx-auto mb-3 h-10 w-10 text-gray-300" />
             <h3 className="text-sm font-bold text-[#211F26]">No favorites yet</h3>
             <p className="mx-auto mb-4 mt-1 max-w-sm text-xs text-[#6F6B76]">Browse and save snacks to see them here.</p>
@@ -127,7 +127,7 @@ const FavoritesPage = () => {
               return (
                 <div
                   key={item.id}
-                  className="flex flex-col justify-between gap-4 rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm sm:flex-row"
+                  className="flex flex-col justify-between gap-4 rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm sm:flex-row"
                 >
                   <img
                     src={item.image}

@@ -75,7 +75,7 @@ const SellerPortalPage = () => {
     <div className="min-h-screen bg-[#FAF8FD] py-6">
       <Metadata title="Kitchen — YumZee" description="Prepare orders." />
 
-      <div className="container mx-auto max-w-6xl px-4 space-y-6">
+      <div className="w-full max-w-6xl mx-auto px-2 sm:px-3 space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -96,7 +96,7 @@ const SellerPortalPage = () => {
         {/* Orders */}
         <div className="space-y-4">
           {filteredOrders.length === 0 ? (
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
+            <div className="rounded-2xl border border-[#E9E5EE] bg-white p-6 text-center shadow-sm">
               <Utensils className="mx-auto h-10 w-10 text-[#6F6B76]/40 mb-2" />
               <h3 className="text-sm font-bold text-[#211F26]">No orders</h3>
               <p className="text-xs text-[#6F6B76] mt-1">New orders will appear here.</p>
@@ -111,7 +111,7 @@ const SellerPortalPage = () => {
               return (
                 <div
                   key={order.id}
-                  className="overflow-hidden rounded-3xl border border-[#E9E5EE] bg-white shadow-sm transition hover:shadow-md"
+                  className="overflow-hidden rounded-2xl border border-[#E9E5EE] bg-white shadow-sm transition hover:shadow-md"
                 >
                   {/* Order Top Bar */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#E9E5EE] bg-[#FAF8FD] p-4">

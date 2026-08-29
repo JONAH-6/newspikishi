@@ -118,7 +118,7 @@ const DiscoverPage = () => {
 
       {/* Sticky search header - Glovo style */}
       <div className="sticky top-0 z-30 border-b border-[#E9E5EE] bg-white/95 backdrop-blur-md">
-        <div className="container mx-auto max-w-3xl px-4 py-3 flex items-center gap-3">
+        <div className="w-full max-w-3xl mx-auto px-2 sm:px-3 py-3 flex items-center gap-3">
           <button
             onClick={() => navigate(routes.home())}
             className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#F5F1FB] text-[#4B2E83] hover:bg-[#E9E5EE] transition lg:hidden"
@@ -158,7 +158,7 @@ const DiscoverPage = () => {
         </div>
 
         {/* Category pills - Facebook/Glovo horizontal chips */}
-        <div className="container mx-auto max-w-3xl px-4 pb-3">
+        <div className="w-full max-w-3xl mx-auto px-2 sm:px-3 pb-3">
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
             <div className="flex items-center gap-1.5 pr-2 text-[#6F6B76]">
               <SlidersHorizontal className="h-3.5 w-3.5" />
@@ -182,7 +182,7 @@ const DiscoverPage = () => {
         </div>
       </div>
 
-      <div className="container mx-auto max-w-3xl px-4 py-6 space-y-6">
+      <div className="w-full max-w-3xl mx-auto px-2 sm:px-3 py-6 space-y-6">
         {/* Suggestions dropdown */}
         {suggestions.length > 0 && (
           <div className="rounded-2xl border border-[#E9E5EE] bg-white shadow-sm overflow-hidden">
@@ -202,7 +202,7 @@ const DiscoverPage = () => {
         {!isSearching ? (
           <>
             {/* Recent searches */}
-            <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+            <div className="rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm">
               <div className="flex items-center justify-between">
                 <h3 className="flex items-center gap-2 text-sm font-extrabold text-[#211F26]">
                   <Clock className="h-4 w-4 text-[#6F6B76]" /> Recent searches
@@ -257,7 +257,7 @@ const DiscoverPage = () => {
                   <button
                     key={cat}
                     onClick={() => setSelectedCat(cat)}
-                    className="flex items-center gap-3 rounded-2xl border border-[#E9E5EE] bg-white p-4 text-left shadow-sm hover:border-[#4B2E83]/20 hover:shadow-md transition"
+                    className="flex items-center gap-3 rounded-2xl border border-[#E9E5EE] bg-white p-3 text-left shadow-sm hover:border-[#4B2E83]/20 hover:shadow-md transition"
                   >
                     <span className="text-2xl">{categoryEmoji[cat]}</span>
                     <div>
@@ -332,7 +332,7 @@ const DiscoverPage = () => {
             </div>
 
             {filtered.length === 0 ? (
-              <div className="rounded-3xl border border-dashed border-[#E9E5EE] bg-white p-10 text-center">
+              <div className="rounded-2xl border border-dashed border-[#E9E5EE] bg-white p-10 text-center">
                 <Search className="mx-auto h-10 w-10 text-[#A09BA8]/40" />
                 <h3 className="mt-3 text-sm font-bold text-[#211F26]">No results for “{query}”{selectedCat !== 'All' ? ` in ${selectedCat}` : ''}</h3>
                 <p className="mt-1 text-xs text-[#6F6B76]">Try a different term or category.</p>
@@ -350,7 +350,7 @@ const DiscoverPage = () => {
                   const qty = getQty(product.id)
                   const added = addedIds.includes(product.id)
                   return (
-                    <div key={product.id} className="overflow-hidden rounded-3xl border border-[#E9E5EE] bg-white shadow-sm hover:shadow-md transition">
+                    <div key={product.id} className="overflow-hidden rounded-2xl border border-[#E9E5EE] bg-white shadow-sm hover:shadow-md transition">
                       <div className="relative h-40 bg-gray-100">
                         <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
                         {product.isPopular && <span className="absolute left-3 top-3 rounded-full bg-[#FFC928] px-2.5 py-1 text-[10px] font-black uppercase text-[#4B2E83]">Popular</span>}

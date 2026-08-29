@@ -46,7 +46,7 @@ const TrackOrderPage = () => {
   if (!order) {
     return (
       <div className="min-h-screen bg-[#FAF8FD] flex items-center justify-center p-4">
-        <div className="rounded-3xl border border-[#E9E5EE] bg-white p-6 text-center max-w-md shadow-sm space-y-3">
+        <div className="rounded-2xl border border-[#E9E5EE] bg-white p-6 text-center max-w-md shadow-sm space-y-3">
           <Package className="mx-auto h-10 w-10 text-[#6F6B76]/40" />
           <h2 className="text-sm font-bold text-[#211F26]">Order Not Found</h2>
           <p className="text-xs text-[#6F6B76]">Could not find #{orderId}.</p>
@@ -68,8 +68,8 @@ const TrackOrderPage = () => {
   return (
     <div className="min-h-screen bg-[#FAF8FD] py-6">
       <Metadata title={`Track #${order.id} — YumZee`} description="Track your delivery." />
-      <div className="container mx-auto max-w-4xl px-4 space-y-6">
-        <div className="overflow-hidden rounded-3xl border border-[#E9E5EE] bg-white shadow-sm">
+      <div className="w-full max-w-4xl mx-auto px-2 sm:px-3 space-y-6">
+        <div className="overflow-hidden rounded-2xl border border-[#E9E5EE] bg-white shadow-sm">
           <div className="bg-[#4B2E83] p-4 text-white">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
@@ -107,7 +107,7 @@ const TrackOrderPage = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 space-y-3">
+          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-4 space-y-3">
             <h3 className="text-xs font-black uppercase tracking-wider text-[#6F6B76]">Rider</h3>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -120,14 +120,14 @@ const TrackOrderPage = () => {
               </div>
             </div>
           </div>
-          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 space-y-2">
+          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-4 space-y-2">
             <h3 className="text-xs font-black uppercase tracking-wider text-[#6F6B76]">Drop-off</h3>
             <p className="text-sm font-bold text-[#211F26] flex items-center gap-1"><MapPin className="h-4 w-4 text-[#4B2E83]" />{order.hostelAddress}</p>
             <p className="text-xs text-[#6F6B76]">Note: <span className="font-semibold text-[#211F26]">{isGroup ? groupOrder?.deliveryNote || 'At entrance' : singleOrder?.deliveryInstructions || 'Call on arrival'}</span></p>
           </div>
         </div>
 
-        <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 space-y-3">
+        <div className="rounded-2xl border border-[#E9E5EE] bg-white p-4 space-y-3">
           <div className="flex items-center justify-between border-b pb-3">
             <h3 className="text-sm font-bold text-[#211F26]">{isGroup ? 'Group items' : 'Items'}</h3>
             <span className="text-xs font-bold text-[#4B2E83]">{isGroup ? `${groupOrder?.participants.length} bags` : `${singleOrder?.items.length} items`}</span>

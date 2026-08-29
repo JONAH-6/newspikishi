@@ -53,7 +53,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     <div className="flex min-h-screen flex-col bg-[#FAF8FD] font-sans antialiased text-[#211F26] pb-16 lg:pb-0">
       {/* 1. Main Navigation Bar - CLEAN (no RoleSwitcherBar, no Group/Rider/Admin/Seller) */}
       <header className="sticky top-0 z-40 border-b border-[#E9E5EE] bg-white/95 backdrop-blur-md">
-        <div className="container mx-auto flex items-center justify-between px-4 py-3 sm:py-4">
+        <div className="w-full mx-auto flex items-center justify-between px-2 sm:px-3 py-3 sm:py-4">
           {/* Logo */}
           <div className="flex items-center gap-8">
             <Link to={routes.home()} className="flex items-center gap-1.5 text-2xl sm:text-3xl font-black tracking-tight">
@@ -99,7 +99,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             {/* Cart Button */}
             <button
               onClick={() => setIsCartOpen(true)}
-              className="relative flex items-center gap-2 rounded-2xl bg-[#FFC928] px-4 py-2.5 text-xs font-extrabold text-[#4B2E83] shadow-md hover:bg-[#E5B420] transition active:scale-95"
+              className="relative flex items-center gap-2 rounded-2xl bg-[#FFC928] px-2 sm:px-3 py-2.5 text-xs font-extrabold text-[#4B2E83] shadow-md hover:bg-[#E5B420] transition active:scale-95"
               aria-label="Open food bag"
             >
               <ShoppingCart className="h-4 w-4" />
@@ -131,7 +131,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             ) : (
               <Link
                 to={routes.login()}
-                className="hidden sm:flex items-center gap-1.5 rounded-2xl border border-[#E9E5EE] px-4 py-2 text-xs font-bold text-[#211F26] hover:border-[#4B2E83] transition"
+                className="hidden sm:flex items-center gap-1.5 rounded-2xl border border-[#E9E5EE] px-2 sm:px-3 py-2 text-xs font-bold text-[#211F26] hover:border-[#4B2E83] transition"
               >
                 <User className="h-3.5 w-3.5" />
                 <span>Login</span>
@@ -293,7 +293,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
       {/* 4. Footer - CLEAN: no Operations Portals */}
       <footer className="border-t border-[#E9E5EE] bg-[#211F26] py-12 text-white">
-        <div className="container mx-auto px-4 space-y-8">
+        <div className="w-full mx-auto px-2 sm:px-3 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="space-y-3">
               <div className="flex items-center gap-1.5 text-2xl font-black">

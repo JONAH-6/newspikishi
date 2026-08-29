@@ -9,7 +9,7 @@ const AboutPage = () => {
       <Metadata title="About YumZee" description="YumZee — fresh snacks, simple ordering for everyone." />
 
       <section className="bg-gradient-to-br from-[#4B2E83] via-[#3B226B] to-[#251448] py-10 text-white">
-        <div className="container mx-auto px-4 max-w-5xl">
+        <div className="w-full mx-auto px-2 sm:px-3 max-w-5xl">
           <h1 className="text-3xl font-black tracking-tight sm:text-4xl">
             Snack cravings, <span className="text-[#FFC928]">solved simply.</span>
           </h1>
@@ -27,19 +27,19 @@ const AboutPage = () => {
         </div>
       </section>
 
-      <section className="container mx-auto max-w-5xl px-4 py-6">
+      <section className="w-full max-w-5xl mx-auto px-2 sm:px-3 py-6">
         <div className="grid gap-4 md:grid-cols-3">
-          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FFC928] text-[#4B2E83]"><Flame className="h-5 w-5" /></div>
             <h3 className="mt-3 text-sm font-extrabold text-[#211F26]">Made fresh to order</h3>
             <p className="mt-1 text-xs leading-relaxed text-[#6F6B76]">Prepared fresh and sealed warm.</p>
           </div>
-          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#4B2E83] text-white"><Clock className="h-5 w-5" /></div>
             <h3 className="mt-3 text-sm font-extrabold text-[#211F26]">Fast delivery</h3>
             <p className="mt-1 text-xs leading-relaxed text-[#6F6B76]">Track live. Hot in 15-20 minutes.</p>
           </div>
-          <div className="rounded-3xl border border-[#E9E5EE] bg-white p-4 shadow-sm">
+          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-3 shadow-sm">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 border border-emerald-200"><ShieldCheck className="h-5 w-5" /></div>
             <h3 className="mt-3 text-sm font-extrabold text-[#211F26]">Simple & affordable</h3>
             <p className="mt-1 text-xs leading-relaxed text-[#6F6B76]">From ₦250. Clear prices, no hidden fees.</p>
