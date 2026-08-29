@@ -72,13 +72,11 @@ const CheckoutPage = () => {
     if (cart.length === 0) { setJoinError('Add snacks to invite'); return }
     try {
       const items = cart.map((c) => {
-        const prod = INITIAL_PRODUCTS.find((p) => p.id === c.id) || { id: c.id, name: c.name, price: c.price, image: c.image, category: c.category, description: '', rating: 5, hiddenAlphabet: (c as any).hiddenAlphabet } as any
+        const prod = INITIAL_PRODUCTS.find((p) => p.id === c.id) || { id: c.id, name: c.name, price: c.price, image: c.image, category: c.category, description: '', rating: 5 } as any
         return { product: prod, quantity: c.quantity }
       })
-      // New spec: each product has hidden alphabet, code is hidden alphabets joined
-      const hiddenAlphabets = items.map(it => (it.product as any).hiddenAlphabet || String.fromCharCode(65 + (it.product.id % 26))).join('').toUpperCase()
-      const g = GroupOrderStore.createGroupOrderByAlphabets({ hostUserId: uid, hostName: displayName, items })
-      setInviteCode(g.hiddenAlphabets || g.code)
+      const g = GroupOrderStore.createGroupOrder({ hostUserId: uid, hostName: displayName, items })
+      setInviteCode(g.code)
       setActiveGroup(g)
       setModalView('invite')
       setJoinError('')
@@ -189,14 +187,13 @@ const CheckoutPage = () => {
 
               {modalView === 'join' && (
                 <div className="space-y-3">
-                  <h4 className="font-bold text-sm text-center">Enter Hidden Letters</h4>
-                  <p className="text-xs text-center text-[#6F6B76]">Ask host for the hidden letters of their snacks (e.g., D Z R)</p>
-                  <input value={joinCodeInput} onChange={(e) => { setJoinCodeInput(e.target.value.toUpperCase().replace(/[^A-Z]/g, '')); setJoinError('') }} placeholder="e.g., DZR" className="w-full rounded-xl border border-[#E9E5EE] bg-[#FAF8FD] px-3 py-3 text-sm font-mono font-bold tracking-widest text-center focus:border-[#4B2E83] focus:outline-none" />
+                  <h4 className="font-bold text-sm text-center">Enter Group Code</h4>
+                  <input value={joinCodeInput} onChange={(e) => { setJoinCodeInput(e.target.value.toUpperCase()); setJoinError('') }} placeholder="YZ-XXXX-XXXX" className="w-full rounded-xl border border-[#E9E5EE] bg-[#FAF8FD] px-3 py-3 text-sm font-mono font-bold tracking-widest text-center focus:border-[#4B2E83] focus:outline-none" />
                   {joinError && <p className="text-xs font-bold text-red-600 text-center whitespace-pre-wrap">{joinError}</p>}
                   <div className="rounded-xl bg-[#F5F1FB] p-3 text-xs text-[#6F6B76]">
-                    <div className="font-bold text-[#211F26]">Active groups on this device:</div>
-                    <div className="font-mono mt-1">{GroupOrderStore.getAll().filter(g=>g.status==='active').map(g=>g.hiddenAlphabets || g.code).join(', ') || 'None — add snacks then click INVITE to create one.'}</div>
-                    <div className="text-[11px] mt-1">Each product has a hidden letter (A-Z). Invite reveals your cart&apos;s letters. Join by entering those same letters.</div>
+                    <div className="font-bold text-[#211F26]">Active codes on this device:</div>
+                    <div className="font-mono mt-1">{GroupOrderStore.getAll().filter(g=>g.status==='active').map(g=>g.code).join(', ') || 'None — click INVITE to create one.'}</div>
+                    <div className="text-[11px] mt-1">Tip: Code is created via INVITE. Ask host for the exact code.</div>
                   </div>
                   <button onClick={handleJoin} className="w-full rounded-xl bg-[#4B2E83] py-3 text-sm font-bold text-white">JOIN GROUP</button>
                   <button onClick={() => setModalView('choice')} className="w-full text-xs font-bold text-[#6F6B76]">← Back</button>
@@ -205,12 +202,11 @@ const CheckoutPage = () => {
 
               {modalView === 'invite' && (
                 <div className="space-y-3 text-center">
-                  <h4 className="font-bold text-sm">Share These Hidden Letters</h4>
-                  <p className="text-xs text-[#6F6B76]">Each snack has a hidden letter — these are your cart&apos;s letters</p>
-                  <div className="mx-auto rounded-xl bg-[#4B2E83] text-white font-mono text-2xl font-black tracking-[0.3em] py-4 px-6">{inviteCode}</div>
-                  <p className="text-xs text-[#6F6B76]">Letters stay same for this cart — add more snacks and letters update. Share this exact code.</p>
+                  <h4 className="font-bold text-sm">Share This Code</h4>
+                  <div className="mx-auto rounded-xl bg-[#4B2E83] text-white font-mono text-xl font-black tracking-widest py-3 px-6">{inviteCode}</div>
+                  <p className="text-xs text-[#6F6B76]">Share this code with friends — anyone can join</p>
                   <button onClick={() => handleCopy(inviteCode)} className="w-full flex items-center justify-center gap-2 rounded-xl border border-[#E9E5EE] bg-white py-2.5 text-xs font-bold hover:bg-gray-50">
-                    {copied ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />} {copied ? 'Copied' : '📋 COPY LETTERS'}
+                    {copied ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />} {copied ? 'Copied' : '📋 COPY CODE'}
                   </button>
                   <a href={`https://wa.me/?text=${encodeURIComponent(`Join my YumZee group ${inviteCode} http://localhost:40000/checkout`)}`} target="_blank" rel="noopener noreferrer" className="w-full inline-block rounded-xl bg-emerald-600 py-2.5 text-xs font-bold text-white">Share via WhatsApp</a>
                   <button onClick={() => { setGroupModalOpen(false); setModalView('choice') }} className="w-full rounded-xl bg-[#4B2E83] py-2.5 text-xs font-bold text-white">Done</button>
