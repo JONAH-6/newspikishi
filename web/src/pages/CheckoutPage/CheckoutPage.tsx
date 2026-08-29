@@ -201,11 +201,11 @@ const CheckoutPage = () => {
             <div className="p-6 space-y-4">
               {modalView === 'choice' && (
                 <>
-                  <button onClick={() => setModalView('join')} className="w-full rounded-2xl border-2 border-[#4B2E83] bg-white p-4 text-left hover:bg-[#F5F1FB] transition">
+                  <button onClick={handleInvite} className="w-full rounded-2xl border-2 border-[#4B2E83] bg-white p-4 text-left hover:bg-[#F5F1FB] transition">
                     <div className="font-black text-sm text-[#4B2E83]">JOIN</div>
                     <div className="text-xs text-[#6F6B76]">Join a friend&apos;s group order</div>
                   </button>
-                  <button onClick={handleInvite} className="w-full rounded-2xl bg-[#4B2E83] p-4 text-left text-white hover:bg-[#371F62] transition">
+                  <button onClick={() => setModalView('join')} className="w-full rounded-2xl bg-[#4B2E83] p-4 text-left text-white hover:bg-[#371F62] transition">
                     <div className="font-black text-sm">INVITE</div>
                     <div className="text-xs text-white/80">Invite friends to your group order</div>
                   </button>
