@@ -34,30 +34,38 @@ const HomePage = () => {
   }
 
   const [productNumberInput, setProductNumberInput] = useState('')
-  const [productNumberPreview, setProductNumberPreview] = useState<Product | null>(null)
-  const [productNumberQty, setProductNumberQty] = useState(1)
+  const [productNumberPreview, setProductNumberPreview] = useState<{ product: Product; qty: number }[] | null>(null)
   const [productNumberError, setProductNumberError] = useState('')
 
-  const parseProductNumber = (input: string): { id: number; qty: number } | null => {
-    const s = input.trim().replace(/×/g, 'x').toLowerCase()
-    // formats: "5", "5x2", "5 x 2", "12x3", "1x3"
-    const m = s.match(/^(\d+)\s*(?:x\s*(\d+))?$/)
-    if (!m) return null
-    const id = parseInt(m[1], 10)
-    const qty = m[2] ? parseInt(m[2], 10) : 1
-    if (id < 1 || id > 50) return null
-    if (qty < 1 || qty > 99) return null
-    return { id, qty }
+  const parseProductNumberList = (input: string): { id: number; qty: number }[] | null => {
+    const s = input.trim()
+    if (!s) return null
+    const parts = s.split(',').map(p => p.trim()).filter(Boolean)
+    if (parts.length === 0) return null
+    const res: { id: number; qty: number }[] = []
+    for (const part of parts) {
+      const m = part.replace(/×/g, 'x').toLowerCase().match(/^(\d+)\s*(?:x\s*(\d+))?$/)
+      if (!m) return null
+      const id = parseInt(m[1], 10); const qty = m[2] ? parseInt(m[2], 10) : 1
+      if (id < 1 || id > 50 || qty < 1 || qty > 99) return null
+      const ex = res.find(r => r.id === id)
+      if (ex) ex.qty += qty
+      else res.push({ id, qty })
+    }
+    return res
   }
   const handleProductNumberLoad = () => {
-    const parsed = parseProductNumber(productNumberInput)
-    if (!parsed) { setProductNumberError('Enter 1-20, e.g., 5 or 5x2 for qty 2'); setProductNumberPreview(null); return }
-    const prod = INITIAL_PRODUCTS.find((p) => p.id === parsed.id)
-    if (!prod) { setProductNumberError(`No product #${parsed.id}`); setProductNumberPreview(null); return }
-    setProductNumberQty(parsed.qty)
-    setProductNumberPreview(prod)
+    const parsedList = parseProductNumberList(productNumberInput)
+    if (!parsedList) { setProductNumberError('Enter 1-20, e.g., 5 or 5x2 or 3x2,7x1,12x3'); setProductNumberPreview(null); return }
+    const found: { product: Product; qty: number }[] = []
+    for (const p of parsedList) {
+      const prod = INITIAL_PRODUCTS.find(x => x.id === p.id)
+      if (!prod) { setProductNumberError(`No product #${p.id}`); setProductNumberPreview(null); return }
+      found.push({ product: prod, qty: p.qty })
+      setQuantities((prev) => ({ ...prev, [prod.id]: p.qty }))
+    }
+    setProductNumberPreview(found)
     setProductNumberError('')
-    setQuantities((prev) => ({ ...prev, [prod.id]: parsed.qty }))
   }
 
   const filteredProducts = INITIAL_PRODUCTS.filter((p) => {
@@ -150,28 +158,30 @@ const HomePage = () => {
             </div>
             {productNumberError && <p className="text-xs font-bold text-red-600">{productNumberError}</p>}
             {productNumberPreview && (
-              <div className="flex items-center gap-3 rounded-xl border border-[#4B2E83]/20 bg-[#F5F1FB] p-3">
-                <img src={productNumberPreview.image} alt={productNumberPreview.name} className="h-12 w-12 rounded-xl object-cover border" />
-                <div className="flex-1 min-w-0">
-                  <div className="text-[11px] font-bold text-[#4B2E83]">#{productNumberPreview.id} • {productNumberPreview.category}</div>
-                  <div className="text-sm font-bold truncate">{productNumberPreview.name} — ₦{productNumberPreview.price.toLocaleString()}</div>
-                  <div className="text-xs text-[#6F6B76]">Qty {productNumberQty} → ₦{(productNumberPreview.price * productNumberQty).toLocaleString()}</div>
-                </div>
-                <div className="flex items-center gap-1">
-                  <button onClick={() => setProductNumberQty(Math.max(1, productNumberQty - 1))} className="h-7 w-7 rounded-full bg-white flex items-center justify-center border"><Minus className="h-3 w-3" /></button>
-                  <span className="w-6 text-center text-xs font-bold">{productNumberQty}</span>
-                  <button onClick={() => setProductNumberQty(productNumberQty + 1)} className="h-7 w-7 rounded-full bg-white flex items-center justify-center border"><Plus className="h-3 w-3" /></button>
-                </div>
+              <div className="space-y-2">
+                {productNumberPreview.map(({ product, qty }) => (
+                  <div key={product.id} className="flex items-center gap-3 rounded-xl border border-[#4B2E83]/20 bg-[#F5F1FB] p-3">
+                    <img src={product.image} alt={product.name} className="h-12 w-12 rounded-xl object-cover border" />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[11px] font-bold text-[#4B2E83]">#{product.id} • {product.category}</div>
+                      <div className="text-sm font-bold truncate">{product.name} — ₦{product.price.toLocaleString()}</div>
+                      <div className="text-xs text-[#6F6B76]">Qty {qty} → ₦{(product.price * qty).toLocaleString()}</div>
+                    </div>
+                    <span className="text-xs font-bold">×{qty}</span>
+                  </div>
+                ))}
                 <button
                   onClick={() => {
-                    setQuantities((prev) => ({ ...prev, [productNumberPreview.id]: productNumberQty }))
-                    handleAddToCart({ ...productNumberPreview } as Product)
-                    // also add with correct qty
-                    setTimeout(() => setQuantities((prev) => ({ ...prev, [productNumberPreview.id]: 1 })), 300)
+                    productNumberPreview.forEach(({ product, qty }) => {
+                      setQuantities((prev) => ({ ...prev, [product.id]: qty }))
+                      // use addToCart with qty
+                      addToCart(product, qty)
+                    })
+                    setTimeout(() => setProductNumberPreview(null), 800)
                   }}
-                  className="rounded-full bg-[#FFC928] px-4 py-2 text-xs font-bold text-[#4B2E83]"
+                  className="w-full rounded-xl bg-[#FFC928] py-2.5 text-xs font-bold text-[#4B2E83]"
                 >
-                  Add
+                  Add All {productNumberPreview.length} to Bag
                 </button>
               </div>
             )}

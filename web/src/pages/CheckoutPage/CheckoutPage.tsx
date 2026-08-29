@@ -5,7 +5,7 @@ import { Metadata } from '@redwoodjs/web'
 import { useCart } from 'src/components/CartContext/CartContext'
 import { useAuth } from 'src/contexts/AuthContexts'
 import { OrderStore } from 'src/lib/orderStore'
-import { GroupOrderStore, GroupOrder, calculateGroupTotal, subscribeGroupStore } from 'src/lib/groupOrderStore'
+import { GroupOrderStore, GroupOrder, calculateGroupTotal, subscribeGroupStore, parseProductSelectionCode } from 'src/lib/groupOrderStore'
 import { INITIAL_PRODUCTS } from 'src/lib/orderStore'
 import { PaymentModal } from 'src/components/PaymentModal/PaymentModal'
 import {
@@ -46,7 +46,7 @@ const CheckoutPage = () => {
   const [joinError, setJoinError] = useState('')
   const [copied, setCopied] = useState(false)
   const [activeGroup, setActiveGroup] = useState<GroupOrder | null>(null)
-  const [productPreview, setProductPreview] = useState<{ product: any; qty: number } | null>(null)
+  const [productPreview, setProductPreview] = useState<{ product: any; qty: number }[] | null>(null)
 
   const getGuestId = () => {
     if (typeof window === 'undefined') return 'guest'
@@ -77,7 +77,9 @@ const CheckoutPage = () => {
         return { product: prod, quantity: c.quantity }
       })
       const g = GroupOrderStore.createGroupOrder({ hostUserId: uid, hostName: displayName, items })
-      setInviteCode(g.code)
+      // Show product-selection code (e.g., "5", "5x3", "3x2,7x1,12x3") — NOT random YZ — for product sharing
+      const selectionCode = (g as any).productSelectionCode || g.code
+      setInviteCode(selectionCode)
       setActiveGroup(g)
       setModalView('invite')
       setJoinError('')
@@ -97,12 +99,17 @@ const CheckoutPage = () => {
   const handleJoin = async () => {
     const raw = joinCodeInput.trim()
     if (!raw) { setJoinError('Enter code'); return }
-    // Product number → auto-load (e.g., 5 or 5x2, 12x3) — product identifier, not quantity selector
-    const parsed = parseProductNumberInput(raw)
-    if (parsed) {
-      const prod = INITIAL_PRODUCTS.find(p => p.id === parsed.id)
-      if (!prod) { setJoinError(`No product #${parsed.id} — we have 1-20`); setProductPreview(null); return }
-      setProductPreview({ product: prod, qty: parsed.qty })
+    // Product number(s) → auto-load (e.g., 5, 5x3, 3x2,7x1,12x3) — product identifier + quantity, not quantity selector alone
+    const parsedList = parseProductSelectionCode(raw)
+    if (parsedList) {
+      const found: { product: any; qty: number }[] = []
+      for (const p of parsedList) {
+        const prod = INITIAL_PRODUCTS.find(x => x.id === p.productId)
+        if (!prod) { setJoinError(`No product #${p.productId} — we have 1-20`); setProductPreview(null); return }
+        found.push({ product: prod, qty: p.quantity })
+      }
+      // Do not create duplicate entries — quantity already handled via parse (e.g., 5x3 is qty 3, not 3 entries)
+      setProductPreview(found)
       setJoinError('')
       return
     }
@@ -214,14 +221,30 @@ const CheckoutPage = () => {
                   <input value={joinCodeInput} onChange={(e) => { setJoinCodeInput(e.target.value.toUpperCase()); setJoinError(''); setProductPreview(null) }} placeholder="YZ-XXXX-XXXX or 5 or 12x3" className="w-full rounded-xl border border-[#E9E5EE] bg-[#FAF8FD] px-3 py-3 text-sm font-mono font-bold tracking-widest text-center focus:border-[#4B2E83] focus:outline-none" />
                   {joinError && <p className="text-xs font-bold text-red-600 text-center whitespace-pre-wrap">{joinError}</p>}
                   {productPreview && (
-                    <div className="rounded-xl border border-[#4B2E83]/20 bg-[#F5F1FB] p-3 flex items-center gap-3">
-                      <img src={productPreview.product.image} alt={productPreview.product.name} className="h-12 w-12 rounded-xl object-cover border" />
-                      <div className="flex-1 min-w-0">
-                        <div className="text-xs font-bold text-[#4B2E83]">#{productPreview.product.id} • {productPreview.product.category}</div>
-                        <div className="text-sm font-bold truncate">{productPreview.product.name}</div>
-                        <div className="text-xs text-[#6F6B76]">Qty {productPreview.qty} → ₦{(productPreview.product.price * productPreview.qty).toLocaleString()}</div>
-                      </div>
-                      <button onClick={() => { addToCart(productPreview.product, productPreview.qty); setProductPreview(null); setJoinError(`Added #${productPreview.product.id} ×${productPreview.qty} to bag`); setJoinCodeInput('') }} className="rounded-xl bg-[#FFC928] px-4 py-2 text-xs font-bold text-[#4B2E83]">Add</button>
+                    <div className="space-y-2">
+                      {productPreview.map(({ product, qty }) => (
+                        <div key={product.id} className="rounded-xl border border-[#4B2E83]/20 bg-[#F5F1FB] p-3 flex items-center gap-3">
+                          <img src={product.image} alt={product.name} className="h-12 w-12 rounded-xl object-cover border" />
+                          <div className="flex-1 min-w-0">
+                            <div className="text-xs font-bold text-[#4B2E83]">#{product.id} • {product.category}</div>
+                            <div className="text-sm font-bold truncate">{product.name}</div>
+                            <div className="text-xs text-[#6F6B76]">Qty {qty} → ₦{(product.price * qty).toLocaleString()}</div>
+                          </div>
+                          <span className="text-xs font-bold">×{qty}</span>
+                        </div>
+                      ))}
+                      <button
+                        onClick={() => {
+                          productPreview.forEach(({ product, qty }) => addToCart(product, qty))
+                          const code = productPreview.map(p => p.qty > 1 ? `${p.product.id}x${p.qty}` : `${p.product.id}`).join(',')
+                          setProductPreview(null)
+                          setJoinError(`Loaded ${productPreview.length} product(s): ${code} — added to bag`)
+                          setJoinCodeInput('')
+                        }}
+                        className="w-full rounded-xl bg-[#FFC928] py-2.5 text-xs font-bold text-[#4B2E83]"
+                      >
+                        Add All to Bag
+                      </button>
                     </div>
                   )}
                   <div className="rounded-xl bg-[#F5F1FB] p-3 text-xs text-[#6F6B76]">
