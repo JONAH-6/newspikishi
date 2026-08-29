@@ -24,7 +24,8 @@ export interface GroupItem {
 
 export interface GroupOrder {
   id: string
-  code: string
+  code: string // YZ-XXXX-XXXX for legacy, or hidden alphabets like DZR for product version
+  hiddenAlphabets?: string // product hidden letters, e.g., DZR
   status: GroupOrderStatus
   hostUserId: string
   members: GroupMember[]
@@ -88,21 +89,49 @@ async function firestoreGet(code: string): Promise<GroupOrder | null> {
 }
 export const GroupOrderStore = {
   getAll() { return loadAll() },
-  getByCode(code: string) { return loadAll().find(g => g.code.toUpperCase() === code.trim().toUpperCase()) },
+  getByCode(code: string) {
+    const up = code.trim().toUpperCase().replace(/\s+/g, '')
+    return loadAll().find(g => g.code.toUpperCase() === up || (g.hiddenAlphabets && g.hiddenAlphabets.toUpperCase() === up))
+  },
   async getByCodeAsync(code: string): Promise<GroupOrder | null> {
-    const local = loadAll().find(g => g.code.toUpperCase() === code.trim().toUpperCase())
+    const up = code.trim().toUpperCase().replace(/\s+/g, '')
+    const local = loadAll().find(g => g.code.toUpperCase() === up || (g.hiddenAlphabets && g.hiddenAlphabets.toUpperCase() === up))
     if (local) return local
     const remote = await firestoreGet(code)
     if (remote) { saveAll([remote, ...loadAll()]); return remote }
+    // also try hiddenAlphabets search in Firestore via getAll
+    try {
+      const snap = await getDoc(doc(db, 'groupOrders', up))
+      if (snap.exists()) return snap.data() as GroupOrder
+    } catch {}
     return null
   },
   getActiveForUser(uid: string) { return loadAll().find(g => g.status === 'active' && g.members.some(m => m.userId === uid)) },
+  // Legacy YZ code
   createGroupOrder(params: { hostUserId: string; hostName: string; items: { product: Product; quantity: number }[] }): GroupOrder {
     let code = generateGroupCode()
     if (loadAll().some(g => g.code === code)) code = generateGroupCode()
     const now = new Date()
+    const hiddenAlphabets = params.items.map(it => (it.product as any).hiddenAlphabet || String.fromCharCode(65 + (it.product.id % 26))).join('')
     const g: GroupOrder = {
-      id: genId('grp'), code, status: 'active', hostUserId: params.hostUserId,
+      id: genId('grp'), code, hiddenAlphabets, status: 'active', hostUserId: params.hostUserId,
+      members: [{ userId: params.hostUserId, name: params.hostName, role: 'host' }],
+      items: params.items.map(it => ({ id: genId('item'), productId: it.product.id, productName: it.product.name, productImage: it.product.image, price: it.product.price, quantity: it.quantity, addedByUserId: params.hostUserId, addedByName: params.hostName })),
+      createdAt: now.toISOString(), expiresAt: new Date(now.getTime() + EXPIRY).toISOString(),
+    }
+    saveAll([g, ...loadAll()])
+    firestoreSave(g)
+    return g
+  },
+  // New product hidden alphabet: code is hidden alphabets string like DZR
+  createGroupOrderByAlphabets(params: { hostUserId: string; hostName: string; items: { product: Product; quantity: number }[] }): GroupOrder {
+    const hiddenAlphabets = params.items.map(it => (it.product as any).hiddenAlphabet || String.fromCharCode(65 + (it.product.id % 26))).join('').toUpperCase()
+    const code = hiddenAlphabets || generateGroupCode()
+    const existing = loadAll().find(g => g.code.toUpperCase() === code || (g.hiddenAlphabets && g.hiddenAlphabets.toUpperCase() === code))
+    if (existing && existing.status === 'active') return existing
+    const now = new Date()
+    const g: GroupOrder = {
+      id: genId('grp'), code, hiddenAlphabets, status: 'active', hostUserId: params.hostUserId,
       members: [{ userId: params.hostUserId, name: params.hostName, role: 'host' }],
       items: params.items.map(it => ({ id: genId('item'), productId: it.product.id, productName: it.product.name, productImage: it.product.image, price: it.product.price, quantity: it.quantity, addedByUserId: params.hostUserId, addedByName: params.hostName })),
       createdAt: now.toISOString(), expiresAt: new Date(now.getTime() + EXPIRY).toISOString(),

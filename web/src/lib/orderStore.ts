@@ -15,6 +15,7 @@ export interface Product {
   isPopular?: boolean
   prepTimeMinutes?: number
   sellerName?: string
+  hiddenAlphabet?: string // A-Z, same for all users, for Group Order INVITE
 }
 
 export interface CartItem {
@@ -180,6 +181,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     isPopular: true,
     prepTimeMinutes: 15,
     sellerName: 'Mama Chisom Kitchen',
+    hiddenAlphabet: 'A',
   },
   {
     id: 2,
@@ -193,6 +195,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     isPopular: true,
     prepTimeMinutes: 10,
     sellerName: 'Campus Grill Hub',
+    hiddenAlphabet: 'B',
   },
   {
     id: 3,
@@ -206,6 +209,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     isPopular: true,
     prepTimeMinutes: 8,
     sellerName: 'Hostel Kitchen Co.',
+    hiddenAlphabet: 'C',
   },
   {
     id: 4,
@@ -218,6 +222,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     rating: 4.6,
     prepTimeMinutes: 7,
     sellerName: 'Mama Chisom Kitchen',
+    hiddenAlphabet: 'D',
   },
   {
     id: 5,
@@ -229,6 +234,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     rating: 4.5,
     prepTimeMinutes: 5,
     sellerName: 'Campus Bites',
+    hiddenAlphabet: 'E',
   },
   {
     id: 6,
@@ -242,6 +248,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     isPopular: true,
     prepTimeMinutes: 20,
     sellerName: 'Naija Pot',
+    hiddenAlphabet: 'F',
   },
   {
     id: 7,
@@ -253,6 +260,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     rating: 4.7,
     prepTimeMinutes: 2,
     sellerName: 'Campus Bites',
+    hiddenAlphabet: 'G',
   },
   {
     id: 8,
@@ -264,6 +272,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     rating: 4.6,
     prepTimeMinutes: 10,
     sellerName: 'Naija Pot',
+    hiddenAlphabet: 'H',
   },
   {
     id: 9,
@@ -275,6 +284,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     rating: 4.5,
     prepTimeMinutes: 2,
     sellerName: 'Campus Bites',
+    hiddenAlphabet: 'I',
   },
   {
     id: 10,
@@ -288,6 +298,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     isPopular: true,
     prepTimeMinutes: 15,
     sellerName: 'Mama Chisom Kitchen',
+    hiddenAlphabet: 'J',
   },
   {
     id: 11,
@@ -299,6 +310,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     rating: 4.4,
     prepTimeMinutes: 6,
     sellerName: 'Hostel Kitchen Co.',
+    hiddenAlphabet: 'K',
   },
   {
     id: 12,
@@ -312,6 +324,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     isPopular: true,
     prepTimeMinutes: 12,
     sellerName: 'Campus Grill Hub',
+    hiddenAlphabet: 'L',
   },
   {
     id: 13,
@@ -324,6 +337,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     isPopular: true,
     prepTimeMinutes: 8,
     sellerName: 'Campus Bites',
+    hiddenAlphabet: 'M',
   },
   {
     id: 14,
@@ -335,6 +349,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     rating: 4.6,
     prepTimeMinutes: 6,
     sellerName: 'Campus Bites',
+    hiddenAlphabet: 'N',
   },
   {
     id: 15,
@@ -346,6 +361,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     rating: 4.7,
     prepTimeMinutes: 7,
     sellerName: 'Hostel Kitchen Co.',
+    hiddenAlphabet: 'O',
   },
   {
     id: 16,
@@ -358,6 +374,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     isPopular: true,
     prepTimeMinutes: 12,
     sellerName: 'Campus Grill Hub',
+    hiddenAlphabet: 'P',
   },
   {
     id: 17,
@@ -370,6 +387,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     isPopular: true,
     prepTimeMinutes: 5,
     sellerName: 'Sweet Tooth',
+    hiddenAlphabet: 'Q',
   },
   {
     id: 18,
@@ -381,6 +399,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     rating: 4.7,
     prepTimeMinutes: 4,
     sellerName: 'Sweet Tooth',
+    hiddenAlphabet: 'R',
   },
   {
     id: 19,
@@ -392,6 +411,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     rating: 4.6,
     prepTimeMinutes: 3,
     sellerName: 'Healthy Bites Co.',
+    hiddenAlphabet: 'S',
   },
   {
     id: 20,
@@ -403,6 +423,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     rating: 4.7,
     prepTimeMinutes: 3,
     sellerName: 'Healthy Bites Co.',
+    hiddenAlphabet: 'T',
   },
 ]
 

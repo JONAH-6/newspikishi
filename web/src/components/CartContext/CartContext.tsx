@@ -11,6 +11,7 @@ export interface CartItem {
   originalPrice?: number
   image: string
   quantity: number
+  hiddenAlphabet?: string
 }
 
 interface CartContextType {
@@ -65,7 +66,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, [cart])
 
   const addToCart = (
-    product: { id: number; name: string; price: number; image?: string; category?: string; description?: string },
+    product: { id: number; name: string; price: number; image?: string; category?: string; description?: string; hiddenAlphabet?: string },
     quantity = 1
   ) => {
     setCart((prev) => {
@@ -87,6 +88,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             originalPrice: fullProd?.originalPrice,
             image: product.image || fullProd?.image || 'https://images.unsplash.com/photo-1544025162-d76694265947?w=500&h=400&fit=crop',
             quantity: Math.max(1, quantity),
+            hiddenAlphabet: (product as any).hiddenAlphabet || fullProd?.hiddenAlphabet || String.fromCharCode(65 + (product.id % 26)),
           },
         ]
       }
