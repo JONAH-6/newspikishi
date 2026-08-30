@@ -264,7 +264,6 @@ const CheckoutPage = () => {
                   <button onClick={() => handleCopy(inviteCode)} className="w-full flex items-center justify-center gap-2 rounded-xl border border-[#E9E5EE] bg-white py-2.5 text-xs font-bold hover:bg-gray-50">
                     {copied ? <Check className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />} {copied ? 'Copied' : '📋 COPY CODE'}
                   </button>
-                  <a href={`https://wa.me/?text=${encodeURIComponent(`Join my YumZee group ${inviteCode} http://localhost:40000/checkout`)}`} target="_blank" rel="noopener noreferrer" className="w-full inline-block rounded-xl bg-emerald-600 py-2.5 text-xs font-bold text-white">Share via WhatsApp</a>
                   <button onClick={() => { setGroupModalOpen(false); setModalView('choice') }} className="w-full rounded-xl bg-[#4B2E83] py-2.5 text-xs font-bold text-white">Done</button>
                 </div>
               )}
