@@ -72,9 +72,11 @@ const HomePage = () => {
     const catOk = selectedCategory === 'All Items' || p.category === selectedCategory
     const q = searchQuery.trim().toLowerCase()
     if (!q) return catOk
-    // if query is product number like "5" or "5x2", also match by id
-    const parsed = parseProductNumber(q)
-    if (parsed && p.id === parsed.id) return catOk
+    // hidden product number: if query is like "5" or "5x2" or "3,7,12", match by id (still works even though not displayed)
+    const parsedList = parseProductNumberList(q)
+    if (parsedList && parsedList.some(x => x.id === p.id)) return catOk
+    const single = (() => { const m = q.replace(/×/g,'x').match(/^(\d+)\s*(?:x\s*\d+)?$/); return m ? parseInt(m[1],10) : null })()
+    if (single && p.id === single) return catOk
     return catOk && `${p.name} ${p.description} ${p.category}`.toLowerCase().includes(q)
   })
 
@@ -139,54 +141,6 @@ const HomePage = () => {
             ))}
           </div>
 
-          {/* Product Number → Auto Load (e.g., 5 → Puff Puff, 5x2 → qty 2) */}
-          <div className="rounded-2xl border border-[#E9E5EE] bg-white p-3 space-y-3">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-[#211F26]">Have product number? (1-20)</span>
-              <span className="text-[11px] text-[#6F6B76]">e.g., 5 → Puff Puff, 12×3 → Suya ×3</span>
-            </div>
-            <div className="flex gap-2">
-              <input
-                value={productNumberInput}
-                onChange={(e) => { setProductNumberInput(e.target.value); setProductNumberError('') }}
-                onKeyDown={(e) => e.key === 'Enter' && handleProductNumberLoad()}
-                placeholder="Enter 5 or 5x2"
-                className="flex-1 rounded-xl border border-[#E9E5EE] bg-[#FAF8FD] px-3 py-2.5 text-sm font-mono font-bold text-center focus:border-[#4B2E83] focus:outline-none"
-              />
-              <button onClick={handleProductNumberLoad} className="rounded-xl bg-[#4B2E83] px-5 py-2.5 text-xs font-bold text-white hover:bg-[#371F62]">Load</button>
-              <button onClick={() => { const s = productNumberInput.trim(); if (s) navigator.clipboard.writeText(s) }} className="rounded-xl border border-[#E9E5EE] bg-white px-3 py-2.5 text-xs font-bold hover:bg-gray-50">Share</button>
-            </div>
-            {productNumberError && <p className="text-xs font-bold text-red-600">{productNumberError}</p>}
-            {productNumberPreview && (
-              <div className="space-y-2">
-                {productNumberPreview.map(({ product, qty }) => (
-                  <div key={product.id} className="flex items-center gap-3 rounded-xl border border-[#4B2E83]/20 bg-[#F5F1FB] p-3">
-                    <img src={product.image} alt={product.name} className="h-12 w-12 rounded-xl object-cover border" />
-                    <div className="flex-1 min-w-0">
-                      <div className="text-[11px] font-bold text-[#4B2E83]">#{product.id} • {product.category}</div>
-                      <div className="text-sm font-bold truncate">{product.name} — ₦{product.price.toLocaleString()}</div>
-                      <div className="text-xs text-[#6F6B76]">Qty {qty} → ₦{(product.price * qty).toLocaleString()}</div>
-                    </div>
-                    <span className="text-xs font-bold">×{qty}</span>
-                  </div>
-                ))}
-                <button
-                  onClick={() => {
-                    productNumberPreview.forEach(({ product, qty }) => {
-                      setQuantities((prev) => ({ ...prev, [product.id]: qty }))
-                      // use addToCart with qty
-                      addToCart(product, qty)
-                    })
-                    setTimeout(() => setProductNumberPreview(null), 800)
-                  }}
-                  className="w-full rounded-xl bg-[#FFC928] py-2.5 text-xs font-bold text-[#4B2E83]"
-                >
-                  Add All {productNumberPreview.length} to Bag
-                </button>
-              </div>
-            )}
-          </div>
-
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filteredProducts.map((product) => {
               const qty = getQuantity(product.id)
@@ -195,16 +149,15 @@ const HomePage = () => {
                 <div key={product.id} className="flex flex-col overflow-hidden rounded-2xl border border-[#E9E5EE] bg-white">
                   <div className="relative h-44 bg-gray-100">
                     <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
-                    <span className="absolute left-3 top-3 rounded-full bg-[#4B2E83] px-2.5 py-1 text-[10px] font-black text-white">#{product.id}</span>
                     {product.isPopular && (
-                      <span className="absolute left-12 top-3 rounded-full bg-[#FFC928] px-3 py-1 text-[10px] font-black uppercase text-[#4B2E83]">
+                      <span className="absolute left-3 top-3 rounded-full bg-[#FFC928] px-3 py-1 text-[10px] font-black uppercase text-[#4B2E83]">
                         Popular
                       </span>
                     )}
                   </div>
                   <div className="flex flex-1 flex-col p-4 space-y-3">
                     <div>
-                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#4B2E83]">#{product.id} • {product.category}</div>
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#4B2E83]">{product.category}</div>
                       <h3 className="mt-1 text-sm font-bold text-[#211F26]">{product.name}</h3>
                     </div>
                     <div className="flex items-center justify-between pt-3 border-t border-[#F5F1FB]">

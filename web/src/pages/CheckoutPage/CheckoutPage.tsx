@@ -225,7 +225,7 @@ const CheckoutPage = () => {
                         <div key={product.id} className="rounded-xl border border-[#4B2E83]/20 bg-[#F5F1FB] p-3 flex items-center gap-3">
                           <img src={product.image} alt={product.name} className="h-12 w-12 rounded-xl object-cover border" />
                           <div className="flex-1 min-w-0">
-                            <div className="text-xs font-bold text-[#4B2E83]">#{product.id} • {product.category}</div>
+                            <div className="text-xs font-bold text-[#4B2E83]">{product.category}</div>
                             <div className="text-sm font-bold truncate">{product.name}</div>
                             <div className="text-xs text-[#6F6B76]">Qty {qty} → ₦{(product.price * qty).toLocaleString()}</div>
                           </div>
@@ -237,7 +237,7 @@ const CheckoutPage = () => {
                           productPreview.forEach(({ product, qty }) => addToCart(product, qty))
                           const code = productPreview.map(p => p.qty > 1 ? `${p.product.id}x${p.qty}` : `${p.product.id}`).join(',')
                           setProductPreview(null)
-                          setJoinError(`Loaded ${productPreview.length} product(s): ${code} — added to bag`)
+                          setJoinError(`Loaded ${productPreview.length} product(s) — added to bag`)
                           setJoinCodeInput('')
                         }}
                         className="w-full rounded-xl bg-[#FFC928] py-2.5 text-xs font-bold text-[#4B2E83]"
